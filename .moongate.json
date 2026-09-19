@@ -1,0 +1,26 @@
+{
+  "$schema": "./skills/moongate-setup/references/moongate.schema.json",
+  "version": 1,
+  "model": "jev-1.13.0",
+  "rules": [
+    {
+      "id": "no_runtime_rule_authoring",
+      "source": "DESIGN.md: separate setup assistant from runner",
+      "severity": "advisory",
+      "globs": ["src/**/*.mbt"],
+      "exclude": [],
+      "context": [],
+      "thresholds": { "min_probability": 0.90, "min_confidence": 0.80 },
+      "question": {
+        "type": "choice",
+        "instructions": "Does this change add generative rule authoring to the CI runner?",
+        "criteria": {
+          "violation": "The runner calls a generative model to extract or author repository rules.",
+          "compliant": "The runner reads existing structured rules and evaluates them, without generative rule authoring.",
+          "insufficient_evidence": "The supplied changes do not show enough context to establish the behavior."
+        }
+      },
+      "message": "Possible runtime rule authoring. Keep rule authoring in the separate setup skill."
+    }
+  ]
+}
