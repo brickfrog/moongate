@@ -4,6 +4,9 @@
 /// Only a decisive answer that clears both thresholds is taken at face value.
 /// Everything else routes to review, including every `insufficient_evidence`
 /// answer: absence of evidence is never treated as compliance.
+///
+/// The thresholds are routing values chosen before any measurement on this
+/// repository; clearing them is not evidence that a verdict is correct.
 pub fn decide(rule : Rule, answer : ChoiceAnswer) -> Decision {
   let t = rule.thresholds
   let clears = answer.probability_of(answer.choice) >= t.min_probability &&
