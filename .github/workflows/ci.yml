@@ -36,7 +36,7 @@ jobs:
 
       - name: Integration tests
         run: |
-          python3 tests/integration.py \
+          ./_build/native/release/build/cmd/itest/itest.exe \
             --bin "$PWD/_build/native/release/build/cmd/moongate/moongate.exe"
 
       - name: Validate the repository configuration

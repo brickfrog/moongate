@@ -1,5 +1,8 @@
 ///|
 /// Conservative local byte budget for one serialized request body.
+///
+/// Bytes, not tokens: the runner cannot count tokens for a remote model, so
+/// it bounds what it is willing to send instead of guessing what will fit.
 pub let max_request_bytes : Int = 24576
 
 ///|
