@@ -217,7 +217,15 @@ async fn test_context_paths_are_literal(fixture : Fixture) -> Unit raise {
     ["check", "--base", base, "--format", "json"],
     base_url=Some(fixture.origin),
   )
-  expect_exit("wildcard context path does not resolve", proc, 2)
+  // The rule is advisory, so the unresolved path is reported as an error
+  // result without failing the build; what matters is that no other file was
+  // silently substituted.
+  expect_exit("wildcard context path does not resolve", proc, 0)
+  check(
+    "unresolved context is an error result",
+    status_of(report(proc), "no_secret_logging") == "error",
+    clip(proc.stdout),
+  )
   check(
     "no request for unresolved context",
     fixture.requests.length() == before,

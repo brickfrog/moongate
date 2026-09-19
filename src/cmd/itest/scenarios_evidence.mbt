@@ -279,96 +279,95 @@ async fn test_file_to_directory(fixture : Fixture) -> Unit raise {
 }
 
 ///|
-/// Evidence the runner cannot represent is an error, never a silent omission.
-async fn test_unsupported_evidence(fixture : Fixture) -> Unit raise {
+/// Builds a repository whose single rule cannot be evaluated, for each way
+/// that can happen. `severity` is the rule's severity.
+async fn unevaluable_repo(kind : String, severity : String) -> (Repo, String) raise {
   let repo = new_repo()
-  repo.write(".moongate.json", config([rule([("globs", strings(["src/**"]))])]))
-  repo.write("src/a.py", "x\n")
-  let base = repo.commit("base")
-  repo.write_bytes("src/blob.py", b"\x00\x01binary\n")
-  repo.commit("binary") |> ignore
-  let before = fixture.requests.length()
-  let binary_proc = run_cli(
-    repo,
-    ["check", "--base", base, "--format", "json"],
-    base_url=Some(fixture.origin),
-  )
-  expect_exit("binary evidence fails", binary_proc, 2)
-  check(
-    "binary evidence made no request",
-    fixture.requests.length() == before,
-    "request sent",
-  )
-  let repo2 = new_repo()
-  repo2.write(".moongate.json", config([rule([("globs", strings(["src/**"]))])]))
-  repo2.write("src/a.py", "x\n")
-  let base2 = repo2.commit("base")
-  repo2.write_bytes("src/bad.py", b"\xff\xfe not utf8\n")
-  repo2.commit("invalid utf8") |> ignore
-  expect_exit(
-    "invalid UTF-8 evidence fails",
-    run_cli(
-      repo2,
-      ["check", "--base", base2, "--format", "json"],
-      base_url=Some(fixture.origin),
-    ),
-    2,
-  )
-  let repo3 = new_repo()
-  repo3.write(".moongate.json", config([
-    rule([("context", strings(["link.txt"]))]),
-  ]))
-  repo3.write("src/a.py", "x\n")
-  repo3.write("real.txt", "hello\n")
-  repo3.symlink("real.txt", "link.txt")
-  let base3 = repo3.commit("base")
-  repo3.write("src/a.py", "y\n")
-  repo3.commit("head") |> ignore
-  expect_exit(
-    "symlink context fails",
-    run_cli(
-      repo3,
-      ["check", "--base", base3, "--format", "json"],
-      base_url=Some(fixture.origin),
-    ),
-    2,
-  )
-  let repo4 = new_repo()
-  repo4.write(".moongate.json", config([
-    rule([("context", strings(["missing.txt"]))]),
-  ]))
-  repo4.write("src/a.py", "x\n")
-  let base4 = repo4.commit("base")
-  repo4.write("src/a.py", "y\n")
-  repo4.commit("head") |> ignore
-  expect_exit(
-    "missing context on both sides fails",
-    run_cli(
-      repo4,
-      ["check", "--base", base4, "--format", "json"],
-      base_url=Some(fixture.origin),
-    ),
-    2,
-  )
-  let repo5 = new_repo()
-  repo5.write(".moongate.json", config([rule([("globs", strings(["src/**"]))])]))
-  repo5.write("src/a.py", "x\n")
-  let base5 = repo5.commit("base")
-  let padding = StringBuilder()
-  for _ in 0..<4000 {
-    padding.write_string("# padding line\n")
+  let overrides = [("severity", Json::string(severity))]
+  match kind {
+    "symlink context" => overrides.push(("context", strings(["link.txt"])))
+    "missing context" => overrides.push(("context", strings(["missing.txt"])))
+    _ => overrides.push(("globs", strings(["src/**"])))
   }
-  repo5.write("src/big.py", padding.to_string())
-  repo5.commit("oversized") |> ignore
-  let oversized = run_cli(
-    repo5,
-    ["check", "--base", base5, "--format", "json"],
-    base_url=Some(fixture.origin),
-  )
-  expect_exit("oversized evidence fails", oversized, 2)
-  check(
-    "oversized reports incomplete",
-    conclusion(report(oversized)) == "incomplete",
-    clip(oversized.stdout),
-  )
+  repo.write(".moongate.json", config([rule(overrides)]))
+  repo.write("src/a.py", "x\n")
+  if kind == "symlink context" {
+    repo.write("real.txt", "hello\n")
+    repo.symlink("real.txt", "link.txt")
+  }
+  let base = repo.commit("base")
+  match kind {
+    "binary" => repo.write_bytes("src/blob.py", b"\x00\x01binary\n")
+    "invalid utf8" => repo.write_bytes("src/bad.py", b"\xff\xfe not utf8\n")
+    "oversized" => {
+      let padding = StringBuilder()
+      for _ in 0..<4000 {
+        padding.write_string("# padding line\n")
+      }
+      repo.write("src/big.py", padding.to_string())
+    }
+    _ => repo.write("src/a.py", "y\n")
+  }
+  repo.commit("head") |> ignore
+  (repo, base)
+}
+
+///|
+/// Evidence the runner cannot represent is never a silent omission, and the
+/// rule's own severity decides whether the run fails: a blocking rule must
+/// not pass unproven, an advisory rule was never allowed to fail the build.
+async fn test_unsupported_evidence(fixture : Fixture) -> Unit raise {
+  let kinds = [
+    "binary", "invalid utf8", "symlink context", "missing context", "oversized",
+  ]
+  for kind in kinds {
+    let (repo, base) = unevaluable_repo(kind, "advisory")
+    let before = fixture.requests.length()
+    let proc = run_cli(
+      repo,
+      ["check", "--base", base, "--format", "json"],
+      base_url=Some(fixture.origin),
+    )
+    expect_exit("advisory \{kind} does not fail the build", proc, 0)
+    let doc = report(proc)
+    check(
+      "advisory \{kind} concludes advisory",
+      conclusion(doc) == "advisory",
+      clip(proc.stdout),
+    )
+    check(
+      "advisory \{kind} is reported as an error result",
+      status_of(doc, "no_secret_logging") == "error",
+      clip(proc.stdout),
+    )
+    check(
+      "advisory \{kind} explains why the rule was skipped",
+      text_of(field(array_of(field(doc, "results"))[0], "detail")).length() > 0,
+      clip(proc.stdout),
+    )
+    check(
+      "advisory \{kind} sends no request",
+      fixture.requests.length() == before,
+      "request sent",
+    )
+    // Never a pass: unevaluated is not compliant.
+    check(
+      "advisory \{kind} is not a pass",
+      conclusion(doc) != "pass",
+      clip(proc.stdout),
+    )
+
+    let (strict, strict_base) = unevaluable_repo(kind, "blocking")
+    let blocked = run_cli(
+      strict,
+      ["check", "--base", strict_base, "--format", "json"],
+      base_url=Some(fixture.origin),
+    )
+    expect_exit("blocking \{kind} fails the build", blocked, 2)
+    check(
+      "blocking \{kind} concludes incomplete",
+      conclusion(report(blocked)) == "incomplete",
+      clip(blocked.stdout),
+    )
+  }
 }

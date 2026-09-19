@@ -140,6 +140,10 @@ pub(all) struct RuleResult {
   paths : Array[String]
   model : String?
   answer : ChoiceAnswer?
+  /// Why this rule could not be evaluated, when `status` is `error`. It is a
+  /// property of the rule, not of the run, so it lives here rather than in
+  /// the report's run-level `errors`.
+  detail : String?
 }
 
 ///|

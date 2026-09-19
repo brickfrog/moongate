@@ -115,6 +115,7 @@ fn result_of(status : ResultStatus, severity : Severity) -> RuleResult {
     paths: [],
     model: None,
     answer: None,
+    detail: None,
   }
 }
 
@@ -157,6 +158,35 @@ test "conclusion precedence puts failures above verdicts" {
   )
   assert_eq(mixed.conclusion(), ConcIncomplete)
   assert_eq(mixed.exit_code(), 2)
+}
+
+///|
+test "a rule that could not be evaluated is judged by its own severity" {
+  // A blocking rule must never pass unproven.
+  let blocking = report_of([result_of(StatusError, Blocking)], [])
+  assert_eq(blocking.conclusion(), ConcIncomplete)
+  assert_eq(blocking.exit_code(), 2)
+  // An advisory rule cannot stop a merge, and "could not look" is not graver
+  // than "looked and found a violation", which is advisory.
+  let advisory = report_of([result_of(StatusError, Advisory)], [])
+  assert_eq(advisory.conclusion(), ConcAdvisory)
+  assert_eq(advisory.exit_code(), 0)
+  // One unevaluated blocking rule outranks any number of advisory ones.
+  let mixed = report_of(
+    [result_of(StatusError, Advisory), result_of(StatusError, Blocking)],
+    [],
+  )
+  assert_eq(mixed.conclusion(), ConcIncomplete)
+  // An unevaluated advisory rule never counts as a pass.
+  let with_compliant = report_of(
+    [result_of(StatusCompliant, Advisory), result_of(StatusError, Advisory)],
+    [],
+  )
+  assert_eq(with_compliant.conclusion(), ConcAdvisory)
+  // A run-level failure stays unconditional regardless of severity.
+  let run_level = report_of([result_of(StatusError, Advisory)], ["transport failed"])
+  assert_eq(run_level.conclusion(), ConcIncomplete)
+  assert_eq(run_level.exit_code(), 2)
 }
 
 ///|
