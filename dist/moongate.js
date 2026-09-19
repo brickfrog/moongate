@@ -25816,7 +25816,7 @@ function _M0FP39brickfrog8moongate6runner13evaluate__allN16_2aasync__driverS1120
             const _$4 = _tmp$3;
             if (_$4 < _bind$6) {
               const item = batch[_$4];
-              _M0MPC15array5Array4pushGsE(acc$4.results, new _M0TP39brickfrog8moongate4core10RuleResult(item.rule.id, 4, item.rule.severity, item.rule.source, item.rule.message, item.paths, undefined, undefined, undefined));
+              _M0MPC15array5Array4pushGsE(acc$4.results, new _M0TP39brickfrog8moongate4core10RuleResult(item.rule.id, 4, item.rule.severity, item.rule.source, item.rule.message, item.paths, undefined, undefined, _message));
               _tmp$3 = _$4 + 1 | 0;
               continue;
             } else {

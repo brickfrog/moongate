@@ -267,7 +267,7 @@ async fn evaluate_all(
             paths: item.paths,
             model: None,
             answer: None,
-            detail: None,
+            detail: Some(message),
           })
         }
       }
