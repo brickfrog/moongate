@@ -1,0 +1,110 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Moongate configuration",
+  "description": "Structured semantic rules evaluated by the Moongate runner. The CLI additionally enforces semantic constraints this schema cannot express: unique rule ids, rejected duplicate JSON keys, glob syntax, and explicit thresholds on blocking rules.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "rules"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "version": { "const": 1 },
+    "model": {
+      "type": "string",
+      "minLength": 1,
+      "description": "TypeSafe model identifier. Defaults to jev-1.13.0. Thresholds are only meaningful relative to one model."
+    },
+    "rules": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/rule" }
+    }
+  },
+  "$defs": {
+    "rule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "globs", "question", "message"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]{0,63}$"
+        },
+        "source": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Citation of the instruction this rule encodes, for example 'CLAUDE.md:28'."
+        },
+        "severity": {
+          "enum": ["advisory", "blocking"],
+          "default": "advisory"
+        },
+        "globs": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/glob" }
+        },
+        "exclude": {
+          "type": "array",
+          "default": [],
+          "items": { "$ref": "#/$defs/glob" }
+        },
+        "context": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Exact repository-root-relative file path, not a glob."
+          }
+        },
+        "thresholds": { "$ref": "#/$defs/thresholds" },
+        "question": { "$ref": "#/$defs/question" },
+        "message": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Pre-authored, actionable finding text. The model returns labels, never prose."
+        }
+      }
+    },
+    "glob": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Root-relative pattern. '*' and '?' match inside one component; a whole '**' component matches zero or more components. Brackets, braces and backslash escapes are rejected."
+    },
+    "thresholds": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["min_probability", "min_confidence"],
+      "properties": {
+        "min_probability": {
+          "type": "number",
+          "exclusiveMinimum": 0.5,
+          "maximum": 1
+        },
+        "min_confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        }
+      }
+    },
+    "question": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "instructions", "criteria"],
+      "properties": {
+        "type": { "const": "choice" },
+        "instructions": { "type": "string", "minLength": 1 },
+        "criteria": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["violation", "compliant", "insufficient_evidence"],
+          "properties": {
+            "violation": { "type": "string", "minLength": 1 },
+            "compliant": { "type": "string", "minLength": 1 },
+            "insufficient_evidence": { "type": "string", "minLength": 1 }
+          }
+        }
+      }
+    }
+  }
+}
