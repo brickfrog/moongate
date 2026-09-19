@@ -40,8 +40,8 @@ pub fn ChangeRecord::key(self : ChangeRecord) -> String {
 /// configuration injection points are neutralised so repository or user
 /// configuration cannot introduce an external diff driver, a textconv filter,
 /// or a credential prompt.
-fn git_env() -> Map[String, String] {
-  let env = @env.get_env_vars()
+fn git_env() -> Map[String, String] raise {
+  let env = (@host.current().env_vars)()
   let clean : Map[String, String] = Map([])
   for key, value in env {
     if key == "TYPESAFE_API_KEY" ||
@@ -67,26 +67,19 @@ fn git_env() -> Map[String, String] {
 ///|
 /// Runs Git with a literal argument vector and returns raw stdout bytes.
 async fn git_bytes(args : Array[String]) -> Bytes raise {
-  let cmd = @shell.Cmd(
-    "git",
-    args,
-    env=git_env(),
-    inherit_env=false,
-    stdout=@shell.Redirect::Capture,
-    stderr=@shell.Redirect::Capture,
-  )
-  let output = try cmd.output(
-      timeout_ms=git_timeout_ms,
-      max_output_bytes=max_blob_bytes,
+  let result = try (@host.current().run_command)(
+      "git",
+      args,
+      git_env(),
+      git_timeout_ms,
+      max_blob_bytes,
     ) catch {
     err => raise @core.GateError("git \{args[0]} failed: \{describe(err)}")
   }
-  if output.exit_code() != 0 {
-    raise @core.GateError(
-      "git \{args[0]} exited with status \{output.exit_code()}.",
-    )
+  if result.code != 0 {
+    raise @core.GateError("git \{args[0]} exited with status \{result.code}.")
   }
-  output.stdout_bytes()
+  result.stdout
 }
 
 ///|
@@ -113,15 +106,11 @@ fn decode_utf8(data : Bytes, what : String) -> String raise {
 /// is root-relative.
 pub async fn assert_repo_root() -> Unit raise {
   let top = git_line(["rev-parse", "--show-toplevel"])
-  let here = match @env.current_dir() {
-    Some(dir) => try @fs.realpath(dir) catch {
-        _ => dir
-      }
+  let here = match (@host.current().current_dir)() {
+    Some(dir) => (@host.current().realpath)(dir)
     None => raise @core.GateError("Cannot determine the current directory.")
   }
-  let top_real = try @fs.realpath(top) catch {
-      _ => top
-    }
+  let top_real = (@host.current().realpath)(top)
   if top_real != here {
     raise @core.GateError(
       "Moongate must run from the repository root (\{@core.sanitize_line(top_real)}).",

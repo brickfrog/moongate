@@ -56,10 +56,12 @@ Findings are **advisory by default**. A rule blocks CI only when its author mark
 - Writes the three Choice criteria, scopes globs against the real tree, keeps ids stable, and runs `moongate validate`.
 - Never enables blocking, never calls the API, never edits workflows.
 
-### B. Runner (`moongate`, MoonBit native)
+### B. Runner (`moongate`)
 - No generative model and no credential other than `TYPESAFE_API_KEY`.
 - Reads only committed objects: no working-tree content, no repository code execution, no Git hooks, external diff drivers, or textconv filters.
 - Emits GitHub annotations, machine-readable JSON, or text, with exit codes 0 / 1 / 2.
+- One source tree, two builds. `src/core`, `src/runner` and `src/cli` are target-neutral; `src/host` declares the services they need (process execution, HTTPS, filesystem, stdout, environment, exit) as a record of functions. `src/host/native` supplies them from `moonbitlang/async`; `src/host/js` supplies them from Node. Imports resolve per package, not per target, so each backend has to be its own package.
+- The GitHub Action runs the `--target js` build committed at `dist/moongate.js` (`runs: node20`). Callers need no MoonBit toolchain and no build step; CI fails if the committed bundle differs from a fresh build. The native binary remains the local and non-Actions path.
 
 ---
 

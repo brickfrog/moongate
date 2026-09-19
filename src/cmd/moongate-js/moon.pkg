@@ -2,9 +2,9 @@ import {
   "brickfrog/moongate/cli",
   "brickfrog/moongate/host",
   "moonbitlang/async",
-  "brickfrog/moongate/host/native",
+  "brickfrog/moongate/host/js",
 }
 
-supported_targets = "+native"
+supported_targets = "+js"
 
 pkgtype(kind: "executable")

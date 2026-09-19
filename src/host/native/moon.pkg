@@ -1,0 +1,13 @@
+import {
+  "brickfrog/moongate/host",
+  "moonbitlang/async",
+  "moonbitlang/async/fs",
+  "moonbitlang/async/http",
+  "moonbitlang/async/shell",
+  "moonbitlang/async/stdio",
+  "moonbitlang/async/tls",
+  "moonbitlang/core/env",
+  "moonbitlang/x/sys",
+}
+
+supported_targets = "+native"

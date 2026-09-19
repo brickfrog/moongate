@@ -32,7 +32,7 @@ pub let prompt_preamble : String =
 /// Reads the API credential. Only one variable name is supported: aliases and
 /// flags would multiply the places a secret can leak from.
 pub fn api_key() -> String raise {
-  let raw = match @env.get_env_var("TYPESAFE_API_KEY") {
+  let raw = match (@host.current().env_vars)().get("TYPESAFE_API_KEY") {
     Some(value) => value
     None =>
       raise @core.GateError(
@@ -54,7 +54,7 @@ pub fn api_key() -> String raise {
 ///|
 /// Resolves and validates the API origin.
 pub fn base_url() -> String raise {
-  let origin = match @env.get_env_var("TYPESAFE_BASE_URL") {
+  let origin = match (@host.current().env_vars)().get("TYPESAFE_BASE_URL") {
     Some(value) => value.trim(chars=" \t\r\n").to_owned()
     None => return default_base_url
   }
@@ -183,86 +183,42 @@ pub async fn evaluate(
   for rule in rules {
     ids.push(rule.id)
   }
-  let text = @async.with_timeout(http_timeout_ms, async fn() {
-    post_json(origin, key, body)
-  })
+  let text = post_json(origin, key, body)
   @core.decode_response(text, ids)
 }
 
 ///|
+/// Sends one request through the host and returns the response text.
 async fn post_json(origin : String, key : String, body : String) -> String raise {
-  let headers : Map[@http.CaseInsensitiveString, String] = Map([])
-  headers[@http.CaseInsensitiveString("content-type")] = "application/json"
-  headers[@http.CaseInsensitiveString("accept")] = "application/json"
-  headers[@http.CaseInsensitiveString("authorization")] = "Bearer " + key
-  // An explicit length keeps the request out of chunked encoding, which some
-  // HTTP/1.1 endpoints reject outright.
-  headers[@http.CaseInsensitiveString("content-length")] = @utf8.encode(body)
-    .length()
-    .to_string()
-  let client = try @http.Client(origin, trust=@tls.TrustedRoot::SystemRoot) catch {
-    err =>
-      raise @core.GateError(
-        "Cannot reach the evaluation API: \{@core.sanitize_line(err.to_string())}",
-      )
+  let headers = [
+    ("content-type", "application/json"),
+    ("accept", "application/json"),
+    ("authorization", "Bearer " + key),
+    // An explicit length keeps the request out of chunked encoding, which
+    // some HTTP/1.1 endpoints reject outright.
+    ("content-length", @utf8.encode(body).length().to_string()),
+  ]
+  let response = try (@host.current().post_json)(
+      origin,
+      endpoint_path,
+      headers,
+      body,
+      http_timeout_ms,
+      max_response_bytes,
+    ) catch {
+    err => raise @core.GateError(@core.sanitize_line(err.to_string()))
   }
-  errdefer client.close()
-  let result = read_response(client, headers, body)
-  client.close()
-  result
-}
-
-///|
-async fn read_response(
-  client : @http.Client,
-  headers : Map[@http.CaseInsensitiveString, String],
-  body : String,
-) -> String raise {
-  let response = try client.post(endpoint_path, body, extra_headers=headers) catch {
-    err =>
-      raise @core.GateError(
-        "Evaluation request failed: \{@core.sanitize_line(err.to_string())}",
-      )
-  }
-  let request_id = match
-    response.headers.get(@http.CaseInsensitiveString("x-typesafe-request-id")) {
-    Some(value) => " (request id \{@core.sanitize_line(value)})"
-    None => ""
-  }
-  if response.code != 200 {
+  if response.status != 200 {
+    let request_id = if response.request_id.is_empty() {
+      ""
+    } else {
+      " (request id \{@core.sanitize_line(response.request_id)})"
+    }
     raise @core.GateError(
-      "Evaluation API returned HTTP \{response.code}\{request_id}.",
+      "Evaluation API returned HTTP \{response.status}\{request_id}.",
     )
   }
-  // Chunks are accumulated as bytes and decoded once: a multi-byte sequence
-  // split across two reads is valid UTF-8 overall but not per chunk.
-  let chunks : Array[Bytes] = []
-  let mut total = 0
-  while true {
-    let chunk = try client.read_some() catch {
-      err =>
-        raise @core.GateError(
-          "Reading the evaluation response failed: \{@core.sanitize_line(err.to_string())}",
-        )
-    }
-    match chunk {
-      None => break
-      Some(bytes) => {
-        total += bytes.length()
-        if total > max_response_bytes {
-          raise @core.GateError("Evaluation response exceeds 1 MiB.")
-        }
-        chunks.push(bytes)
-      }
-    }
-  }
-  let merged = FixedArray::make(total, b'\x00')
-  let mut at = 0
-  for chunk in chunks {
-    merged.blit_from_bytes(at, chunk, 0, chunk.length())
-    at += chunk.length()
-  }
-  try @utf8.decode(merged.unsafe_reinterpret_as_bytes()[:]) catch {
+  try @utf8.decode(response.body[:]) catch {
     _ => raise @core.GateError("Evaluation response is not valid UTF-8.")
   }
 }

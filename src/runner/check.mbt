@@ -388,23 +388,23 @@ async fn build_state(
 ///|
 /// Reads a working-tree configuration file.
 pub async fn read_local_config(path : String) -> String raise {
-  let kind = try @fs.kind(path, follow_symlink=false) catch {
-    _ =>
-      raise @core.GateError(
-        "Configuration '\{@core.sanitize_line(path)}' not found.",
-      )
+  let kind = (@host.current().path_kind)(path)
+  if kind is @host.Missing {
+    raise @core.GateError(
+      "Configuration '\{@core.sanitize_line(path)}' not found.",
+    )
   }
-  if kind != @fs.FileKind::Regular {
+  if !(kind is @host.Regular) {
     raise @core.GateError(
       "Configuration '\{@core.sanitize_line(path)}' is not a regular file.",
     )
   }
-  let size = @fs.file_size(path)
+  let size = (@host.current().file_size)(path)
   if size > @core.max_config_bytes.to_int64() {
     raise @core.GateError("Configuration exceeds the 1 MiB limit.")
   }
-  let data = @fs.read_file(path)
-  try @utf8.decode(data.binary()[:]) catch {
+  let data = (@host.current().read_file)(path)
+  try @utf8.decode(data[:]) catch {
     _ => raise @core.GateError("Configuration is not valid UTF-8.")
   }
 }

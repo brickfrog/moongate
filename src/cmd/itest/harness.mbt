@@ -352,8 +352,12 @@ async fn Repo::commit(self : Repo, message : String) -> String raise {
 // ---------------------------------------------------------------------------
 
 ///|
-/// Path of the binary under test, set once from the command line.
+/// Program under test and any fixed leading arguments, so the same scenarios
+/// can drive the native binary and `node dist/index.js`.
 let binary : Ref[String] = { val: "" }
+
+///|
+let binary_prefix : Array[String] = []
 
 ///|
 /// Runs the CLI. `key` defaults to the dummy credential; `None` omits it.
@@ -372,7 +376,11 @@ async fn run_cli(
     Some(value) => env["TYPESAFE_BASE_URL"] = value
     None => ()
   }
-  run_process(binary.val, args, repo.path, env)
+  let argv = binary_prefix.copy()
+  for arg in args {
+    argv.push(arg)
+  }
+  run_process(binary.val, argv, repo.path, env)
 }
 
 ///|

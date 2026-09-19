@@ -7,6 +7,11 @@ async fn main {
     if argv[i] == "--bin" && i + 1 < argv.length() {
       path = argv[i + 1]
     }
+    // Fixed arguments inserted before every CLI invocation, so the suite can
+    // run `node dist/index.js` as the program under test.
+    if argv[i] == "--bin-arg" && i + 1 < argv.length() {
+      binary_prefix.push(argv[i + 1])
+    }
   }
   if path.is_empty() {
     @stdio.stderr.write("usage: itest --bin PATH\n")
@@ -14,7 +19,10 @@ async fn main {
     return
   }
   binary.val = path
-  if !(@fs.exists(path)) {
+  if !(path.contains("/")) {
+    // A bare program name resolves through PATH; only a path can be checked.
+    ()
+  } else if !(@fs.exists(path)) {
     @stdio.stderr.write("binary not found: \{path}\n")
     @sys.exit(2)
     return

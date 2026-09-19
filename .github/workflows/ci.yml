@@ -26,18 +26,34 @@ jobs:
         run: moon update
 
       - name: Check
-        run: moon check --target native
+        run: |
+          moon check --target native
+          moon check --target js
 
       - name: Unit tests
         run: moon test --target native
 
       - name: Build
-        run: moon build --target native --release
+        run: |
+          moon build --target native --release
+          moon build --target js --release
 
-      - name: Integration tests
+      - name: Integration tests against the native binary
         run: |
           ./_build/native/release/build/cmd/itest/itest.exe \
             --bin "$PWD/_build/native/release/build/cmd/moongate/moongate.exe"
+
+      - name: Integration tests against the shipped bundle
+        run: |
+          ./_build/native/release/build/cmd/itest/itest.exe \
+            --bin node --bin-arg "$PWD/dist/moongate.js"
+
+      - name: Committed bundle is current
+        run: |
+          set -euo pipefail
+          # dist/ is what callers execute, so a stale bundle is a shipped bug.
+          cp _build/js/release/build/cmd/moongate-js/moongate-js.js dist/moongate.js
+          git diff --exit-code -- dist/
 
       - name: Validate the repository configuration
         run: |
