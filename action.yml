@@ -25,5 +25,5 @@ inputs:
 # needs no MoonBit toolchain and no build step. Regenerate with
 # `moon build --target js --release`; CI fails if dist/ is stale.
 runs:
-  using: node20
+  using: node24
   main: dist/index.js
