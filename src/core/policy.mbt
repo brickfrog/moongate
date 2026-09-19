@@ -26,6 +26,13 @@ pub fn decide(rule : Rule, answer : ChoiceAnswer) -> Decision {
 ///|
 /// Overall conclusion, in precedence order: incomplete, blocked, advisory,
 /// pass, not applicable.
+///
+/// A rule that could not be evaluated is judged by its own severity, exactly
+/// like a rule that was. A blocking rule must never pass unproven, so it
+/// concludes `incomplete`; an advisory rule never had the authority to stop a
+/// merge, so "could not look" cannot be graver than "looked and found a
+/// violation", which is advisory. Run-level failures — bad configuration, no
+/// merge base, a dead transport — are in `errors` and remain unconditional.
 pub fn Report::conclusion(self : Report) -> Conclusion {
   if !self.errors.is_empty() {
     return ConcIncomplete
@@ -36,7 +43,13 @@ pub fn Report::conclusion(self : Report) -> Conclusion {
   let mut advisory = false
   for result in self.results {
     match result.status {
-      StatusError => return ConcIncomplete
+      StatusError =>
+        if result.severity == Blocking {
+          return ConcIncomplete
+        } else {
+          all_compliant = false
+          advisory = true
+        }
       StatusViolation => {
         evaluated += 1
         all_compliant = false

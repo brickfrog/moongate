@@ -64,6 +64,10 @@ fn render_text(report : Report) -> String {
     if result.status is (StatusViolation | StatusReview | StatusError) {
       out.write_string("  \{sanitize_line(result.message)}\n")
     }
+    match result.detail {
+      Some(detail) => out.write_string("  \{sanitize_line(detail)}\n")
+      None => ()
+    }
   }
   for err in report.errors {
     out.write_string("ERROR: \{sanitize_line(err)}\n")
@@ -134,6 +138,10 @@ fn render_json(report : Report) -> String {
         "model": opt_json(result.model),
         "answer": match result.answer {
           Some(answer) => answer.to_json_value()
+          None => Json::null()
+        },
+        "detail": match result.detail {
+          Some(detail) => Json::string(sanitize_line(detail))
           None => Json::null()
         },
       }),
@@ -214,6 +222,10 @@ fn render_github(report : Report) -> String {
         )
       None => ()
     }
+    match result.detail {
+      Some(reason) => detail.write_string(" [\{reason}]")
+      None => ()
+    }
     let body = escape_annotation_data(detail.to_string())
     match result.status {
       StatusViolation =>
@@ -223,7 +235,14 @@ fn render_github(report : Report) -> String {
           out.write_string("::warning title=\{title}::\{body}\n")
         }
       StatusReview => out.write_string("::warning title=\{title}::\{body}\n")
-      StatusError => out.write_string("::error title=\{title}::\{body}\n")
+      // A rule that could not be evaluated is as loud as its severity allows,
+      // matching the conclusion: an advisory rule never fails the job.
+      StatusError =>
+        if result.severity == Blocking {
+          out.write_string("::error title=\{title}::\{body}\n")
+        } else {
+          out.write_string("::warning title=\{title}::\{body}\n")
+        }
       _ => ()
     }
   }

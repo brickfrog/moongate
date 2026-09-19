@@ -1715,7 +1715,7 @@ function _M0DTP39brickfrog8moongate6runner47_24brickfrog_2fmoongate_2frunner_2eb
   this._10 = param10;
 }
 _M0DTP39brickfrog8moongate6runner47_24brickfrog_2fmoongate_2frunner_2ebuild__stateL5State8State__6.prototype.$tag = 6;
-function _M0TP39brickfrog8moongate4core10RuleResult(param0, param1, param2, param3, param4, param5, param6, param7) {
+function _M0TP39brickfrog8moongate4core10RuleResult(param0, param1, param2, param3, param4, param5, param6, param7, param8) {
   this.id = param0;
   this.status = param1;
   this.severity = param2;
@@ -1724,6 +1724,7 @@ function _M0TP39brickfrog8moongate4core10RuleResult(param0, param1, param2, para
   this.paths = param5;
   this.model = param6;
   this.answer = param7;
+  this.detail = param8;
 }
 function _M0DTP39brickfrog8moongate6runner48_24brickfrog_2fmoongate_2frunner_2eevaluate__allL5State8State__0(param0, param1, param2, param3) {
   this._0 = param0;
@@ -2683,20 +2684,20 @@ const _M0FP39brickfrog8moongate4core16label__violation = "violation";
 const _M0FP39brickfrog8moongate4core16label__compliant = "compliant";
 const _M0FP39brickfrog8moongate4core19label__insufficient = "insufficient_evidence";
 const _M0FP39brickfrog8moongate4core8pad__hexN6digitsS87 = "0123456789abcdef";
-const _M0FP39brickfrog8moongate4core16decode__responseN7_2abindS504 = " \t\r\n";
-const _M0FP39brickfrog8moongate4core17validate__patternN7_2abindS748 = "/";
-const _M0FP39brickfrog8moongate4core17validate__patternN7_2abindS766 = "/";
-const _M0FP39brickfrog8moongate4core17validate__patternN7_2abindS754 = "**";
-const _M0FP39brickfrog8moongate4core19validate__rel__pathN7_2abindS769 = "/";
-const _M0FP39brickfrog8moongate4core19validate__rel__pathN7_2abindS785 = "/";
-const _M0FP39brickfrog8moongate4core17split__componentsN7_2abindS804 = "/";
-const _M0FP39brickfrog8moongate4core15sanitize__blockN7_2abindS839 = "\n";
-const _M0FP39brickfrog8moongate4core15sanitize__blockN7_2abindS828 = "::";
+const _M0FP39brickfrog8moongate4core16decode__responseN7_2abindS507 = " \t\r\n";
+const _M0FP39brickfrog8moongate4core17validate__patternN7_2abindS769 = "/";
+const _M0FP39brickfrog8moongate4core17validate__patternN7_2abindS787 = "/";
+const _M0FP39brickfrog8moongate4core17validate__patternN7_2abindS775 = "**";
+const _M0FP39brickfrog8moongate4core19validate__rel__pathN7_2abindS790 = "/";
+const _M0FP39brickfrog8moongate4core19validate__rel__pathN7_2abindS806 = "/";
+const _M0FP39brickfrog8moongate4core17split__componentsN7_2abindS825 = "/";
+const _M0FP39brickfrog8moongate4core15sanitize__blockN7_2abindS860 = "\n";
+const _M0FP39brickfrog8moongate4core15sanitize__blockN7_2abindS849 = "::";
 const _M0FP39brickfrog8moongate4core14default__model = "jev-1.13.0";
 const _M0FP39brickfrog8moongate4core18max__config__bytes = 1048576;
-const _M0FP39brickfrog8moongate4core15parse__questionN7_2abindS848 = " \t\r\n";
-const _M0FP39brickfrog8moongate4core15parse__questionN7_2abindS851 = " \t\r\n";
-const _M0FP39brickfrog8moongate4core13parse__configN7_2abindS940 = " \t\r\n";
+const _M0FP39brickfrog8moongate4core15parse__questionN7_2abindS869 = " \t\r\n";
+const _M0FP39brickfrog8moongate4core15parse__questionN7_2abindS872 = " \t\r\n";
+const _M0FP39brickfrog8moongate4core13parse__configN7_2abindS961 = " \t\r\n";
 const _M0FP39brickfrog8moongate4host9installed = new _M0TPC13ref3RefGORP39brickfrog8moongate4host4HostE(undefined);
 const _M0FP39brickfrog8moongate6runner14endpoint__path = "/v1/systemone";
 const _M0FP39brickfrog8moongate6runner18default__base__url = "https://api.typesafe.ai";
@@ -2760,13 +2761,14 @@ const _M0FP49brickfrog8moongate4host2js10path__kindN6constrS312 = 0;
 const _M0FP49brickfrog8moongate4host2js10path__kindN6constrS313 = 2;
 const _M0FP49brickfrog8moongate4host2js10path__kindN6constrS314 = 1;
 const _M0MPC16string10StringView4findN6constrS9928 = 0;
-const _M0FP39brickfrog8moongate4core11parse__ruleN6recordS961 = new _M0TP39brickfrog8moongate4core10Thresholds(0.9, 0.8);
+const _M0FP39brickfrog8moongate4core11parse__ruleN6recordS982 = new _M0TP39brickfrog8moongate4core10Thresholds(0.9, 0.8);
 const _M0FP39brickfrog8moongate3cli13run__validateN6constrS349 = 0;
 const _M0FP39brickfrog8moongate3cli13run__validateN6constrS350 = 2;
 const _M0FP39brickfrog8moongate3cli13run__validateN6constrS351 = 2;
 const _M0FPC18argparse19subcommand__entriesN5tupleS3134 = { _0: "help", _1: "Print help for the subcommand(s)." };
 const _M0FP39brickfrog8moongate6runner10post__jsonN5tupleS1493 = { _0: "content-type", _1: "application/json" };
 const _M0FP39brickfrog8moongate6runner10post__jsonN5tupleS1494 = { _0: "accept", _1: "application/json" };
+const _M0FP39brickfrog8moongate6runner13evaluate__allN6constrS1496 = "Not evaluated: an earlier batch failed.";
 const _M0FP39brickfrog8moongate6runner13record__patchN6constrS1495 = "";
 const _M0FP39brickfrog8moongate3cli19run__check__commandN6constrS347 = 2;
 const _M0FP39brickfrog8moongate3cli19run__check__commandN6constrS348 = 2;
@@ -20164,15 +20166,15 @@ function _M0MPC15deque5Deque10pop__frontGRP411moonbitlang5async8internal9corouti
     return undefined;
   }
 }
-function _M0IP39brickfrog8moongate4core8SeverityPB2Eq5equal(_x_318, _x_319) {
-  if (_x_318 === 0) {
-    if (_x_319 === 0) {
+function _M0IP39brickfrog8moongate4core8SeverityPB2Eq5equal(_x_321, _x_322) {
+  if (_x_321 === 0) {
+    if (_x_322 === 0) {
       return true;
     } else {
       return false;
     }
   } else {
-    if (_x_319 === 1) {
+    if (_x_322 === 1) {
       return true;
     } else {
       return false;
@@ -20437,9 +20439,9 @@ function _M0FP39brickfrog8moongate4core15reject__unknown(obj, allowed, what) {
   }
   return new _M0DTPC16result6ResultGuRPC15error5ErrorE2Ok(undefined);
 }
-function _M0FP39brickfrog8moongate4core22decode__choice__answerN4readS251(_env, label) {
-  const show = _env._1;
-  const probs = _env._0;
+function _M0FP39brickfrog8moongate4core22decode__choice__answerN4readS254(_env, label) {
+  const probs = _env._1;
+  const show = _env._0;
   const _string_builder = _M0MPB13StringBuilder21StringBuilder_2einner(23);
   _M0IPB13StringBuilderPB6Logger13write__string(_string_builder, "answer '");
   _M0MPB13StringBuilder13write__objectGsE(_string_builder, show);
@@ -20588,8 +20590,8 @@ function _M0FP39brickfrog8moongate4core22decode__choice__answer(value, id) {
     _M0IPB13StringBuilderPB6Logger13write__string(_string_builder$7, "' must carry exactly three probabilities.");
     return new _M0DTPC16result6ResultGRP39brickfrog8moongate4core12ChoiceAnswerRP39brickfrog8moongate4core9GateErrorE3Err(new _M0DTPC15error5Error51brickfrog_2fmoongate_2fcore_2eGateError_2eGateError(_string_builder$7.val));
   }
-  const _env = { _0: probs, _1: show };
-  const _bind$11 = _M0FP39brickfrog8moongate4core22decode__choice__answerN4readS251(_env, _M0FP39brickfrog8moongate4core16label__violation);
+  const _env = { _0: show, _1: probs };
+  const _bind$11 = _M0FP39brickfrog8moongate4core22decode__choice__answerN4readS254(_env, _M0FP39brickfrog8moongate4core16label__violation);
   let p_violation;
   if (_bind$11.$tag === 1) {
     const _ok = _bind$11;
@@ -20597,7 +20599,7 @@ function _M0FP39brickfrog8moongate4core22decode__choice__answer(value, id) {
   } else {
     return _bind$11;
   }
-  const _bind$12 = _M0FP39brickfrog8moongate4core22decode__choice__answerN4readS251(_env, _M0FP39brickfrog8moongate4core16label__compliant);
+  const _bind$12 = _M0FP39brickfrog8moongate4core22decode__choice__answerN4readS254(_env, _M0FP39brickfrog8moongate4core16label__compliant);
   let p_compliant;
   if (_bind$12.$tag === 1) {
     const _ok = _bind$12;
@@ -20605,7 +20607,7 @@ function _M0FP39brickfrog8moongate4core22decode__choice__answer(value, id) {
   } else {
     return _bind$12;
   }
-  const _bind$13 = _M0FP39brickfrog8moongate4core22decode__choice__answerN4readS251(_env, _M0FP39brickfrog8moongate4core19label__insufficient);
+  const _bind$13 = _M0FP39brickfrog8moongate4core22decode__choice__answerN4readS254(_env, _M0FP39brickfrog8moongate4core19label__insufficient);
   let p_insufficient;
   if (_bind$13.$tag === 1) {
     const _ok = _bind$13;
@@ -20847,7 +20849,7 @@ function _M0FP39brickfrog8moongate4core16decode__response(text, question_ids) {
   } else {
     return _bind$6;
   }
-  const _p = _M0MPC16string6String12trim_2einner(model, new _M0TPC16string10StringView(_M0FP39brickfrog8moongate4core16decode__responseN7_2abindS504, 0, _M0FP39brickfrog8moongate4core16decode__responseN7_2abindS504.length));
+  const _p = _M0MPC16string6String12trim_2einner(model, new _M0TPC16string10StringView(_M0FP39brickfrog8moongate4core16decode__responseN7_2abindS507, 0, _M0FP39brickfrog8moongate4core16decode__responseN7_2abindS507.length));
   if ((_p.end - _p.start | 0) === 0) {
     return new _M0DTPC16result6ResultGRP39brickfrog8moongate4core11JevResponseRP39brickfrog8moongate4core9GateErrorE3Err(new _M0DTPC15error5Error51brickfrog_2fmoongate_2fcore_2eGateError_2eGateError("API response has an empty model field."));
   }
@@ -21124,7 +21126,13 @@ function _M0MP39brickfrog8moongate4core6Report10conclusion(self) {
       const _bind$5 = result.status;
       switch (_bind$5) {
         case 4: {
-          return 0;
+          if (_M0IP39brickfrog8moongate4core8SeverityPB2Eq5equal(result.severity, 1)) {
+            return 0;
+          } else {
+            all_compliant = false;
+            advisory = true;
+          }
+          break;
         }
         case 2: {
           evaluated = evaluated + 1 | 0;
@@ -21219,9 +21227,20 @@ function _M0FP39brickfrog8moongate4core14render__github(report) {
         _M0IPB13StringBuilderPB6Logger13write__string(_string_builder$2, "]");
         _M0IPB13StringBuilderPB6Logger13write__string(detail, _string_builder$2.val);
       }
+      const _bind$7 = result.detail;
+      if (_bind$7 === undefined) {
+      } else {
+        const _Some = _bind$7;
+        const _reason = _Some;
+        const _string_builder$2 = _M0MPB13StringBuilder21StringBuilder_2einner(3);
+        _M0IPB13StringBuilderPB6Logger13write__string(_string_builder$2, " [");
+        _M0MPB13StringBuilder13write__objectGsE(_string_builder$2, _reason);
+        _M0IPB13StringBuilderPB6Logger13write__string(_string_builder$2, "]");
+        _M0IPB13StringBuilderPB6Logger13write__string(detail, _string_builder$2.val);
+      }
       const body = _M0FP39brickfrog8moongate4core24escape__annotation__data(detail.val);
-      const _bind$7 = result.status;
-      switch (_bind$7) {
+      const _bind$8 = result.status;
+      switch (_bind$8) {
         case 2: {
           if (_M0IP39brickfrog8moongate4core8SeverityPB2Eq5equal(result.severity, 1)) {
             const _string_builder$2 = _M0MPB13StringBuilder21StringBuilder_2einner(17);
@@ -21253,13 +21272,23 @@ function _M0FP39brickfrog8moongate4core14render__github(report) {
           break;
         }
         case 4: {
-          const _string_builder$3 = _M0MPB13StringBuilder21StringBuilder_2einner(17);
-          _M0IPB13StringBuilderPB6Logger13write__string(_string_builder$3, "::error title=");
-          _M0MPB13StringBuilder13write__objectGsE(_string_builder$3, title);
-          _M0IPB13StringBuilderPB6Logger13write__string(_string_builder$3, "::");
-          _M0MPB13StringBuilder13write__objectGsE(_string_builder$3, body);
-          _M0IPB13StringBuilderPB6Logger13write__string(_string_builder$3, "\n");
-          _M0IPB13StringBuilderPB6Logger13write__string(out, _string_builder$3.val);
+          if (_M0IP39brickfrog8moongate4core8SeverityPB2Eq5equal(result.severity, 1)) {
+            const _string_builder$3 = _M0MPB13StringBuilder21StringBuilder_2einner(17);
+            _M0IPB13StringBuilderPB6Logger13write__string(_string_builder$3, "::error title=");
+            _M0MPB13StringBuilder13write__objectGsE(_string_builder$3, title);
+            _M0IPB13StringBuilderPB6Logger13write__string(_string_builder$3, "::");
+            _M0MPB13StringBuilder13write__objectGsE(_string_builder$3, body);
+            _M0IPB13StringBuilderPB6Logger13write__string(_string_builder$3, "\n");
+            _M0IPB13StringBuilderPB6Logger13write__string(out, _string_builder$3.val);
+          } else {
+            const _string_builder$3 = _M0MPB13StringBuilder21StringBuilder_2einner(19);
+            _M0IPB13StringBuilderPB6Logger13write__string(_string_builder$3, "::warning title=");
+            _M0MPB13StringBuilder13write__objectGsE(_string_builder$3, title);
+            _M0IPB13StringBuilderPB6Logger13write__string(_string_builder$3, "::");
+            _M0MPB13StringBuilder13write__objectGsE(_string_builder$3, body);
+            _M0IPB13StringBuilderPB6Logger13write__string(_string_builder$3, "\n");
+            _M0IPB13StringBuilderPB6Logger13write__string(out, _string_builder$3.val);
+          }
           break;
         }
       }
@@ -21351,8 +21380,19 @@ function _M0FP39brickfrog8moongate4core12render__json(report) {
         const _answer = _Some;
         _tmp$11 = _M0MP39brickfrog8moongate4core12ChoiceAnswer15to__json__value(_answer);
       }
-      const _bind$8 = [_tmp$4, _tmp$5, _tmp$6, _tmp$7, _tmp$8, _tmp$9, _tmp$10, { _0: "answer", _1: _tmp$11 }];
-      const _p$5 = _M0MPB3Map3MapGsRPB4JsonE(new _M0TPB9ArrayViewGUsRPB4JsonEE(_bind$8, 0, 8), undefined);
+      const _tmp$12 = { _0: "answer", _1: _tmp$11 };
+      const _bind$8 = result.detail;
+      let _tmp$13;
+      if (_bind$8 === undefined) {
+        _tmp$13 = _M0DTPB4Json4Null__;
+      } else {
+        const _Some = _bind$8;
+        const _detail = _Some;
+        const _p$5 = _M0FP39brickfrog8moongate4core14sanitize__line(_detail);
+        _tmp$13 = new _M0DTPB4Json6String(_p$5);
+      }
+      const _bind$9 = [_tmp$4, _tmp$5, _tmp$6, _tmp$7, _tmp$8, _tmp$9, _tmp$10, _tmp$12, { _0: "detail", _1: _tmp$13 }];
+      const _p$5 = _M0MPB3Map3MapGsRPB4JsonE(new _M0TPB9ArrayViewGUsRPB4JsonEE(_bind$9, 0, 9), undefined);
       _M0MPC15array5Array4pushGsE(results, new _M0DTPB4Json6Object(_p$5));
       _tmp$2 = _ + 1 | 0;
       continue;
@@ -21523,6 +21563,17 @@ function _M0FP39brickfrog8moongate4core12render__text(report) {
         const _string_builder$2 = _M0MPB13StringBuilder21StringBuilder_2einner(3);
         _M0IPB13StringBuilderPB6Logger13write__string(_string_builder$2, "  ");
         _M0MPB13StringBuilder13write__objectGsE(_string_builder$2, _M0FP39brickfrog8moongate4core14sanitize__line(result.message));
+        _M0IPB13StringBuilderPB6Logger13write__string(_string_builder$2, "\n");
+        _M0IPB13StringBuilderPB6Logger13write__string(out, _string_builder$2.val);
+      }
+      const _bind$9 = result.detail;
+      if (_bind$9 === undefined) {
+      } else {
+        const _Some = _bind$9;
+        const _detail = _Some;
+        const _string_builder$2 = _M0MPB13StringBuilder21StringBuilder_2einner(3);
+        _M0IPB13StringBuilderPB6Logger13write__string(_string_builder$2, "  ");
+        _M0MPB13StringBuilder13write__objectGsE(_string_builder$2, _M0FP39brickfrog8moongate4core14sanitize__line(_detail));
         _M0IPB13StringBuilderPB6Logger13write__string(_string_builder$2, "\n");
         _M0IPB13StringBuilderPB6Logger13write__string(out, _string_builder$2.val);
       }
@@ -21777,14 +21828,14 @@ function _M0FP39brickfrog8moongate4core17validate__pattern(pattern) {
       break;
     }
   }
-  if (_M0MPC16string6String11has__prefix(pattern, new _M0TPC16string10StringView(_M0FP39brickfrog8moongate4core17validate__patternN7_2abindS748, 0, _M0FP39brickfrog8moongate4core17validate__patternN7_2abindS748.length))) {
+  if (_M0MPC16string6String11has__prefix(pattern, new _M0TPC16string10StringView(_M0FP39brickfrog8moongate4core17validate__patternN7_2abindS769, 0, _M0FP39brickfrog8moongate4core17validate__patternN7_2abindS769.length))) {
     const _string_builder = _M0MPB13StringBuilder21StringBuilder_2einner(41);
     _M0IPB13StringBuilderPB6Logger13write__string(_string_builder, "Glob '");
     _M0MPB13StringBuilder13write__objectGsE(_string_builder, show);
     _M0IPB13StringBuilderPB6Logger13write__string(_string_builder, "' must be repository-root-relative.");
     return new _M0DTPC16result6ResultGuRP39brickfrog8moongate4core9GateErrorE3Err(new _M0DTPC15error5Error51brickfrog_2fmoongate_2fcore_2eGateError_2eGateError(_string_builder.val));
   }
-  const _it = _M0MPC16string6String5split(pattern, new _M0TPC16string10StringView(_M0FP39brickfrog8moongate4core17validate__patternN7_2abindS766, 0, _M0FP39brickfrog8moongate4core17validate__patternN7_2abindS766.length));
+  const _it = _M0MPC16string6String5split(pattern, new _M0TPC16string10StringView(_M0FP39brickfrog8moongate4core17validate__patternN7_2abindS787, 0, _M0FP39brickfrog8moongate4core17validate__patternN7_2abindS787.length));
   while (true) {
     const _bind$4 = _M0MPB4Iter4nextGRP411moonbitlang5async8internal9coroutine9CoroutineE(_it);
     if (_bind$4 === undefined) {
@@ -21810,7 +21861,7 @@ function _M0FP39brickfrog8moongate4core17validate__pattern(pattern) {
         return new _M0DTPC16result6ResultGuRP39brickfrog8moongate4core9GateErrorE3Err(new _M0DTPC15error5Error51brickfrog_2fmoongate_2fcore_2eGateError_2eGateError(_string_builder.val));
       }
       let _tmp$3;
-      if (_M0MPC16string6String8contains(comp, new _M0TPC16string10StringView(_M0FP39brickfrog8moongate4core17validate__patternN7_2abindS754, 0, _M0FP39brickfrog8moongate4core17validate__patternN7_2abindS754.length))) {
+      if (_M0MPC16string6String8contains(comp, new _M0TPC16string10StringView(_M0FP39brickfrog8moongate4core17validate__patternN7_2abindS775, 0, _M0FP39brickfrog8moongate4core17validate__patternN7_2abindS775.length))) {
         const _p = "**";
         _tmp$3 = !(comp === _p);
       } else {
@@ -21845,7 +21896,7 @@ function _M0FP39brickfrog8moongate4core19validate__rel__path(path, what) {
     _M0IPB13StringBuilderPB6Logger13write__string(_string_builder, "' contains a NUL character.");
     return new _M0DTPC16result6ResultGuRP39brickfrog8moongate4core9GateErrorE3Err(new _M0DTPC15error5Error51brickfrog_2fmoongate_2fcore_2eGateError_2eGateError(_string_builder.val));
   }
-  if (_M0MPC16string6String11has__prefix(path, new _M0TPC16string10StringView(_M0FP39brickfrog8moongate4core19validate__rel__pathN7_2abindS769, 0, _M0FP39brickfrog8moongate4core19validate__rel__pathN7_2abindS769.length))) {
+  if (_M0MPC16string6String11has__prefix(path, new _M0TPC16string10StringView(_M0FP39brickfrog8moongate4core19validate__rel__pathN7_2abindS790, 0, _M0FP39brickfrog8moongate4core19validate__rel__pathN7_2abindS790.length))) {
     const _string_builder = _M0MPB13StringBuilder21StringBuilder_2einner(42);
     _M0MPB13StringBuilder13write__objectGsE(_string_builder, what);
     _M0IPB13StringBuilderPB6Logger13write__string(_string_builder, " path '");
@@ -21853,7 +21904,7 @@ function _M0FP39brickfrog8moongate4core19validate__rel__path(path, what) {
     _M0IPB13StringBuilderPB6Logger13write__string(_string_builder, "' must be repository-root-relative.");
     return new _M0DTPC16result6ResultGuRP39brickfrog8moongate4core9GateErrorE3Err(new _M0DTPC15error5Error51brickfrog_2fmoongate_2fcore_2eGateError_2eGateError(_string_builder.val));
   }
-  const _it = _M0MPC16string6String5split(path, new _M0TPC16string10StringView(_M0FP39brickfrog8moongate4core19validate__rel__pathN7_2abindS785, 0, _M0FP39brickfrog8moongate4core19validate__rel__pathN7_2abindS785.length));
+  const _it = _M0MPC16string6String5split(path, new _M0TPC16string10StringView(_M0FP39brickfrog8moongate4core19validate__rel__pathN7_2abindS806, 0, _M0FP39brickfrog8moongate4core19validate__rel__pathN7_2abindS806.length));
   while (true) {
     const _bind$3 = _M0MPB4Iter4nextGRP411moonbitlang5async8internal9coroutine9CoroutineE(_it);
     if (_bind$3 === undefined) {
@@ -21930,7 +21981,7 @@ function _M0FP39brickfrog8moongate4core16match__component(pattern, text) {
 }
 function _M0FP39brickfrog8moongate4core17split__components(text) {
   const out = [];
-  const _it = _M0MPC16string6String5split(text, new _M0TPC16string10StringView(_M0FP39brickfrog8moongate4core17split__componentsN7_2abindS804, 0, _M0FP39brickfrog8moongate4core17split__componentsN7_2abindS804.length));
+  const _it = _M0MPC16string6String5split(text, new _M0TPC16string10StringView(_M0FP39brickfrog8moongate4core17split__componentsN7_2abindS825, 0, _M0FP39brickfrog8moongate4core17split__componentsN7_2abindS825.length));
   while (true) {
     const _bind$3 = _M0MPB4Iter4nextGRP411moonbitlang5async8internal9coroutine9CoroutineE(_it);
     if (_bind$3 === undefined) {
@@ -22042,7 +22093,7 @@ function _M0FP39brickfrog8moongate4core13safe__message(err) {
 function _M0FP39brickfrog8moongate4core15sanitize__block(text) {
   const out = _M0MPB13StringBuilder21StringBuilder_2einner(0);
   let first = true;
-  const _it = _M0MPC16string6String5split(text, new _M0TPC16string10StringView(_M0FP39brickfrog8moongate4core15sanitize__blockN7_2abindS839, 0, _M0FP39brickfrog8moongate4core15sanitize__blockN7_2abindS839.length));
+  const _it = _M0MPC16string6String5split(text, new _M0TPC16string10StringView(_M0FP39brickfrog8moongate4core15sanitize__blockN7_2abindS860, 0, _M0FP39brickfrog8moongate4core15sanitize__blockN7_2abindS860.length));
   while (true) {
     const _bind$3 = _M0MPB4Iter4nextGRP411moonbitlang5async8internal9coroutine9CoroutineE(_it);
     if (_bind$3 === undefined) {
@@ -22055,7 +22106,7 @@ function _M0FP39brickfrog8moongate4core15sanitize__block(text) {
       }
       first = false;
       const clean = _M0FP39brickfrog8moongate4core14sanitize__line(_M0MPC16string10StringView9to__owned(_line));
-      if (_M0MPC16string6String11has__prefix(clean, new _M0TPC16string10StringView(_M0FP39brickfrog8moongate4core15sanitize__blockN7_2abindS828, 0, _M0FP39brickfrog8moongate4core15sanitize__blockN7_2abindS828.length))) {
+      if (_M0MPC16string6String11has__prefix(clean, new _M0TPC16string10StringView(_M0FP39brickfrog8moongate4core15sanitize__blockN7_2abindS849, 0, _M0FP39brickfrog8moongate4core15sanitize__blockN7_2abindS849.length))) {
         _M0IPB13StringBuilderPB6Logger11write__char(out, 32);
       }
       _M0IPB13StringBuilderPB6Logger13write__string(out, clean);
@@ -22124,7 +22175,7 @@ function _M0FP39brickfrog8moongate4core15parse__questionN4readS46(_env, key) {
   } else {
     return _bind$4;
   }
-  const _p = _M0MPC16string6String12trim_2einner(text, new _M0TPC16string10StringView(_M0FP39brickfrog8moongate4core15parse__questionN7_2abindS851, 0, _M0FP39brickfrog8moongate4core15parse__questionN7_2abindS851.length));
+  const _p = _M0MPC16string6String12trim_2einner(text, new _M0TPC16string10StringView(_M0FP39brickfrog8moongate4core15parse__questionN7_2abindS872, 0, _M0FP39brickfrog8moongate4core15parse__questionN7_2abindS872.length));
   if ((_p.end - _p.start | 0) === 0) {
     const _string_builder$3 = _M0MPB13StringBuilder21StringBuilder_2einner(33);
     _M0MPB13StringBuilder13write__objectGsE(_string_builder$3, ctx);
@@ -22213,7 +22264,7 @@ function _M0FP39brickfrog8moongate4core15parse__question(value, ctx) {
   } else {
     return _bind$8;
   }
-  const _p$2 = _M0MPC16string6String12trim_2einner(instructions, new _M0TPC16string10StringView(_M0FP39brickfrog8moongate4core15parse__questionN7_2abindS848, 0, _M0FP39brickfrog8moongate4core15parse__questionN7_2abindS848.length));
+  const _p$2 = _M0MPC16string6String12trim_2einner(instructions, new _M0TPC16string10StringView(_M0FP39brickfrog8moongate4core15parse__questionN7_2abindS869, 0, _M0FP39brickfrog8moongate4core15parse__questionN7_2abindS869.length));
   if ((_p$2.end - _p$2.start | 0) === 0) {
     const _string_builder$7 = _M0MPB13StringBuilder21StringBuilder_2einner(35);
     _M0MPB13StringBuilder13write__objectGsE(_string_builder$7, ctx);
@@ -22663,7 +22714,7 @@ function _M0FP39brickfrog8moongate4core11parse__rule(entry) {
       _M0IPB13StringBuilderPB6Logger13write__string(_string_builder$4, ": a blocking rule must declare explicit thresholds.");
       return new _M0DTPC16result6ResultGRP39brickfrog8moongate4core4RuleRP39brickfrog8moongate4core9GateErrorE3Err(new _M0DTPC15error5Error51brickfrog_2fmoongate_2fcore_2eGateError_2eGateError(_string_builder$4.val));
     } else {
-      thresholds = _M0FP39brickfrog8moongate4core11parse__ruleN6recordS961;
+      thresholds = _M0FP39brickfrog8moongate4core11parse__ruleN6recordS982;
     }
   } else {
     const _Some = _bind$14;
@@ -22786,7 +22837,7 @@ function _M0FP39brickfrog8moongate4core13parse__config(text) {
     } else {
       return _bind$9;
     }
-    const _p = _M0MPC16string6String12trim_2einner(name, new _M0TPC16string10StringView(_M0FP39brickfrog8moongate4core13parse__configN7_2abindS940, 0, _M0FP39brickfrog8moongate4core13parse__configN7_2abindS940.length));
+    const _p = _M0MPC16string6String12trim_2einner(name, new _M0TPC16string10StringView(_M0FP39brickfrog8moongate4core13parse__configN7_2abindS961, 0, _M0FP39brickfrog8moongate4core13parse__configN7_2abindS961.length));
     if ((_p.end - _p.start | 0) === 0) {
       return new _M0DTPC16result6ResultGRP39brickfrog8moongate4core6ConfigRP39brickfrog8moongate4core9GateErrorE3Err(new _M0DTPC15error5Error51brickfrog_2fmoongate_2fcore_2eGateError_2eGateError("Configuration 'model' must not be empty."));
     }
@@ -25598,7 +25649,9 @@ function _M0FP39brickfrog8moongate6runner12build__state(base, head, mb, records,
   const _bind$3 = records.length;
   return _M0FP39brickfrog8moongate6runner12build__stateN16_2aasync__driverS1024(_cont, new _M0DTP39brickfrog8moongate6runner47_24brickfrog_2fmoongate_2frunner_2ebuild__stateL5State9_2afor__5(0, base, head, mb, records, rule, changes, _bind$3, _err_cont));
 }
-function _M0FP39brickfrog8moongate6runner13evaluate__allN16_2aasync__driverS1120(_cont, _state) {
+function _M0FP39brickfrog8moongate6runner13evaluate__allN16_2aasync__driverS1120(_env, _state) {
+  const constr = _env._1;
+  const _cont = _env._0;
   let _tmp$2 = _state;
   _L: while (true) {
     const _state$2 = _tmp$2;
@@ -25629,7 +25682,7 @@ function _M0FP39brickfrog8moongate6runner13evaluate__allN16_2aasync__driverS1120
               const _$2 = _tmp$3;
               if (_$2 < _bind$4) {
                 const item = batch[_$2];
-                _M0MPC15array5Array4pushGsE(acc$2.results, new _M0TP39brickfrog8moongate4core10RuleResult(item.rule.id, 4, item.rule.severity, item.rule.source, item.rule.message, item.paths, undefined, undefined));
+                _M0MPC15array5Array4pushGsE(acc$2.results, new _M0TP39brickfrog8moongate4core10RuleResult(item.rule.id, 4, item.rule.severity, item.rule.source, item.rule.message, item.paths, undefined, undefined, constr));
                 _tmp$3 = _$2 + 1 | 0;
                 continue;
               } else {
@@ -25658,7 +25711,7 @@ function _M0FP39brickfrog8moongate6runner13evaluate__allN16_2aasync__driverS1120
             const _bind$5 = _M0FP39brickfrog8moongate6runner8evaluate(model, _M0MPC15array5Array2atGRPB4JsonE(batch, 0).state, new _M0TPB9ArrayViewGRP39brickfrog8moongate4core4RuleE(rules, 0, rules.length), (_cont_param) => {
               let _err$2;
               _L$3: {
-                const _bind$6 = _M0FP39brickfrog8moongate6runner13evaluate__allN16_2aasync__driverS1120(_cont, new _M0DTP39brickfrog8moongate6runner48_24brickfrog_2fmoongate_2frunner_2eevaluate__allL5State8State__5(_cont_param, model, acc$2, batches, failed$2, failure$2, batch, _, _bind$3, _err_cont));
+                const _bind$6 = _M0FP39brickfrog8moongate6runner13evaluate__allN16_2aasync__driverS1120(_env, new _M0DTP39brickfrog8moongate6runner48_24brickfrog_2fmoongate_2frunner_2eevaluate__allL5State8State__5(_cont_param, model, acc$2, batches, failed$2, failure$2, batch, _, _bind$3, _err_cont));
                 let _bind$7;
                 if (_bind$6.$tag === 1) {
                   const _ok = _bind$6;
@@ -25681,7 +25734,7 @@ function _M0FP39brickfrog8moongate6runner13evaluate__allN16_2aasync__driverS1120
             }, (_cont_param) => {
               let _err$2;
               _L$3: {
-                const _bind$6 = _M0FP39brickfrog8moongate6runner13evaluate__allN16_2aasync__driverS1120(_cont, new _M0DTP39brickfrog8moongate6runner48_24brickfrog_2fmoongate_2frunner_2eevaluate__allL5State12_2atry_2f592(_cont_param, model, acc$2, batches, failed$2, failure$2, batch, _, _bind$3, _err_cont));
+                const _bind$6 = _M0FP39brickfrog8moongate6runner13evaluate__allN16_2aasync__driverS1120(_env, new _M0DTP39brickfrog8moongate6runner48_24brickfrog_2fmoongate_2frunner_2eevaluate__allL5State12_2atry_2f592(_cont_param, model, acc$2, batches, failed$2, failure$2, batch, _, _bind$3, _err_cont));
                 let _bind$7;
                 if (_bind$6.$tag === 1) {
                   const _ok = _bind$6;
@@ -25763,7 +25816,7 @@ function _M0FP39brickfrog8moongate6runner13evaluate__allN16_2aasync__driverS1120
             const _$4 = _tmp$3;
             if (_$4 < _bind$6) {
               const item = batch[_$4];
-              _M0MPC15array5Array4pushGsE(acc$4.results, new _M0TP39brickfrog8moongate4core10RuleResult(item.rule.id, 4, item.rule.severity, item.rule.source, item.rule.message, item.paths, undefined, undefined));
+              _M0MPC15array5Array4pushGsE(acc$4.results, new _M0TP39brickfrog8moongate4core10RuleResult(item.rule.id, 4, item.rule.severity, item.rule.source, item.rule.message, item.paths, undefined, undefined, undefined));
               _tmp$3 = _$4 + 1 | 0;
               continue;
             } else {
@@ -25795,7 +25848,7 @@ function _M0FP39brickfrog8moongate6runner13evaluate__allN16_2aasync__driverS1120
                   status = 3;
                 }
               }
-              _M0MPC15array5Array4pushGsE(acc$4.results, new _M0TP39brickfrog8moongate4core10RuleResult(item.rule.id, status, item.rule.severity, item.rule.source, item.rule.message, item.paths, _response.model, answer));
+              _M0MPC15array5Array4pushGsE(acc$4.results, new _M0TP39brickfrog8moongate4core10RuleResult(item.rule.id, status, item.rule.severity, item.rule.source, item.rule.message, item.paths, _response.model, answer, undefined));
               _tmp$3 = _$4 + 1 | 0;
               continue;
             } else {
@@ -25844,6 +25897,7 @@ function _M0FP39brickfrog8moongate6runner13evaluate__allN16_2aasync__driverS1120
   }
 }
 function _M0FP39brickfrog8moongate6runner13evaluate__all(model, applicable, acc, _cont, _err_cont) {
+  const _env = { _0: _cont, _1: _M0FP39brickfrog8moongate6runner13evaluate__allN6constrS1496 };
   const _bind$3 = _M0FP39brickfrog8moongate6runner8api__key();
   if (_bind$3.$tag === 1) {
     const _ok = _bind$3;
@@ -25958,15 +26012,17 @@ function _M0FP39brickfrog8moongate6runner13evaluate__all(model, applicable, acc,
     const _ = _tmp$5;
     if (_ < _bind$6) {
       const item = oversized[_];
-      const _tmp$6 = acc.errors;
-      const _string_builder = _M0MPB13StringBuilder21StringBuilder_2einner(58);
-      _M0IPB13StringBuilderPB6Logger13write__string(_string_builder, "Rule '");
-      _M0MPB13StringBuilder13write__objectGsE(_string_builder, _M0FP39brickfrog8moongate4core14sanitize__line(item.rule.id));
-      _M0IPB13StringBuilderPB6Logger13write__string(_string_builder, "' has evidence larger than the ");
+      const _tmp$6 = acc.results;
+      const _tmp$7 = item.rule.id;
+      const _tmp$8 = item.rule.severity;
+      const _tmp$9 = item.rule.source;
+      const _tmp$10 = item.rule.message;
+      const _tmp$11 = item.paths;
+      const _string_builder = _M0MPB13StringBuilder21StringBuilder_2einner(94);
+      _M0IPB13StringBuilderPB6Logger13write__string(_string_builder, "Evidence is larger than the ");
       _M0MPB13StringBuilder13write__objectGiE(_string_builder, 24576);
-      _M0IPB13StringBuilderPB6Logger13write__string(_string_builder, " byte request budget.");
-      _M0MPC15array5Array4pushGsE(_tmp$6, _string_builder.val);
-      _M0MPC15array5Array4pushGsE(acc.results, new _M0TP39brickfrog8moongate4core10RuleResult(item.rule.id, 4, item.rule.severity, item.rule.source, item.rule.message, item.paths, undefined, undefined));
+      _M0IPB13StringBuilderPB6Logger13write__string(_string_builder, " byte request budget; narrow the rule's globs or split the change.");
+      _M0MPC15array5Array4pushGsE(_tmp$6, new _M0TP39brickfrog8moongate4core10RuleResult(_tmp$7, 4, _tmp$8, _tmp$9, _tmp$10, _tmp$11, undefined, undefined, _string_builder.val));
       _tmp$5 = _ + 1 | 0;
       continue;
     } else {
@@ -25976,7 +26032,7 @@ function _M0FP39brickfrog8moongate6runner13evaluate__all(model, applicable, acc,
   const failed = new _M0TPB8MutLocalGbE(false);
   const failure = new _M0TPB8MutLocalGsE("");
   const _bind$7 = batches.length;
-  return _M0FP39brickfrog8moongate6runner13evaluate__allN16_2aasync__driverS1120(_cont, new _M0DTP39brickfrog8moongate6runner48_24brickfrog_2fmoongate_2frunner_2eevaluate__allL5State9_2afor__1(0, model, acc, batches, failed, failure, _bind$7, _err_cont));
+  return _M0FP39brickfrog8moongate6runner13evaluate__allN16_2aasync__driverS1120(_env, new _M0DTP39brickfrog8moongate6runner48_24brickfrog_2fmoongate_2frunner_2eevaluate__allL5State9_2afor__1(0, model, acc, batches, failed, failure, _bind$7, _err_cont));
 }
 function _M0FP39brickfrog8moongate6runner19read__local__configN16_2aasync__driverS1192(_state) {
   let _tmp$2 = _state;
@@ -26260,7 +26316,7 @@ function _M0FP39brickfrog8moongate6runner10run__checkN16_2aasync__driverS1229(_s
           const rule = _bind$4[_];
           const selection = _M0FP39brickfrog8moongate6runner15select__records(rule, records);
           if (selection.length === 0) {
-            _M0MPC15array5Array4pushGsE(acc$2.results, new _M0TP39brickfrog8moongate4core10RuleResult(rule.id, 0, rule.severity, rule.source, rule.message, [], undefined, undefined));
+            _M0MPC15array5Array4pushGsE(acc$2.results, new _M0TP39brickfrog8moongate4core10RuleResult(rule.id, 0, rule.severity, rule.source, rule.message, [], undefined, undefined, undefined));
             _tmp$2 = new _M0DTP39brickfrog8moongate6runner45_24brickfrog_2fmoongate_2frunner_2erun__checkL5State17_2acontinue_2f638(acc$2, base, head, config$2, mb, records, applicable$2, _, _bind$4, _bind$3, _cont$2, _err_cont$2);
             continue _L;
           }
@@ -26389,8 +26445,7 @@ function _M0FP39brickfrog8moongate6runner10run__checkN16_2aasync__driverS1229(_s
         if (_cont_param.$tag === 0) {
           const _Err = _cont_param;
           const _message = _Err._0;
-          _M0MPC15array5Array4pushGsE(acc$4.errors, _message);
-          _M0MPC15array5Array4pushGsE(acc$4.results, new _M0TP39brickfrog8moongate4core10RuleResult(rule.id, 4, rule.severity, rule.source, rule.message, paths, undefined, undefined));
+          _M0MPC15array5Array4pushGsE(acc$4.results, new _M0TP39brickfrog8moongate4core10RuleResult(rule.id, 4, rule.severity, rule.source, rule.message, paths, undefined, undefined, _message));
         } else {
           const _Ok = _cont_param;
           const _state$3 = _Ok._0;

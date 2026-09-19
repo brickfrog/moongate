@@ -109,6 +109,7 @@ async fn run_check(options : CheckOptions, acc : Acc) -> Unit raise {
         paths: [],
         model: None,
         answer: None,
+        detail: None,
       })
       continue
     }
@@ -122,7 +123,8 @@ async fn run_check(options : CheckOptions, acc : Acc) -> Unit raise {
       state => Ok(state)
     }) {
       Err(message) => {
-        acc.errors.push(message)
+        // A rule whose evidence cannot be represented is a fact about that
+        // rule; its severity decides whether the run fails.
         acc.results.push({
           id: rule.id,
           status: @core.StatusError,
@@ -132,6 +134,7 @@ async fn run_check(options : CheckOptions, acc : Acc) -> Unit raise {
           paths,
           model: None,
           answer: None,
+          detail: Some(message),
         })
       }
       Ok(state) =>
@@ -209,9 +212,6 @@ async fn evaluate_all(
     }
   }
   for item in oversized {
-    acc.errors.push(
-      "Rule '\{@core.sanitize_line(item.rule.id)}' has evidence larger than the \{max_request_bytes} byte request budget.",
-    )
     acc.results.push({
       id: item.rule.id,
       status: @core.StatusError,
@@ -221,6 +221,9 @@ async fn evaluate_all(
       paths: item.paths,
       model: None,
       answer: None,
+      detail: Some(
+        "Evidence is larger than the \{max_request_bytes} byte request budget; narrow the rule's globs or split the change.",
+      ),
     })
   }
   let mut failed = false
@@ -237,6 +240,7 @@ async fn evaluate_all(
           paths: item.paths,
           model: None,
           answer: None,
+          detail: Some("Not evaluated: an earlier batch failed."),
         })
       }
       continue
@@ -263,6 +267,7 @@ async fn evaluate_all(
             paths: item.paths,
             model: None,
             answer: None,
+            detail: None,
           })
         }
       }
@@ -283,6 +288,7 @@ async fn evaluate_all(
             paths: item.paths,
             model: Some(response.model),
             answer: Some(answer),
+            detail: None,
           })
         }
     }

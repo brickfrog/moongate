@@ -123,7 +123,9 @@ For each applicable rule, with $P$ the probability of the returned label and $C$
 
 Thresholds are routing knobs for one pinned model, not measured accuracy. An advisory exit 0 does not assert compliance. Confidence is derived from the probability distribution; it is not independent evidence of correctness.
 
-Conclusion precedence: `incomplete` (exit 2) > `blocked` (1) > `advisory` (0) > `pass` (0) > `not_applicable` (0). A runner-detected evidence gap is an operational error, never a model-level review.
+Conclusion precedence: `incomplete` (exit 2) > `blocked` (1) > `advisory` (0) > `pass` (0) > `not_applicable` (0).
+
+A rule the runner could not evaluate — unrepresentable evidence, or evidence over the request budget — is judged by its own `severity`, exactly like a rule that was evaluated. A `blocking` rule concludes `incomplete` (exit 2), because it must never pass unproven. An `advisory` rule reports an `error` result with a `detail` string and concludes `advisory` (exit 0): it never had the authority to stop a merge, and "could not look" cannot be graver than "looked and found a violation". Unevaluated is never `compliant` and never counts toward `pass`. Run-level failures — unreadable configuration, missing or ambiguous merge base, a dead transport, a missing credential — stay in the report's `errors` and are unconditionally exit 2.
 
 ---
 
@@ -131,8 +133,8 @@ Conclusion precedence: `incomplete` (exit 2) > `blocked` (1) > `advisory` (0) > 
 
 - Changes come from `git diff --raw -z` between the single merge base and head; multiple or missing merge bases fail with exit 2.
 - Patches are generated from the exact recorded blob object ids, so a path filter can never pull in excluded descendants after a file becomes a directory.
-- Binary, invalid-UTF-8, symlink, submodule, oversized (>8 MiB) and non-regular selected files fail the run instead of being silently dropped. A rule can exclude them explicitly.
-- Each rule's evidence is one indivisible unit: a cross-file rule is never split into independently passing fragments. A unit over the 24576-byte request budget fails that rule.
+- Binary, invalid-UTF-8, symlink, submodule, oversized (>8 MiB) and non-regular selected files stop that rule from being evaluated instead of being silently dropped; the rule's severity decides whether the run fails. A rule can exclude them explicitly.
+- Each rule's evidence is one indivisible unit: a cross-file rule is never split into independently passing fragments. A unit over the 24576-byte request budget leaves that rule unevaluated, reported by severity. The budget is a conservative local byte guard chosen without measurement against the API, not a token-limit guarantee.
 - Only configured evidence leaves the machine: no repository archive, no PR description, no branch names.
 
 ---
