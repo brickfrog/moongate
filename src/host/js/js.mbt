@@ -25,8 +25,15 @@ extern "js" fn spawn_bridge(
   #|         windowsHide: true,
   #|       },
   #|       (err, stdout, stderr) => {
-  #|         if (err && err.code === undefined) {
-  #|           resolve(JSON.stringify({ error: String(err.message || err) }));
+  #|         // execFile signals a timeout with a signal and an overflow with a
+  #|         // string code; neither is an exit status, and reporting them as
+  #|         // "exited 1" would hand truncated evidence to the caller.
+  #|         if (err && (err.killed || err.signal)) {
+  #|           resolve(JSON.stringify({ error: "Running '" + program + "' timed out." }));
+  #|           return;
+  #|         }
+  #|         if (err && typeof err.code !== "number") {
+  #|           resolve(JSON.stringify({ error: "Running '" + program + "' failed: " + String(err.code || err.message || err) }));
   #|           return;
   #|         }
   #|         resolve(JSON.stringify({
@@ -58,10 +65,21 @@ extern "js" fn fetch_bridge(
   #|       redirect: "manual",
   #|       signal: controller.signal,
   #|     });
-  #|     const buf = Buffer.from(await res.arrayBuffer());
-  #|     if (buf.length > maxResponseBytes) {
-  #|       return JSON.stringify({ error: "Evaluation response exceeds its size limit." });
+  #|     // Capped while reading, like the native path: a hostile or broken
+  #|     // endpoint must not be able to buffer an unbounded body first.
+  #|     const parts = [];
+  #|     let total = 0;
+  #|     if (res.body) {
+  #|       for await (const chunk of res.body) {
+  #|         total += chunk.length;
+  #|         if (total > maxResponseBytes) {
+  #|           controller.abort();
+  #|           return JSON.stringify({ error: "Evaluation response exceeds its size limit." });
+  #|         }
+  #|         parts.push(chunk);
+  #|       }
   #|     }
+  #|     const buf = Buffer.concat(parts);
   #|     return JSON.stringify({
   #|       status: res.status,
   #|       requestId: res.headers.get("x-typesafe-request-id") || "",
@@ -128,8 +146,11 @@ extern "js" fn write_bridge(stream : Int, text : String) -> Unit =
   #| }
 
 ///|
+/// Sets the status without calling `process.exit`, which discards whatever is
+/// still queued on a piped stdout. Node exits with this code once the write
+/// queue drains.
 extern "js" fn exit_bridge(code : Int) -> Unit =
-  #| (code) => { process.exitCode = code; process.exit(code); }
+  #| (code) => { process.exitCode = code; }
 
 ///|
 fn decode_bridge(text : String) -> Json raise {

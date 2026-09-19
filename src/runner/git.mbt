@@ -44,7 +44,10 @@ fn git_env() -> Map[String, String] raise {
   let env = (@host.current().env_vars)()
   let clean : Map[String, String] = Map([])
   for key, value in env {
+    // An Actions runtime exports every input as INPUT_*, including the API
+    // key, so the whole prefix is dropped rather than one known name.
     if key == "TYPESAFE_API_KEY" ||
+      key.has_prefix("INPUT_") ||
       key == "GIT_CONFIG_PARAMETERS" ||
       key == "GIT_CONFIG_COUNT" ||
       key.has_prefix("GIT_CONFIG_KEY_") ||

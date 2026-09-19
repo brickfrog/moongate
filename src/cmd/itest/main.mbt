@@ -12,6 +12,10 @@ async fn main {
     if argv[i] == "--bin-arg" && i + 1 < argv.length() {
       binary_prefix.push(argv[i + 1])
     }
+    // Absent, the action scenarios are skipped: the bundle may not be built.
+    if argv[i] == "--action" && i + 1 < argv.length() {
+      action_entry.val = argv[i + 1]
+    }
   }
   if path.is_empty() {
     @stdio.stderr.write("usage: itest --bin PATH\n")

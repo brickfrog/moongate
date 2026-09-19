@@ -31,7 +31,9 @@ jobs:
           # `[ -f x ] && v=1` is an AND-list: under `set -e` a missing file
           # would abort the step, which is exactly the first-install case.
           action=0; config=0
-          if [ -f action.yml ]; then action=1; fi
+          # dist/index.js is what a node action executes: without it the job
+          # dies with "Cannot find module" instead of this diagnostic.
+          if [ -f action.yml ] && [ -f dist/index.js ] && [ -f dist/moongate.js ]; then action=1; fi
           if [ -f .moongate.json ]; then config=1; fi
           if [ "$action" = 0 ] && [ "$config" = 0 ]; then
             echo "Moongate is not installed at base; semantic evaluation skipped."

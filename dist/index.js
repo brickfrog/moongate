@@ -37,7 +37,9 @@ const apiKey = input("api-key", "");
 if (apiKey !== "") {
   process.env.TYPESAFE_API_KEY = apiKey;
 }
-delete process.env.INPUT_API_KEY;
+// The real variable name keeps the dash: GitHub only uppercases and replaces
+// spaces. Deleting it stops the key from reaching the `git` child environment.
+delete process.env["INPUT_API-KEY"];
 
 // Policy always comes from the base commit: a pull request cannot weaken the
 // rules that judge it. Configuration changes take effect after merge.
