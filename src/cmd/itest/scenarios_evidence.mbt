@@ -301,7 +301,8 @@ async fn unevaluable_repo(kind : String, severity : String) -> (Repo, String) ra
     "invalid utf8" => repo.write_bytes("src/bad.py", b"\xff\xfe not utf8\n")
     "oversized" => {
       let padding = StringBuilder()
-      for _ in 0..<4000 {
+      // Comfortably past the 65536-byte request budget once patched.
+      for _ in 0..<12000 {
         padding.write_string("# padding line\n")
       }
       repo.write("src/big.py", padding.to_string())

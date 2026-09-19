@@ -2,5 +2,4 @@ import {
   "brickfrog/moongate/core",
   "brickfrog/moongate/host",
   "moonbitlang/core/encoding/utf8",
-  "moonbitlang/core/json",
 }

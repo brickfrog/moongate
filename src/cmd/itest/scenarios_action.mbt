@@ -11,7 +11,6 @@ let action_entry : Ref[String] = { val: "" }
 ///|
 /// Runs the action entry point with an INPUT_* environment.
 async fn run_action(
-  repo : Repo,
   inputs : Array[(String, String)],
   extra_env : Array[(String, String)],
   path_prefix~ : String = "",
@@ -56,7 +55,6 @@ async fn test_action_entry_point(fixture : Fixture) -> Unit raise {
   @fs.chmod("\{bin}/git", 0o755)
   fixture.queue_json(response([("no_secret_logging", decisive("violation"))]))
   let proc = run_action(
-    repo,
     [
       ("BASE", base),
       ("HEAD", head),
@@ -108,8 +106,7 @@ async fn test_action_entry_point(fixture : Fixture) -> Unit raise {
   let strict_head = strict.commit("head")
   fixture.queue_json(response([("no_secret_logging", decisive("violation"))]))
   let blocked = run_action(
-    strict,
-    [
+        [
       ("BASE", strict_base),
       ("HEAD", strict_head),
       ("REPOSITORY", strict.path),
@@ -121,7 +118,6 @@ async fn test_action_entry_point(fixture : Fixture) -> Unit raise {
 
   // Missing inputs fail with a workflow error, not a stack trace.
   let incomplete = run_action(
-    repo,
     [("BASE", base), ("REPOSITORY", repo.path)],
     [("TYPESAFE_BASE_URL", fixture.origin)],
   )
@@ -163,7 +159,6 @@ async fn test_large_report_is_not_truncated(fixture : Fixture) -> Unit raise {
   let head = repo.commit("head")
   fixture.queue_json(response(answers))
   let proc = run_action(
-    repo,
     [
       ("BASE", base),
       ("HEAD", head),

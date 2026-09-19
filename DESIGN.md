@@ -134,7 +134,7 @@ A rule the runner could not evaluate — unrepresentable evidence, or evidence o
 - Changes come from `git diff --raw -z` between the single merge base and head; multiple or missing merge bases fail with exit 2.
 - Patches are generated from the exact recorded blob object ids, so a path filter can never pull in excluded descendants after a file becomes a directory.
 - Binary, invalid-UTF-8, symlink, submodule, oversized (>8 MiB) and non-regular selected files stop that rule from being evaluated instead of being silently dropped; the rule's severity decides whether the run fails. A rule can exclude them explicitly.
-- Each rule's evidence is one indivisible unit: a cross-file rule is never split into independently passing fragments. A unit over the 24576-byte request budget leaves that rule unevaluated, reported by severity. The budget is a conservative local byte guard chosen without measurement against the API, not a token-limit guarantee.
+- Each rule's evidence is one indivisible unit: a cross-file rule is never split into independently passing fragments. A unit over the 65536-byte request budget leaves that rule unevaluated, reported by severity. The budget is measured, not guessed: `jev-1.13.0` accepted a 149053-byte body (32827 input tokens) and rejected 152935 bytes with `max_tokens_exceeded`, and no transport limit appears below 8 MiB. 65536 bytes assumes a pessimistic 2 bytes per token against that ceiling; it is a byte guard, not a token count.
 - Only configured evidence leaves the machine: no repository archive, no PR description, no branch names.
 
 ---
