@@ -298,11 +298,6 @@ fn env_vars() -> Map[String, String] {
 }
 
 ///|
-fn env_var(name : String) -> String? {
-  env_vars().get(name)
-}
-
-///|
 fn args() -> Array[String] {
   let out = []
   let parsed = @json.parse(argv_bridge()) catch {
@@ -322,12 +317,12 @@ fn args() -> Array[String] {
 }
 
 ///|
-async fn write_stdout(text : String) -> Unit {
+fn write_stdout(text : String) -> Unit {
   write_bridge(1, text)
 }
 
 ///|
-async fn write_stderr(text : String) -> Unit {
+fn write_stderr(text : String) -> Unit {
   write_bridge(2, text)
 }
 

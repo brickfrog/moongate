@@ -1,9 +1,19 @@
 ///|
-/// Conservative local byte budget for one serialized request body.
+/// Local byte budget for one serialized request body.
 ///
 /// Bytes, not tokens: the runner cannot count tokens for a remote model, so
 /// it bounds what it is willing to send instead of guessing what will fit.
-pub let max_request_bytes : Int = 24576
+///
+/// Measured against `jev-1.13.0` on 2026-09-20: a 149053-byte body counted
+/// 32827 input tokens and was accepted; 152935 bytes was rejected with
+/// `{"error_type":"max_tokens_exceeded"}`. There is no transport-level body
+/// limit below 8 MiB — an 8 MB body with an unknown model still reached model
+/// validation. That ASCII source text ran about 4.5 bytes per token; this
+/// budget assumes a pessimistic 2 bytes per token, so 65536 bytes stays under
+/// the measured ceiling even for dense or escape-heavy evidence. Content that
+/// tokenizes worse still fails cleanly: the API's error becomes that rule's
+/// non-evaluation, judged by its severity.
+pub let max_request_bytes : Int = 65536
 
 ///|
 /// Ceiling for a response body.

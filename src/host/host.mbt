@@ -115,5 +115,5 @@ pub fn decode_base64(text : String) -> Bytes raise {
       acc = acc & ((1 << bits) - 1)
     }
   }
-  out.unsafe_reinterpret_as_bytes()[:length].to_bytes()
+  out.unsafe_reinterpret_as_bytes()[:length].to_owned()
 }

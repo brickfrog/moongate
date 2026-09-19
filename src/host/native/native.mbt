@@ -86,7 +86,7 @@ async fn post_json(
 }
 
 ///|
-async fn path_kind(path : String) -> @host.PathKind raise {
+async fn path_kind(path : String) -> @host.PathKind {
   let kind = try @fs.kind(path, follow_symlink=false) catch {
     _ => return @host.Missing
   }
@@ -112,7 +112,7 @@ async fn read_file(path : String) -> Bytes raise {
 }
 
 ///|
-async fn realpath(path : String) -> String raise {
+async fn realpath(path : String) -> String {
   try @fs.realpath(path) catch {
     _ => path
   }
@@ -126,11 +126,6 @@ fn current_dir() -> String? {
 ///|
 fn env_vars() -> Map[String, String] {
   @env.get_env_vars()
-}
-
-///|
-fn env_var(name : String) -> String? {
-  @env.get_env_var(name)
 }
 
 ///|

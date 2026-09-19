@@ -255,3 +255,28 @@ test "a chosen label must hold a maximal probability" {
     _ => fail("expected a non-maximal choice to be rejected")
   }
 }
+
+///|
+test "nesting deeper than the limit is rejected before parsing" {
+  fn nest(depth : Int) -> String {
+    let b = StringBuilder()
+    for _ in 0..<depth {
+      b.write_string("[")
+    }
+    for _ in 0..<depth {
+      b.write_string("]")
+    }
+    b.to_string()
+  }
+
+  // The limit itself is accepted; one level past it is not.
+  parse_strict(nest(max_json_depth), "test") |> ignore
+  let mut rejected = false
+  try parse_strict(nest(max_json_depth + 1), "test") |> ignore catch {
+    _ => rejected = true
+  }
+  assert_true(rejected)
+  // Brackets inside a string are text, not structure.
+  let bracketed = "{\"a\": \"[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[\"}"
+  parse_strict(bracketed, "test") |> ignore
+}
