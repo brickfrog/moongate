@@ -1,0 +1,76 @@
+name: Semantic
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+
+jobs:
+  preflight:
+    # Fork pull requests have no access to repository secrets, and Dependabot
+    # runs with a restricted token. Both are skipped explicitly rather than
+    # reported as passing evaluations.
+    if: >-
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      github.actor != 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    outputs:
+      installed: ${{ steps.probe.outputs.installed }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event.pull_request.base.sha }}
+          persist-credentials: false
+
+      - id: probe
+        run: |
+          set -euo pipefail
+          # `[ -f x ] && v=1` is an AND-list: under `set -e` a missing file
+          # would abort the step, which is exactly the first-install case.
+          action=0; config=0
+          if [ -f action.yml ]; then action=1; fi
+          if [ -f .moongate.json ]; then config=1; fi
+          if [ "$action" = 0 ] && [ "$config" = 0 ]; then
+            echo "Moongate is not installed at base; semantic evaluation skipped."
+            echo "installed=false" >> "$GITHUB_OUTPUT"
+          elif [ "$action" != "$config" ]; then
+            echo "::error title=moongate::Incomplete installation at base: action.yml=$action .moongate.json=$config"
+            exit 1
+          else
+            echo "installed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+  evaluate:
+    needs: preflight
+    if: needs.preflight.outputs.installed == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event.pull_request.base.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Require the event head commit
+        env:
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+          # Never substitute the current branch tip: a force push between the
+          # event and this job must fail loudly, not evaluate other code.
+          if ! git cat-file -e "${HEAD_SHA}^{commit}" 2>/dev/null; then
+            echo "::error title=moongate::Head commit $HEAD_SHA is not available; the pull request moved. Re-run after a new event."
+            exit 1
+          fi
+
+      # The action comes from the base checkout, so pull request code is never
+      # built or executed in this secret-bearing job.
+      - uses: ./
+        with:
+          base: ${{ github.event.pull_request.base.sha }}
+          head: ${{ github.event.pull_request.head.sha }}
+          api-key: ${{ secrets.TYPESAFE_API_KEY }}

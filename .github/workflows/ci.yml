@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build and test
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Install the MoonBit toolchain
+        run: |
+          set -euo pipefail
+          curl -fsSL https://cli.moonbitlang.com/install/unix.sh | bash -s -- 0.10.13+cbb11c36f
+          echo "$HOME/.moon/bin" >> "$GITHUB_PATH"
+
+      - name: Check
+        run: moon check --target native
+
+      - name: Unit tests
+        run: moon test --target native
+
+      - name: Build
+        run: moon build --target native --release
+
+      - name: Integration tests
+        run: |
+          python3 tests/integration.py \
+            --bin "$PWD/_build/native/release/build/cmd/moongate/moongate.exe"
+
+      - name: Validate the repository configuration
+        run: |
+          ./_build/native/release/build/cmd/moongate/moongate.exe \
+            validate --config .moongate.json --format json

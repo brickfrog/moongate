@@ -1,0 +1,85 @@
+name: Moongate
+description: Evaluate committed repository changes against semantic rules with TypeSafe Jev
+author: brickfrog
+
+inputs:
+  base:
+    description: Base commit or ref. Policy is always read from this commit.
+    required: true
+  head:
+    description: Head commit or ref to evaluate.
+    required: true
+  repository:
+    description: Working directory of the repository under evaluation.
+    required: false
+    default: "."
+  config:
+    description: Repository-root-relative configuration path.
+    required: false
+    default: .moongate.json
+  api-key:
+    description: TypeSafe API key. Passed only to the evaluation step.
+    required: true
+  toolchain:
+    description: MoonBit toolchain version used to build the runner.
+    required: false
+    default: 0.10.13+cbb11c36f
+
+runs:
+  using: composite
+  steps:
+    - name: Check runner platform
+      shell: bash
+      run: |
+        set -euo pipefail
+        if [ "$(uname -s)" != "Linux" ]; then
+          echo "::error title=moongate::This action supports Linux runners only."
+          exit 1
+        fi
+
+    - name: Install the MoonBit toolchain
+      shell: bash
+      env:
+        MOONGATE_TOOLCHAIN: ${{ inputs.toolchain }}
+      run: |
+        set -euo pipefail
+        # An isolated MOON_HOME never disturbs a compiler the job installed itself.
+        MOON_HOME="$RUNNER_TEMP/moongate-moon"
+        mkdir -p "$MOON_HOME"
+        export MOON_HOME
+        if ! curl -fsSL https://cli.moonbitlang.com/install/unix.sh \
+          | bash -s -- "$MOONGATE_TOOLCHAIN"; then
+          echo "::error title=moongate::Cannot install MoonBit $MOONGATE_TOOLCHAIN. Pin a different 'toolchain' input."
+          exit 1
+        fi
+        echo "MOON_HOME=$MOON_HOME" >> "$GITHUB_ENV"
+        echo "$MOON_HOME/bin" >> "$GITHUB_PATH"
+
+    - name: Build the runner
+      shell: bash
+      run: |
+        set -euo pipefail
+        cd "$GITHUB_ACTION_PATH"
+        moon update
+        moon build --target native --release
+
+    - name: Evaluate
+      shell: bash
+      working-directory: ${{ inputs.repository }}
+      env:
+        TYPESAFE_API_KEY: ${{ inputs.api-key }}
+        MOONGATE_BASE: ${{ inputs.base }}
+        MOONGATE_HEAD: ${{ inputs.head }}
+        MOONGATE_CONFIG: ${{ inputs.config }}
+      run: |
+        set -euo pipefail
+        # Policy always comes from the base commit: a pull request cannot
+        # weaken the rules that judge it. Configuration changes take effect
+        # after merge.
+        "$GITHUB_ACTION_PATH/_build/native/release/build/cmd/moongate/moongate.exe" \
+          check \
+          --base "$MOONGATE_BASE" \
+          --head "$MOONGATE_HEAD" \
+          --config "$MOONGATE_CONFIG" \
+          --config-ref "$MOONGATE_BASE" \
+          --format github
