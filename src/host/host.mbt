@@ -11,6 +11,14 @@ pub(all) suberror HostError {
 }
 
 ///|
+/// Host diagnostics are authored here and safe by construction, so they print
+/// verbatim rather than through the foreign-error fallback.
+pub impl Show for HostError with output(self, logger) {
+  let HostError(message) = self
+  logger.write_string(message)
+}
+
+///|
 /// Result of running a child process. `stdout` stays bytes because Git output
 /// is not always text; `stderr` is only used for diagnostics.
 pub(all) struct CommandResult {

@@ -41,12 +41,14 @@ jobs:
       - name: Integration tests against the native binary
         run: |
           ./_build/native/release/build/cmd/itest/itest.exe \
-            --bin "$PWD/_build/native/release/build/cmd/moongate/moongate.exe"
+            --bin "$PWD/_build/native/release/build/cmd/moongate/moongate.exe" \
+            --action "$PWD/dist/index.js"
 
       - name: Integration tests against the shipped bundle
         run: |
           ./_build/native/release/build/cmd/itest/itest.exe \
-            --bin node --bin-arg "$PWD/dist/moongate.js"
+            --bin node --bin-arg "$PWD/dist/moongate.js" \
+            --action "$PWD/dist/index.js"
 
       - name: Committed bundle is current
         run: |

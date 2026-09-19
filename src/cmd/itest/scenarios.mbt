@@ -16,6 +16,8 @@ async fn run_scenarios(fixture : Fixture) -> Unit {
   scenario("policy thresholds", () => test_policy_thresholds(fixture))
   scenario("transport failures", () => test_transport_failures(fixture))
   scenario("batching", () => test_batching(fixture))
+  scenario("action entry point", () => test_action_entry_point(fixture))
+  scenario("large report", () => test_large_report_is_not_truncated(fixture))
 }
 
 ///|
