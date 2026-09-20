@@ -2,6 +2,10 @@ name: Moongate
 description: Evaluate committed repository changes against semantic rules with TypeSafe Jev
 author: brickfrog
 
+branding:
+  icon: git-pull-request
+  color: purple
+
 inputs:
   base:
     description: Base commit or ref. Policy is always read from this commit.
