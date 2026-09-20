@@ -290,7 +290,14 @@ test "an annotation states the runner's verdict, not just the model's choice" {
   // A compliant answer under threshold is a review; the annotation must not
   // read like agreement, and a violation annotation must not read like one
   // the runner accepted when it did not.
-  let below = RuleResult::{
+  let answer : ChoiceAnswer = {
+    choice: "compliant",
+    p_violation: 0.13,
+    p_compliant: 0.87,
+    p_insufficient: 0.0,
+    confidence: 0.8,
+  }
+  let below : RuleResult = {
     id: "r",
     status: StatusReview,
     severity: Advisory,
@@ -298,14 +305,8 @@ test "an annotation states the runner's verdict, not just the model's choice" {
     message: "m",
     paths: ["a.py"],
     model: Some("jev-1.13.0"),
-    answer: Some(ChoiceAnswer::{
-      choice: "compliant",
-      p_violation: 0.13,
-      p_compliant: 0.87,
-      p_insufficient: 0.0,
-      confidence: 0.8,
-    }),
-    detail: (None : String?),
+    answer: Some(answer),
+    detail: None,
   }
   let text = render_report(report_of([below], []), FormatGithub)
   assert_true(text.contains("[needs review]"))
