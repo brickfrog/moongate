@@ -119,8 +119,11 @@ function parseReport(stderr) {
   const start = stderr.indexOf(REPORT_BEGIN);
   if (start < 0) return null;
   const from = start + REPORT_BEGIN.length;
-  const end = stderr.indexOf(REPORT_END, from);
-  if (end < 0) return null;
+  // Rule messages and source citations come from the PR-authored config and
+  // are echoed into the report, so a first-match end marker can be spoofed to
+  // truncate the document. The real frame is the outermost one.
+  const end = stderr.lastIndexOf(REPORT_END);
+  if (end < from) return null;
   try {
     return JSON.parse(stderr.slice(from, end));
   } catch {

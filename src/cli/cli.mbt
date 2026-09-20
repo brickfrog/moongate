@@ -26,7 +26,7 @@ fn build_command() -> @argparse.Command {
       @argparse.FlagArg(
         "report-json",
         long="report-json",
-        about="Also write the JSON report to stderr, for a caller that needs the structured result alongside another format",
+        about="Also write the JSON report to stderr, framed by \"--- moongate report begin ---\" and \"--- moongate report end ---\" lines because that stream also carries diagnostics",
       ),
     ],
     options=[
