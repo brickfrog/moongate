@@ -1024,20 +1024,8 @@ function _M0TPB9ArrayViewGUcsEE(param0, param1, param2) {
   this.start = param1;
   this.end = param2;
 }
-function _M0TPC18argparse9OptionArg(param0) {
+function _M0TPC18argparse7FlagArg(param0) {
   this.arg = param0;
-}
-function _M0TPC18argparse3Arg(param0, param1, param2, param3, param4, param5, param6, param7, param8, param9) {
-  this.name = param0;
-  this.about = param1;
-  this.env = param2;
-  this.requires = param3;
-  this.conflicts_with = param4;
-  this.required = param5;
-  this.global = param6;
-  this.hidden = param7;
-  this.info = param8;
-  this.multiple = param9;
 }
 function _M0DTPC18argparse7ArgInfo8FlagInfo(param0, param1, param2, param3) {
   this._0 = param0;
@@ -1060,6 +1048,21 @@ function _M0DTPC18argparse7ArgInfo14PositionalInfo(param0, param1, param2) {
   this._2 = param2;
 }
 _M0DTPC18argparse7ArgInfo14PositionalInfo.prototype.$tag = 2;
+function _M0TPC18argparse3Arg(param0, param1, param2, param3, param4, param5, param6, param7, param8, param9) {
+  this.name = param0;
+  this.about = param1;
+  this.env = param2;
+  this.requires = param3;
+  this.conflicts_with = param4;
+  this.required = param5;
+  this.global = param6;
+  this.hidden = param7;
+  this.info = param8;
+  this.multiple = param9;
+}
+function _M0TPC18argparse9OptionArg(param0) {
+  this.arg = param0;
+}
 function _M0TPC15deque5DequeGRP411moonbitlang5async8internal9coroutine9CoroutineE(param0, param1, param2) {
   this.buf = param0;
   this.len = param1;
@@ -2052,24 +2055,25 @@ function _M0DTP39brickfrog8moongate6runner51_24brickfrog_2fmoongate_2frunner_2ev
   this._0 = param0;
 }
 _M0DTP39brickfrog8moongate6runner51_24brickfrog_2fmoongate_2frunner_2evalidate__configL5State8State__0.prototype.$tag = 0;
-function _M0DTP39brickfrog8moongate3cli41_24brickfrog_2fmoongate_2fcli_2eemit__outL5State11_2atry_2f74(param0) {
+function _M0DTP39brickfrog8moongate3cli41_24brickfrog_2fmoongate_2fcli_2eemit__outL5State11_2atry_2f78(param0) {
   this._0 = param0;
 }
-_M0DTP39brickfrog8moongate3cli41_24brickfrog_2fmoongate_2fcli_2eemit__outL5State11_2atry_2f74.prototype.$tag = 0;
-function _M0DTP39brickfrog8moongate3cli41_24brickfrog_2fmoongate_2fcli_2eemit__errL5State11_2atry_2f80(param0) {
+_M0DTP39brickfrog8moongate3cli41_24brickfrog_2fmoongate_2fcli_2eemit__outL5State11_2atry_2f78.prototype.$tag = 0;
+function _M0DTP39brickfrog8moongate3cli41_24brickfrog_2fmoongate_2fcli_2eemit__errL5State11_2atry_2f84(param0) {
   this._0 = param0;
 }
-_M0DTP39brickfrog8moongate3cli41_24brickfrog_2fmoongate_2fcli_2eemit__errL5State11_2atry_2f80.prototype.$tag = 0;
+_M0DTP39brickfrog8moongate3cli41_24brickfrog_2fmoongate_2fcli_2eemit__errL5State11_2atry_2f84.prototype.$tag = 0;
 function _M0DTP39brickfrog8moongate3cli51_24brickfrog_2fmoongate_2fcli_2erun__check__commandL5State8State__0(param0, param1) {
   this._0 = param0;
   this._1 = param1;
 }
 _M0DTP39brickfrog8moongate3cli51_24brickfrog_2fmoongate_2fcli_2erun__check__commandL5State8State__0.prototype.$tag = 0;
-function _M0DTP39brickfrog8moongate3cli51_24brickfrog_2fmoongate_2fcli_2erun__check__commandL5State8State__1(param0, param1, param2, param3) {
+function _M0DTP39brickfrog8moongate3cli51_24brickfrog_2fmoongate_2fcli_2erun__check__commandL5State8State__1(param0, param1, param2, param3, param4) {
   this._0 = param0;
   this._1 = param1;
   this._2 = param2;
   this._3 = param3;
+  this._4 = param4;
 }
 _M0DTP39brickfrog8moongate3cli51_24brickfrog_2fmoongate_2fcli_2erun__check__commandL5State8State__1.prototype.$tag = 1;
 function _M0DTP39brickfrog8moongate3cli51_24brickfrog_2fmoongate_2fcli_2erun__check__commandL5State8State__2(param0, param1, param2, param3, param4) {
@@ -2080,27 +2084,36 @@ function _M0DTP39brickfrog8moongate3cli51_24brickfrog_2fmoongate_2fcli_2erun__ch
   this._4 = param4;
 }
 _M0DTP39brickfrog8moongate3cli51_24brickfrog_2fmoongate_2fcli_2erun__check__commandL5State8State__2.prototype.$tag = 2;
-function _M0DTP39brickfrog8moongate3cli51_24brickfrog_2fmoongate_2fcli_2erun__check__commandL5State8State__3(param0) {
+function _M0DTP39brickfrog8moongate3cli51_24brickfrog_2fmoongate_2fcli_2erun__check__commandL5State8State__3(param0, param1, param2, param3, param4, param5) {
   this._0 = param0;
+  this._1 = param1;
+  this._2 = param2;
+  this._3 = param3;
+  this._4 = param4;
+  this._5 = param5;
 }
 _M0DTP39brickfrog8moongate3cli51_24brickfrog_2fmoongate_2fcli_2erun__check__commandL5State8State__3.prototype.$tag = 3;
-function _M0DTP39brickfrog8moongate3cli51_24brickfrog_2fmoongate_2fcli_2erun__check__commandL5State8State__4(param0, param1, param2, param3) {
+function _M0DTP39brickfrog8moongate3cli51_24brickfrog_2fmoongate_2fcli_2erun__check__commandL5State8State__4(param0) {
+  this._0 = param0;
+}
+_M0DTP39brickfrog8moongate3cli51_24brickfrog_2fmoongate_2fcli_2erun__check__commandL5State8State__4.prototype.$tag = 4;
+function _M0DTP39brickfrog8moongate3cli51_24brickfrog_2fmoongate_2fcli_2erun__check__commandL5State8State__5(param0, param1, param2, param3) {
   this._0 = param0;
   this._1 = param1;
   this._2 = param2;
   this._3 = param3;
 }
-_M0DTP39brickfrog8moongate3cli51_24brickfrog_2fmoongate_2fcli_2erun__check__commandL5State8State__4.prototype.$tag = 4;
-function _M0DTP39brickfrog8moongate3cli51_24brickfrog_2fmoongate_2fcli_2erun__check__commandL5State8State__5(param0) {
+_M0DTP39brickfrog8moongate3cli51_24brickfrog_2fmoongate_2fcli_2erun__check__commandL5State8State__5.prototype.$tag = 5;
+function _M0DTP39brickfrog8moongate3cli51_24brickfrog_2fmoongate_2fcli_2erun__check__commandL5State8State__6(param0) {
   this._0 = param0;
 }
-_M0DTP39brickfrog8moongate3cli51_24brickfrog_2fmoongate_2fcli_2erun__check__commandL5State8State__5.prototype.$tag = 5;
-function _M0DTP39brickfrog8moongate3cli51_24brickfrog_2fmoongate_2fcli_2erun__check__commandL5State11_2atry_2f86(param0, param1, param2) {
+_M0DTP39brickfrog8moongate3cli51_24brickfrog_2fmoongate_2fcli_2erun__check__commandL5State8State__6.prototype.$tag = 6;
+function _M0DTP39brickfrog8moongate3cli51_24brickfrog_2fmoongate_2fcli_2erun__check__commandL5State11_2atry_2f95(param0, param1, param2) {
   this._0 = param0;
   this._1 = param1;
   this._2 = param2;
 }
-_M0DTP39brickfrog8moongate3cli51_24brickfrog_2fmoongate_2fcli_2erun__check__commandL5State11_2atry_2f86.prototype.$tag = 6;
+_M0DTP39brickfrog8moongate3cli51_24brickfrog_2fmoongate_2fcli_2erun__check__commandL5State11_2atry_2f95.prototype.$tag = 7;
 function _M0TP39brickfrog8moongate6runner12CheckOptions(param0, param1, param2, param3) {
   this.base = param0;
   this.head = param1;
@@ -2122,13 +2135,13 @@ function _M0DTP39brickfrog8moongate3cli45_24brickfrog_2fmoongate_2fcli_2erun__va
   this._3 = param3;
 }
 _M0DTP39brickfrog8moongate3cli45_24brickfrog_2fmoongate_2fcli_2erun__validateL5State8State__2.prototype.$tag = 2;
-function _M0DTP39brickfrog8moongate3cli45_24brickfrog_2fmoongate_2fcli_2erun__validateL5State11_2atry_2f91(param0, param1, param2, param3) {
+function _M0DTP39brickfrog8moongate3cli45_24brickfrog_2fmoongate_2fcli_2erun__validateL5State12_2atry_2f100(param0, param1, param2, param3) {
   this._0 = param0;
   this._1 = param1;
   this._2 = param2;
   this._3 = param3;
 }
-_M0DTP39brickfrog8moongate3cli45_24brickfrog_2fmoongate_2fcli_2erun__validateL5State11_2atry_2f91.prototype.$tag = 3;
+_M0DTP39brickfrog8moongate3cli45_24brickfrog_2fmoongate_2fcli_2erun__validateL5State12_2atry_2f100.prototype.$tag = 3;
 function _M0DTP39brickfrog8moongate3cli45_24brickfrog_2fmoongate_2fcli_2erun__validateL5State8State__4(param0, param1, param2, param3) {
   this._0 = param0;
   this._1 = param1;
@@ -2147,12 +2160,12 @@ function _M0DTP39brickfrog8moongate3cli45_24brickfrog_2fmoongate_2fcli_2erun__va
   this._0 = param0;
 }
 _M0DTP39brickfrog8moongate3cli45_24brickfrog_2fmoongate_2fcli_2erun__validateL5State8State__6.prototype.$tag = 6;
-function _M0DTP39brickfrog8moongate3cli45_24brickfrog_2fmoongate_2fcli_2erun__validateL5State12_2atry_2f105(param0, param1, param2) {
+function _M0DTP39brickfrog8moongate3cli45_24brickfrog_2fmoongate_2fcli_2erun__validateL5State12_2atry_2f114(param0, param1, param2) {
   this._0 = param0;
   this._1 = param1;
   this._2 = param2;
 }
-_M0DTP39brickfrog8moongate3cli45_24brickfrog_2fmoongate_2fcli_2erun__validateL5State12_2atry_2f105.prototype.$tag = 7;
+_M0DTP39brickfrog8moongate3cli45_24brickfrog_2fmoongate_2fcli_2erun__validateL5State12_2atry_2f114.prototype.$tag = 7;
 function _M0DTPC16result6ResultGRP39brickfrog8moongate4core6ConfigsE3Err(param0) {
   this._0 = param0;
 }
@@ -2180,12 +2193,12 @@ function _M0DTP39brickfrog8moongate3cli35_24brickfrog_2fmoongate_2fcli_2erunL5St
   this._0 = param0;
 }
 _M0DTP39brickfrog8moongate3cli35_24brickfrog_2fmoongate_2fcli_2erunL5State8State__3.prototype.$tag = 3;
-function _M0DTP39brickfrog8moongate3cli35_24brickfrog_2fmoongate_2fcli_2erunL5State12_2atry_2f120(param0, param1, param2) {
+function _M0DTP39brickfrog8moongate3cli35_24brickfrog_2fmoongate_2fcli_2erunL5State12_2atry_2f129(param0, param1, param2) {
   this._0 = param0;
   this._1 = param1;
   this._2 = param2;
 }
-_M0DTP39brickfrog8moongate3cli35_24brickfrog_2fmoongate_2fcli_2erunL5State12_2atry_2f120.prototype.$tag = 4;
+_M0DTP39brickfrog8moongate3cli35_24brickfrog_2fmoongate_2fcli_2erunL5State12_2atry_2f129.prototype.$tag = 4;
 function _M0DTP411moonbitlang5async8internal9coroutine5State4Done() {}
 _M0DTP411moonbitlang5async8internal9coroutine5State4Done.prototype.$tag = 0;
 const _M0DTP411moonbitlang5async8internal9coroutine5State4Done__ = new _M0DTP411moonbitlang5async8internal9coroutine5State4Done();
@@ -2679,6 +2692,7 @@ const _M0FPC18argparse20parse__command__implN7_2abindS2623 = "help";
 const _M0FPC18argparse20parse__command__implN7_2abindS2627 = "version";
 const _M0FPC18argparse20parse__command__implN7_2abindS2689 = "-";
 const _M0FPC18argparse20parse__command__implN7_2abindS2691 = "=";
+const _M0MPC18argparse7FlagArg15FlagArg_2einnerN7_2abindS3003 = "";
 const _M0MPC18argparse9OptionArg17OptionArg_2einnerN7_2abindS3045 = "";
 const _M0FP39brickfrog8moongate4core16label__violation = "violation";
 const _M0FP39brickfrog8moongate4core16label__compliant = "compliant";
@@ -2723,31 +2737,34 @@ const _M0FP39brickfrog8moongate6runner10tree__blobN7_2abindS462 = "\t";
 const _M0FP39brickfrog8moongate6runner10tree__blobN7_2abindS460 = " ";
 const _M0FP39brickfrog8moongate6runner17whole__file__hunkN7_2abindS495 = "\n";
 const _M0FP39brickfrog8moongate3cli7version = "0.1.0";
-const _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS55 = "validate";
-const _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS56 = "config";
-const _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS57 = "config";
-const _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS58 = "Configuration path (default .moongate.json)";
-const _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS59 = "format";
-const _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS60 = "format";
-const _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS61 = "Output format: text, json or github";
-const _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS63 = "Validate a Moongate configuration file";
+const _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS59 = "validate";
+const _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS60 = "config";
+const _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS61 = "config";
+const _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS62 = "Configuration path (default .moongate.json)";
+const _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS63 = "format";
+const _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS64 = "format";
+const _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS65 = "Output format: text, json or github";
+const _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS67 = "Validate a Moongate configuration file";
 const _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS37 = "check";
-const _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS38 = "base";
-const _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS39 = "base";
-const _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS40 = "Base ref or commit (required)";
-const _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS41 = "head";
-const _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS42 = "head";
-const _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS43 = "Head ref or commit (default HEAD)";
-const _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS44 = "config";
-const _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS45 = "config";
-const _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS46 = "Configuration path (default .moongate.json)";
-const _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS47 = "config-ref";
-const _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS48 = "config-ref";
-const _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS49 = "Read the configuration from this commit instead of the working tree";
-const _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS50 = "format";
-const _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS51 = "format";
-const _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS52 = "Output format: text, json or github";
-const _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS54 = "Evaluate committed changes against the configured rules";
+const _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS38 = "report-json";
+const _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS39 = "report-json";
+const _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS40 = "Also write the JSON report to stderr, for a caller that needs the structured result alongside another format";
+const _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS42 = "base";
+const _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS43 = "base";
+const _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS44 = "Base ref or commit (required)";
+const _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS45 = "head";
+const _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS46 = "head";
+const _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS47 = "Head ref or commit (default HEAD)";
+const _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS48 = "config";
+const _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS49 = "config";
+const _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS50 = "Configuration path (default .moongate.json)";
+const _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS51 = "config-ref";
+const _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS52 = "config-ref";
+const _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS53 = "Read the configuration from this commit instead of the working tree";
+const _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS54 = "format";
+const _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS55 = "format";
+const _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS56 = "Output format: text, json or github";
+const _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS58 = "Evaluate committed changes against the configured rules";
 const _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS34 = "moongate";
 const _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS36 = "Semantic CI gatekeeper";
 const _M0FPB4seed = _M0FPB12random__seed();
@@ -2761,21 +2778,21 @@ const _M0FP49brickfrog8moongate4host2js10path__kindN6constrS303 = 0;
 const _M0FP49brickfrog8moongate4host2js10path__kindN6constrS304 = 2;
 const _M0FP49brickfrog8moongate4host2js10path__kindN6constrS305 = 1;
 const _M0MPC16string10StringView4findN6constrS9928 = 0;
-const _M0FP39brickfrog8moongate4core11parse__ruleN6recordS998 = new _M0TP39brickfrog8moongate4core10Thresholds(0.9, 0.8);
-const _M0FP39brickfrog8moongate3cli13run__validateN6constrS349 = 0;
-const _M0FP39brickfrog8moongate3cli13run__validateN6constrS350 = 2;
-const _M0FP39brickfrog8moongate3cli13run__validateN6constrS351 = 2;
 const _M0FPC18argparse19subcommand__entriesN5tupleS3134 = { _0: "help", _1: "Print help for the subcommand(s)." };
+const _M0FP39brickfrog8moongate4core11parse__ruleN6recordS998 = new _M0TP39brickfrog8moongate4core10Thresholds(0.9, 0.8);
+const _M0FP39brickfrog8moongate3cli13run__validateN6constrS373 = 0;
+const _M0FP39brickfrog8moongate3cli13run__validateN6constrS374 = 2;
+const _M0FP39brickfrog8moongate3cli13run__validateN6constrS375 = 2;
 const _M0FP39brickfrog8moongate6runner10post__jsonN5tupleS1493 = { _0: "content-type", _1: "application/json" };
 const _M0FP39brickfrog8moongate6runner10post__jsonN5tupleS1494 = { _0: "accept", _1: "application/json" };
 const _M0FP39brickfrog8moongate6runner13evaluate__allN6constrS1496 = "Not evaluated: an earlier batch failed.";
 const _M0FP39brickfrog8moongate6runner13record__patchN6constrS1495 = "";
-const _M0FP39brickfrog8moongate3cli19run__check__commandN6constrS347 = 2;
-const _M0FP39brickfrog8moongate3cli19run__check__commandN6constrS348 = 2;
-const _M0FP39brickfrog8moongate3cli14build__commandN6constrS346 = true;
-const _M0FP39brickfrog8moongate3cli3runN6constrS352 = 2;
-const _M0FP39brickfrog8moongate3cli3runN6constrS353 = 2;
-const _M0FP39brickfrog8moongate3cli3runN6constrS354 = 2;
+const _M0FP39brickfrog8moongate3cli19run__check__commandN6constrS371 = 2;
+const _M0FP39brickfrog8moongate3cli19run__check__commandN6constrS372 = 2;
+const _M0FP39brickfrog8moongate3cli14build__commandN6constrS370 = true;
+const _M0FP39brickfrog8moongate3cli3runN6constrS376 = 2;
+const _M0FP39brickfrog8moongate3cli3runN6constrS377 = 2;
+const _M0FP39brickfrog8moongate3cli3runN6constrS378 = 2;
 function _M0MPB6Logger13write__objectGsE(self, obj) {
   _M0IP016_24default__implPB4Show6outputGsE(obj, self);
 }
@@ -6566,31 +6583,6 @@ function _M0MPB3Map3getGsRPB5ArrayGsEE(self, key) {
     }
   }
 }
-function _M0MPB3Map3getGsRPC18argparse11ValueSourceE(self, key) {
-  const hash = _M0IPC16string6StringPB4Hash4hash(key);
-  let _tmp$2 = 0;
-  let _tmp$3 = hash & self.capacity_mask;
-  while (true) {
-    const i = _tmp$2;
-    const idx = _tmp$3;
-    const _bind$3 = self.entries[idx];
-    if (_bind$3 === undefined) {
-      return undefined;
-    } else {
-      const _Some = _bind$3;
-      const _entry = _Some;
-      if (_entry.hash === hash && _entry.key === key) {
-        return _entry.value;
-      }
-      if (i > _entry.psl) {
-        return undefined;
-      }
-      _tmp$2 = i + 1 | 0;
-      _tmp$3 = idx + 1 & self.capacity_mask;
-      continue;
-    }
-  }
-}
 function _M0MPB3Map3getGsbE(self, key) {
   const hash = _M0IPC16string6StringPB4Hash4hash(key);
   let _tmp$2 = 0;
@@ -6609,6 +6601,31 @@ function _M0MPB3Map3getGsbE(self, key) {
       }
       if (i > _entry.psl) {
         return -1;
+      }
+      _tmp$2 = i + 1 | 0;
+      _tmp$3 = idx + 1 & self.capacity_mask;
+      continue;
+    }
+  }
+}
+function _M0MPB3Map3getGsRPC18argparse11ValueSourceE(self, key) {
+  const hash = _M0IPC16string6StringPB4Hash4hash(key);
+  let _tmp$2 = 0;
+  let _tmp$3 = hash & self.capacity_mask;
+  while (true) {
+    const i = _tmp$2;
+    const idx = _tmp$3;
+    const _bind$3 = self.entries[idx];
+    if (_bind$3 === undefined) {
+      return undefined;
+    } else {
+      const _Some = _bind$3;
+      const _entry = _Some;
+      if (_entry.hash === hash && _entry.key === key) {
+        return _entry.value;
+      }
+      if (i > _entry.psl) {
+        return undefined;
       }
       _tmp$2 = i + 1 | 0;
       _tmp$3 = idx + 1 & self.capacity_mask;
@@ -20011,6 +20028,53 @@ function _M0MPC18argparse7Command5parse(self, argv$46$opt, env$46$opt) {
   }
   return _M0MPC18argparse7Command13parse_2einner(self, argv, env);
 }
+function _M0MPC18argparse7FlagArg15FlagArg_2einner(name, short, long, about, action, env, requires, conflicts_with, required, global, negatable, hidden) {
+  const name$2 = _M0MPC16string10StringView9to__owned(name);
+  const long$2 = _M0IPC16string10StringViewPB2Eq5equal(long, new _M0TPC16string10StringView(_M0MPC18argparse7FlagArg15FlagArg_2einnerN7_2abindS3003, 0, _M0MPC18argparse7FlagArg15FlagArg_2einnerN7_2abindS3003.length)) ? undefined : _M0MPC16string10StringView9to__owned(long);
+  const about$2 = _M0MPC16option6Option3mapGRPC16string10StringViewsE(about, (v) => _M0MPC16string10StringView9to__owned(v));
+  const env$2 = _M0MPC16option6Option3mapGRPC16string10StringViewsE(env, (v) => _M0MPC16string10StringView9to__owned(v));
+  const _bind$3 = _M0MPC15array9ArrayView9to__ownedGsE(requires);
+  const _bind$4 = _M0MPC15array9ArrayView9to__ownedGsE(conflicts_with);
+  const _bind$5 = new _M0DTPC18argparse7ArgInfo8FlagInfo(short, long$2, action, negatable);
+  return new _M0TPC18argparse7FlagArg(new _M0TPC18argparse3Arg(name$2, about$2, env$2, _bind$3, _bind$4, required, global, hidden, _bind$5, false));
+}
+function _M0MPC18argparse7FlagArg7FlagArg(name, short, long$46$opt, about, action$46$opt, env, requires$46$opt, conflicts_with$46$opt, required$46$opt, global$46$opt, negatable$46$opt, hidden$46$opt) {
+  let long;
+  if (long$46$opt === undefined) {
+    long = name;
+  } else {
+    const _Some = long$46$opt;
+    long = _Some;
+  }
+  let action;
+  if (action$46$opt === undefined) {
+    action = 0;
+  } else {
+    const _Some = action$46$opt;
+    action = _Some;
+  }
+  let requires;
+  if (requires$46$opt === undefined) {
+    const _bind$3 = [];
+    requires = new _M0TPB9ArrayViewGsE(_bind$3, 0, 0);
+  } else {
+    const _Some = requires$46$opt;
+    requires = _Some;
+  }
+  let conflicts_with;
+  if (conflicts_with$46$opt === undefined) {
+    const _bind$3 = [];
+    conflicts_with = new _M0TPB9ArrayViewGsE(_bind$3, 0, 0);
+  } else {
+    const _Some = conflicts_with$46$opt;
+    conflicts_with = _Some;
+  }
+  const required = required$46$opt === -1 ? false : required$46$opt;
+  const global = global$46$opt === -1 ? false : global$46$opt;
+  const negatable = negatable$46$opt === -1 ? false : negatable$46$opt;
+  const hidden = hidden$46$opt === -1 ? false : hidden$46$opt;
+  return _M0MPC18argparse7FlagArg15FlagArg_2einner(name, short, long, about, action, env, requires, conflicts_with, required, global, negatable, hidden);
+}
 function _M0MPC18argparse9OptionArg17OptionArg_2einner(name, short, long, about, action, env, default_values, allow_hyphen_values, requires, conflicts_with, required, global, hidden) {
   const name$2 = _M0MPC16string10StringView9to__owned(name);
   const long$2 = _M0IPC16string10StringViewPB2Eq5equal(long, new _M0TPC16string10StringView(_M0MPC18argparse9OptionArg17OptionArg_2einnerN7_2abindS3045, 0, _M0MPC18argparse9OptionArg17OptionArg_2einnerN7_2abindS3045.length)) ? undefined : _M0MPC16string10StringView9to__owned(long);
@@ -27127,15 +27191,17 @@ function _M0FP39brickfrog8moongate6runner16validate__config(path, _cont, _err_co
   }
 }
 function _M0FP39brickfrog8moongate3cli14build__command() {
-  const _tmp$2 = new _M0TPC16string10StringView(_M0FP39brickfrog8moongate3cli14build__commandN7_2abindS55, 0, _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS55.length);
-  const _bind$3 = [_M0MPC18argparse9OptionArg9OptionArg(new _M0TPC16string10StringView(_M0FP39brickfrog8moongate3cli14build__commandN7_2abindS56, 0, _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS56.length), -1, new _M0TPC16string10StringView(_M0FP39brickfrog8moongate3cli14build__commandN7_2abindS57, 0, _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS57.length), new _M0TPC16string10StringView(_M0FP39brickfrog8moongate3cli14build__commandN7_2abindS58, 0, _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS58.length), undefined, undefined, undefined, -1, undefined, undefined, -1, -1, -1), _M0MPC18argparse9OptionArg9OptionArg(new _M0TPC16string10StringView(_M0FP39brickfrog8moongate3cli14build__commandN7_2abindS59, 0, _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS59.length), -1, new _M0TPC16string10StringView(_M0FP39brickfrog8moongate3cli14build__commandN7_2abindS60, 0, _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS60.length), new _M0TPC16string10StringView(_M0FP39brickfrog8moongate3cli14build__commandN7_2abindS61, 0, _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS61.length), undefined, undefined, undefined, -1, undefined, undefined, -1, -1, -1)];
-  const validate = _M0MPC18argparse7Command7Command(_tmp$2, undefined, new _M0TPB9ArrayViewGRPC18argparse9OptionArgE(_bind$3, 0, 2), undefined, undefined, new _M0TPC16string10StringView(_M0FP39brickfrog8moongate3cli14build__commandN7_2abindS63, 0, _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS63.length), undefined, -1, -1, -1, -1, -1, -1, undefined, undefined);
+  const _tmp$2 = new _M0TPC16string10StringView(_M0FP39brickfrog8moongate3cli14build__commandN7_2abindS59, 0, _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS59.length);
+  const _bind$3 = [_M0MPC18argparse9OptionArg9OptionArg(new _M0TPC16string10StringView(_M0FP39brickfrog8moongate3cli14build__commandN7_2abindS60, 0, _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS60.length), -1, new _M0TPC16string10StringView(_M0FP39brickfrog8moongate3cli14build__commandN7_2abindS61, 0, _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS61.length), new _M0TPC16string10StringView(_M0FP39brickfrog8moongate3cli14build__commandN7_2abindS62, 0, _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS62.length), undefined, undefined, undefined, -1, undefined, undefined, -1, -1, -1), _M0MPC18argparse9OptionArg9OptionArg(new _M0TPC16string10StringView(_M0FP39brickfrog8moongate3cli14build__commandN7_2abindS63, 0, _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS63.length), -1, new _M0TPC16string10StringView(_M0FP39brickfrog8moongate3cli14build__commandN7_2abindS64, 0, _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS64.length), new _M0TPC16string10StringView(_M0FP39brickfrog8moongate3cli14build__commandN7_2abindS65, 0, _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS65.length), undefined, undefined, undefined, -1, undefined, undefined, -1, -1, -1)];
+  const validate = _M0MPC18argparse7Command7Command(_tmp$2, undefined, new _M0TPB9ArrayViewGRPC18argparse9OptionArgE(_bind$3, 0, 2), undefined, undefined, new _M0TPC16string10StringView(_M0FP39brickfrog8moongate3cli14build__commandN7_2abindS67, 0, _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS67.length), undefined, -1, -1, -1, -1, -1, -1, undefined, undefined);
   const _tmp$3 = new _M0TPC16string10StringView(_M0FP39brickfrog8moongate3cli14build__commandN7_2abindS37, 0, _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS37.length);
-  const _bind$4 = [_M0MPC18argparse9OptionArg9OptionArg(new _M0TPC16string10StringView(_M0FP39brickfrog8moongate3cli14build__commandN7_2abindS38, 0, _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS38.length), -1, new _M0TPC16string10StringView(_M0FP39brickfrog8moongate3cli14build__commandN7_2abindS39, 0, _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS39.length), new _M0TPC16string10StringView(_M0FP39brickfrog8moongate3cli14build__commandN7_2abindS40, 0, _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS40.length), undefined, undefined, undefined, -1, undefined, undefined, _M0FP39brickfrog8moongate3cli14build__commandN6constrS346, -1, -1), _M0MPC18argparse9OptionArg9OptionArg(new _M0TPC16string10StringView(_M0FP39brickfrog8moongate3cli14build__commandN7_2abindS41, 0, _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS41.length), -1, new _M0TPC16string10StringView(_M0FP39brickfrog8moongate3cli14build__commandN7_2abindS42, 0, _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS42.length), new _M0TPC16string10StringView(_M0FP39brickfrog8moongate3cli14build__commandN7_2abindS43, 0, _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS43.length), undefined, undefined, undefined, -1, undefined, undefined, -1, -1, -1), _M0MPC18argparse9OptionArg9OptionArg(new _M0TPC16string10StringView(_M0FP39brickfrog8moongate3cli14build__commandN7_2abindS44, 0, _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS44.length), -1, new _M0TPC16string10StringView(_M0FP39brickfrog8moongate3cli14build__commandN7_2abindS45, 0, _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS45.length), new _M0TPC16string10StringView(_M0FP39brickfrog8moongate3cli14build__commandN7_2abindS46, 0, _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS46.length), undefined, undefined, undefined, -1, undefined, undefined, -1, -1, -1), _M0MPC18argparse9OptionArg9OptionArg(new _M0TPC16string10StringView(_M0FP39brickfrog8moongate3cli14build__commandN7_2abindS47, 0, _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS47.length), -1, new _M0TPC16string10StringView(_M0FP39brickfrog8moongate3cli14build__commandN7_2abindS48, 0, _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS48.length), new _M0TPC16string10StringView(_M0FP39brickfrog8moongate3cli14build__commandN7_2abindS49, 0, _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS49.length), undefined, undefined, undefined, -1, undefined, undefined, -1, -1, -1), _M0MPC18argparse9OptionArg9OptionArg(new _M0TPC16string10StringView(_M0FP39brickfrog8moongate3cli14build__commandN7_2abindS50, 0, _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS50.length), -1, new _M0TPC16string10StringView(_M0FP39brickfrog8moongate3cli14build__commandN7_2abindS51, 0, _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS51.length), new _M0TPC16string10StringView(_M0FP39brickfrog8moongate3cli14build__commandN7_2abindS52, 0, _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS52.length), undefined, undefined, undefined, -1, undefined, undefined, -1, -1, -1)];
-  const check = _M0MPC18argparse7Command7Command(_tmp$3, undefined, new _M0TPB9ArrayViewGRPC18argparse9OptionArgE(_bind$4, 0, 5), undefined, undefined, new _M0TPC16string10StringView(_M0FP39brickfrog8moongate3cli14build__commandN7_2abindS54, 0, _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS54.length), undefined, -1, -1, -1, -1, -1, -1, undefined, undefined);
-  const _tmp$4 = new _M0TPC16string10StringView(_M0FP39brickfrog8moongate3cli14build__commandN7_2abindS34, 0, _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS34.length);
-  const _bind$5 = [validate, check];
-  return _M0MPC18argparse7Command7Command(_tmp$4, undefined, undefined, undefined, new _M0TPB9ArrayViewGRPC18argparse7CommandE(_bind$5, 0, 2), new _M0TPC16string10StringView(_M0FP39brickfrog8moongate3cli14build__commandN7_2abindS36, 0, _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS36.length), new _M0TPC16string10StringView(_M0FP39brickfrog8moongate3cli7version, 0, _M0FP39brickfrog8moongate3cli7version.length), -1, -1, -1, -1, -1, -1, undefined, undefined);
+  const _bind$4 = [_M0MPC18argparse7FlagArg7FlagArg(new _M0TPC16string10StringView(_M0FP39brickfrog8moongate3cli14build__commandN7_2abindS38, 0, _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS38.length), -1, new _M0TPC16string10StringView(_M0FP39brickfrog8moongate3cli14build__commandN7_2abindS39, 0, _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS39.length), new _M0TPC16string10StringView(_M0FP39brickfrog8moongate3cli14build__commandN7_2abindS40, 0, _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS40.length), undefined, undefined, undefined, undefined, -1, -1, -1, -1)];
+  const _tmp$4 = new _M0TPB9ArrayViewGRPC18argparse7FlagArgE(_bind$4, 0, 1);
+  const _bind$5 = [_M0MPC18argparse9OptionArg9OptionArg(new _M0TPC16string10StringView(_M0FP39brickfrog8moongate3cli14build__commandN7_2abindS42, 0, _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS42.length), -1, new _M0TPC16string10StringView(_M0FP39brickfrog8moongate3cli14build__commandN7_2abindS43, 0, _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS43.length), new _M0TPC16string10StringView(_M0FP39brickfrog8moongate3cli14build__commandN7_2abindS44, 0, _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS44.length), undefined, undefined, undefined, -1, undefined, undefined, _M0FP39brickfrog8moongate3cli14build__commandN6constrS370, -1, -1), _M0MPC18argparse9OptionArg9OptionArg(new _M0TPC16string10StringView(_M0FP39brickfrog8moongate3cli14build__commandN7_2abindS45, 0, _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS45.length), -1, new _M0TPC16string10StringView(_M0FP39brickfrog8moongate3cli14build__commandN7_2abindS46, 0, _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS46.length), new _M0TPC16string10StringView(_M0FP39brickfrog8moongate3cli14build__commandN7_2abindS47, 0, _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS47.length), undefined, undefined, undefined, -1, undefined, undefined, -1, -1, -1), _M0MPC18argparse9OptionArg9OptionArg(new _M0TPC16string10StringView(_M0FP39brickfrog8moongate3cli14build__commandN7_2abindS48, 0, _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS48.length), -1, new _M0TPC16string10StringView(_M0FP39brickfrog8moongate3cli14build__commandN7_2abindS49, 0, _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS49.length), new _M0TPC16string10StringView(_M0FP39brickfrog8moongate3cli14build__commandN7_2abindS50, 0, _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS50.length), undefined, undefined, undefined, -1, undefined, undefined, -1, -1, -1), _M0MPC18argparse9OptionArg9OptionArg(new _M0TPC16string10StringView(_M0FP39brickfrog8moongate3cli14build__commandN7_2abindS51, 0, _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS51.length), -1, new _M0TPC16string10StringView(_M0FP39brickfrog8moongate3cli14build__commandN7_2abindS52, 0, _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS52.length), new _M0TPC16string10StringView(_M0FP39brickfrog8moongate3cli14build__commandN7_2abindS53, 0, _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS53.length), undefined, undefined, undefined, -1, undefined, undefined, -1, -1, -1), _M0MPC18argparse9OptionArg9OptionArg(new _M0TPC16string10StringView(_M0FP39brickfrog8moongate3cli14build__commandN7_2abindS54, 0, _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS54.length), -1, new _M0TPC16string10StringView(_M0FP39brickfrog8moongate3cli14build__commandN7_2abindS55, 0, _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS55.length), new _M0TPC16string10StringView(_M0FP39brickfrog8moongate3cli14build__commandN7_2abindS56, 0, _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS56.length), undefined, undefined, undefined, -1, undefined, undefined, -1, -1, -1)];
+  const check = _M0MPC18argparse7Command7Command(_tmp$3, _tmp$4, new _M0TPB9ArrayViewGRPC18argparse9OptionArgE(_bind$5, 0, 5), undefined, undefined, new _M0TPC16string10StringView(_M0FP39brickfrog8moongate3cli14build__commandN7_2abindS58, 0, _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS58.length), undefined, -1, -1, -1, -1, -1, -1, undefined, undefined);
+  const _tmp$5 = new _M0TPC16string10StringView(_M0FP39brickfrog8moongate3cli14build__commandN7_2abindS34, 0, _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS34.length);
+  const _bind$6 = [validate, check];
+  return _M0MPC18argparse7Command7Command(_tmp$5, undefined, undefined, undefined, new _M0TPB9ArrayViewGRPC18argparse7CommandE(_bind$6, 0, 2), new _M0TPC16string10StringView(_M0FP39brickfrog8moongate3cli14build__commandN7_2abindS36, 0, _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS36.length), new _M0TPC16string10StringView(_M0FP39brickfrog8moongate3cli7version, 0, _M0FP39brickfrog8moongate3cli7version.length), -1, -1, -1, -1, -1, -1, undefined, undefined);
 }
 function _M0FP39brickfrog8moongate3cli6single(matches, name, fallback) {
   const _bind$3 = _M0MPB3Map3getGsRPB5ArrayGsEE(matches.values, name);
@@ -27157,9 +27223,9 @@ function _M0FP39brickfrog8moongate3cli8optional(matches, name) {
     return undefined;
   }
 }
-function _M0FP39brickfrog8moongate3cli9emit__outN16_2aasync__driverS129(_state) {
-  const _$42$try$47$74 = _state;
-  const _try_err = _$42$try$47$74._0;
+function _M0FP39brickfrog8moongate3cli9emit__outN16_2aasync__driverS138(_state) {
+  const _$42$try$47$78 = _state;
+  const _try_err = _$42$try$47$78._0;
   if (_try_err.$tag === 25) {
     return new _M0DTPC16result6ResultGOuRPC15error5ErrorE3Err(_try_err);
   } else {
@@ -27186,7 +27252,7 @@ function _M0FP39brickfrog8moongate3cli9emit__out(text, _cont, _err_cont) {
         const _bind$4 = _func(text, _cont, (_cont_param) => {
           let _err$3;
           _L$3: {
-            const _bind$5 = _M0FP39brickfrog8moongate3cli9emit__outN16_2aasync__driverS129(new _M0DTP39brickfrog8moongate3cli41_24brickfrog_2fmoongate_2fcli_2eemit__outL5State11_2atry_2f74(_cont_param));
+            const _bind$5 = _M0FP39brickfrog8moongate3cli9emit__outN16_2aasync__driverS138(new _M0DTP39brickfrog8moongate3cli41_24brickfrog_2fmoongate_2fcli_2eemit__outL5State11_2atry_2f78(_cont_param));
             let _bind$6;
             if (_bind$5.$tag === 1) {
               const _ok = _bind$5;
@@ -27224,16 +27290,16 @@ function _M0FP39brickfrog8moongate3cli9emit__out(text, _cont, _err_cont) {
           return new _M0DTPC16result6ResultGOuRPC15error5ErrorE2Ok(_payload);
         }
       }
-      return _M0FP39brickfrog8moongate3cli9emit__outN16_2aasync__driverS129(new _M0DTP39brickfrog8moongate3cli41_24brickfrog_2fmoongate_2fcli_2eemit__outL5State11_2atry_2f74(_err$2));
+      return _M0FP39brickfrog8moongate3cli9emit__outN16_2aasync__driverS138(new _M0DTP39brickfrog8moongate3cli41_24brickfrog_2fmoongate_2fcli_2eemit__outL5State11_2atry_2f78(_err$2));
     }
-    return _M0FP39brickfrog8moongate3cli9emit__outN16_2aasync__driverS129(new _M0DTP39brickfrog8moongate3cli41_24brickfrog_2fmoongate_2fcli_2eemit__outL5State11_2atry_2f74(_err));
+    return _M0FP39brickfrog8moongate3cli9emit__outN16_2aasync__driverS138(new _M0DTP39brickfrog8moongate3cli41_24brickfrog_2fmoongate_2fcli_2eemit__outL5State11_2atry_2f78(_err));
   } else {
     return new _M0DTPC16result6ResultGOuRPC15error5ErrorE2Ok(undefined);
   }
 }
-function _M0FP39brickfrog8moongate3cli9emit__errN16_2aasync__driverS145(_state) {
-  const _$42$try$47$80 = _state;
-  const _try_err = _$42$try$47$80._0;
+function _M0FP39brickfrog8moongate3cli9emit__errN16_2aasync__driverS154(_state) {
+  const _$42$try$47$84 = _state;
+  const _try_err = _$42$try$47$84._0;
   if (_try_err.$tag === 25) {
     return new _M0DTPC16result6ResultGOuRPC15error5ErrorE3Err(_try_err);
   } else {
@@ -27260,7 +27326,7 @@ function _M0FP39brickfrog8moongate3cli9emit__err(text, _cont, _err_cont) {
         const _bind$4 = _func(text, _cont, (_cont_param) => {
           let _err$3;
           _L$3: {
-            const _bind$5 = _M0FP39brickfrog8moongate3cli9emit__errN16_2aasync__driverS145(new _M0DTP39brickfrog8moongate3cli41_24brickfrog_2fmoongate_2fcli_2eemit__errL5State11_2atry_2f80(_cont_param));
+            const _bind$5 = _M0FP39brickfrog8moongate3cli9emit__errN16_2aasync__driverS154(new _M0DTP39brickfrog8moongate3cli41_24brickfrog_2fmoongate_2fcli_2eemit__errL5State11_2atry_2f84(_cont_param));
             let _bind$6;
             if (_bind$5.$tag === 1) {
               const _ok = _bind$5;
@@ -27298,14 +27364,14 @@ function _M0FP39brickfrog8moongate3cli9emit__err(text, _cont, _err_cont) {
           return new _M0DTPC16result6ResultGOuRPC15error5ErrorE2Ok(_payload);
         }
       }
-      return _M0FP39brickfrog8moongate3cli9emit__errN16_2aasync__driverS145(new _M0DTP39brickfrog8moongate3cli41_24brickfrog_2fmoongate_2fcli_2eemit__errL5State11_2atry_2f80(_err$2));
+      return _M0FP39brickfrog8moongate3cli9emit__errN16_2aasync__driverS154(new _M0DTP39brickfrog8moongate3cli41_24brickfrog_2fmoongate_2fcli_2eemit__errL5State11_2atry_2f84(_err$2));
     }
-    return _M0FP39brickfrog8moongate3cli9emit__errN16_2aasync__driverS145(new _M0DTP39brickfrog8moongate3cli41_24brickfrog_2fmoongate_2fcli_2eemit__errL5State11_2atry_2f80(_err));
+    return _M0FP39brickfrog8moongate3cli9emit__errN16_2aasync__driverS154(new _M0DTP39brickfrog8moongate3cli41_24brickfrog_2fmoongate_2fcli_2eemit__errL5State11_2atry_2f84(_err));
   } else {
     return new _M0DTPC16result6ResultGOuRPC15error5ErrorE2Ok(undefined);
   }
 }
-function _M0FP39brickfrog8moongate3cli19run__check__commandN16_2aasync__driverS161(_env, _state) {
+function _M0FP39brickfrog8moongate3cli19run__check__commandN16_2aasync__driverS170(_env, _state) {
   const constr = _env._1;
   const constr$2 = _env._0;
   let _tmp$2 = _state;
@@ -27319,73 +27385,87 @@ function _M0FP39brickfrog8moongate3cli19run__check__commandN16_2aasync__driverS1
       }
       case 1: {
         const _State_1 = _state$2;
-        const _err_cont = _State_1._3;
-        const _cont = _State_1._2;
-        const format = _State_1._1;
-        const _cont_param = _State_1._0;
-        const _bind$3 = _M0FP39brickfrog8moongate3cli9emit__out(_M0FP39brickfrog8moongate4core14render__report(_cont_param, format), (_cont_param$2) => {
-          let _err;
-          _L$2: {
-            const _bind$4 = _M0FP39brickfrog8moongate3cli19run__check__commandN16_2aasync__driverS161(_env, new _M0DTP39brickfrog8moongate3cli51_24brickfrog_2fmoongate_2fcli_2erun__check__commandL5State8State__0(_cont_param$2, _cont_param));
+        const _err_cont = _State_1._4;
+        const _cont = _State_1._3;
+        const report$2 = _State_1._2;
+        const matches = _State_1._1;
+        const _bind$3 = _M0MPB3Map3getGsbE(matches.flags, "report-json");
+        if (_bind$3 === -1) {
+          _tmp$2 = new _M0DTP39brickfrog8moongate3cli51_24brickfrog_2fmoongate_2fcli_2erun__check__commandL5State8State__0(undefined, report$2);
+          continue _L;
+        } else {
+          const _Some = _bind$3;
+          const _x = _Some;
+          if (_x === true) {
+            const _bind$4 = _M0FP39brickfrog8moongate3cli9emit__err(_M0FP39brickfrog8moongate4core14render__report(report$2, 1), (_cont_param) => {
+              let _err;
+              _L$2: {
+                const _bind$5 = _M0FP39brickfrog8moongate3cli19run__check__commandN16_2aasync__driverS170(_env, new _M0DTP39brickfrog8moongate3cli51_24brickfrog_2fmoongate_2fcli_2erun__check__commandL5State8State__0(_cont_param, report$2));
+                let _bind$6;
+                if (_bind$5.$tag === 1) {
+                  const _ok = _bind$5;
+                  _bind$6 = _ok._0;
+                } else {
+                  const _err$2 = _bind$5;
+                  _err = _err$2._0;
+                  break _L$2;
+                }
+                if (_bind$6 === undefined) {
+                  return;
+                } else {
+                  const _Some$2 = _bind$6;
+                  const _payload = _Some$2;
+                  _cont(_payload);
+                  return;
+                }
+              }
+              _err_cont(_err);
+            }, _err_cont);
             let _bind$5;
             if (_bind$4.$tag === 1) {
               const _ok = _bind$4;
               _bind$5 = _ok._0;
             } else {
-              const _err$2 = _bind$4;
-              _err = _err$2._0;
-              break _L$2;
+              return _bind$4;
             }
-            if (_bind$5 === undefined) {
-              return;
+            if (_bind$5 === -1) {
+              return new _M0DTPC16result6ResultGOiRPC15error5ErrorE2Ok(undefined);
             } else {
-              const _Some = _bind$5;
-              const _payload = _Some;
-              _cont(_payload);
-              return;
+              const _Some$2 = _bind$5;
+              const _payload = _Some$2;
+              _tmp$2 = new _M0DTP39brickfrog8moongate3cli51_24brickfrog_2fmoongate_2fcli_2erun__check__commandL5State8State__0(_payload, report$2);
+              continue _L;
             }
+          } else {
+            _tmp$2 = new _M0DTP39brickfrog8moongate3cli51_24brickfrog_2fmoongate_2fcli_2erun__check__commandL5State8State__0(undefined, report$2);
+            continue _L;
           }
-          _err_cont(_err);
-        }, _err_cont);
-        let _bind$4;
-        if (_bind$3.$tag === 1) {
-          const _ok = _bind$3;
-          _bind$4 = _ok._0;
-        } else {
-          return _bind$3;
-        }
-        if (_bind$4 === -1) {
-          return new _M0DTPC16result6ResultGOiRPC15error5ErrorE2Ok(undefined);
-        } else {
-          const _Some = _bind$4;
-          const _payload = _Some;
-          _tmp$2 = new _M0DTP39brickfrog8moongate3cli51_24brickfrog_2fmoongate_2fcli_2erun__check__commandL5State8State__0(_payload, _cont_param);
-          continue _L;
         }
       }
       case 2: {
         const _State_2 = _state$2;
         const _err_cont$2 = _State_2._4;
         const _cont$2 = _State_2._3;
-        const options = _State_2._2;
-        const format$2 = _State_2._1;
-        const _bind$5 = _M0FP39brickfrog8moongate6runner5check(options, (_cont_param$2) => {
+        const format = _State_2._2;
+        const matches$2 = _State_2._1;
+        const _cont_param = _State_2._0;
+        const _bind$4 = _M0FP39brickfrog8moongate3cli9emit__out(_M0FP39brickfrog8moongate4core14render__report(_cont_param, format), (_cont_param$2) => {
           let _err;
           _L$2: {
-            const _bind$6 = _M0FP39brickfrog8moongate3cli19run__check__commandN16_2aasync__driverS161(_env, new _M0DTP39brickfrog8moongate3cli51_24brickfrog_2fmoongate_2fcli_2erun__check__commandL5State8State__1(_cont_param$2, format$2, _cont$2, _err_cont$2));
-            let _bind$7;
-            if (_bind$6.$tag === 1) {
-              const _ok = _bind$6;
-              _bind$7 = _ok._0;
+            const _bind$5 = _M0FP39brickfrog8moongate3cli19run__check__commandN16_2aasync__driverS170(_env, new _M0DTP39brickfrog8moongate3cli51_24brickfrog_2fmoongate_2fcli_2erun__check__commandL5State8State__1(_cont_param$2, matches$2, _cont_param, _cont$2, _err_cont$2));
+            let _bind$6;
+            if (_bind$5.$tag === 1) {
+              const _ok = _bind$5;
+              _bind$6 = _ok._0;
             } else {
-              const _err$2 = _bind$6;
+              const _err$2 = _bind$5;
               _err = _err$2._0;
               break _L$2;
             }
-            if (_bind$7 === undefined) {
+            if (_bind$6 === undefined) {
               return;
             } else {
-              const _Some = _bind$7;
+              const _Some = _bind$6;
               const _payload = _Some;
               _cont$2(_payload);
               return;
@@ -27393,126 +27473,173 @@ function _M0FP39brickfrog8moongate3cli19run__check__commandN16_2aasync__driverS1
           }
           _err_cont$2(_err);
         }, _err_cont$2);
-        let _bind$6;
-        if (_bind$5.$tag === 1) {
-          const _ok = _bind$5;
-          _bind$6 = _ok._0;
+        let _bind$5;
+        if (_bind$4.$tag === 1) {
+          const _ok = _bind$4;
+          _bind$5 = _ok._0;
         } else {
-          return _bind$5;
+          return _bind$4;
         }
-        if (_bind$6 === undefined) {
+        if (_bind$5 === -1) {
           return new _M0DTPC16result6ResultGOiRPC15error5ErrorE2Ok(undefined);
         } else {
-          const _Some = _bind$6;
+          const _Some = _bind$5;
           const _payload = _Some;
-          _tmp$2 = new _M0DTP39brickfrog8moongate3cli51_24brickfrog_2fmoongate_2fcli_2erun__check__commandL5State8State__1(_payload, format$2, _cont$2, _err_cont$2);
+          _tmp$2 = new _M0DTP39brickfrog8moongate3cli51_24brickfrog_2fmoongate_2fcli_2erun__check__commandL5State8State__1(_payload, matches$2, _cont_param, _cont$2, _err_cont$2);
           continue _L;
         }
       }
       case 3: {
-        return new _M0DTPC16result6ResultGOiRPC15error5ErrorE2Ok(constr$2);
-      }
-      case 4: {
-        const _State_4 = _state$2;
-        const _err_cont$3 = _State_4._3;
-        const _cont$3 = _State_4._2;
-        const matches = _State_4._1;
-        const _cont_param$2 = _State_4._0;
-        const _bind$7 = _M0FP39brickfrog8moongate3cli6single(matches, "base", "");
-        const _bind$8 = _M0FP39brickfrog8moongate3cli6single(matches, "head", "HEAD");
-        const _bind$9 = _M0FP39brickfrog8moongate3cli6single(matches, "config", ".moongate.json");
-        const _bind$10 = _M0FP39brickfrog8moongate3cli8optional(matches, "config-ref");
-        const options$2 = new _M0TP39brickfrog8moongate6runner12CheckOptions(_bind$7, _bind$8, _bind$9, _bind$10);
-        if (_bind$7 === "") {
-          const _bind$11 = _M0FP39brickfrog8moongate3cli9emit__err("--base is required.\n", (_cont_param$3) => {
-            let _err;
-            _L$2: {
-              const _bind$12 = _M0FP39brickfrog8moongate3cli19run__check__commandN16_2aasync__driverS161(_env, new _M0DTP39brickfrog8moongate3cli51_24brickfrog_2fmoongate_2fcli_2erun__check__commandL5State8State__3(_cont_param$3));
-              let _bind$13;
-              if (_bind$12.$tag === 1) {
-                const _ok = _bind$12;
-                _bind$13 = _ok._0;
-              } else {
-                const _err$2 = _bind$12;
-                _err = _err$2._0;
-                break _L$2;
-              }
-              if (_bind$13 === undefined) {
-                return;
-              } else {
-                const _Some = _bind$13;
-                const _payload = _Some;
-                _cont$3(_payload);
-                return;
-              }
-            }
-            _err_cont$3(_err);
-          }, _err_cont$3);
-          let _bind$12;
-          if (_bind$11.$tag === 1) {
-            const _ok = _bind$11;
-            _bind$12 = _ok._0;
-          } else {
-            return _bind$11;
-          }
-          if (_bind$12 === -1) {
-            return new _M0DTPC16result6ResultGOiRPC15error5ErrorE2Ok(undefined);
-          } else {
-            const _Some = _bind$12;
-            const _payload = _Some;
-            _tmp$2 = new _M0DTP39brickfrog8moongate3cli51_24brickfrog_2fmoongate_2fcli_2erun__check__commandL5State8State__3(_payload);
-            continue _L;
-          }
-        } else {
-          _tmp$2 = new _M0DTP39brickfrog8moongate3cli51_24brickfrog_2fmoongate_2fcli_2erun__check__commandL5State8State__2(undefined, _cont_param$2, options$2, _cont$3, _err_cont$3);
-          continue _L;
-        }
-      }
-      case 5: {
-        return new _M0DTPC16result6ResultGOiRPC15error5ErrorE2Ok(constr);
-      }
-      default: {
-        const _$42$try$47$86 = _state$2;
-        const _err_cont$4 = _$42$try$47$86._2;
-        const _cont$4 = _$42$try$47$86._1;
-        const _try_err = _$42$try$47$86._0;
-        const _bind$11 = _M0FP39brickfrog8moongate3cli9emit__err(`${_M0FP39brickfrog8moongate4core13safe__message(_try_err)}\n`, (_cont_param$3) => {
+        const _State_3 = _state$2;
+        const _err_cont$3 = _State_3._5;
+        const _cont$3 = _State_3._4;
+        const options = _State_3._3;
+        const format$2 = _State_3._2;
+        const matches$3 = _State_3._1;
+        const _bind$6 = _M0FP39brickfrog8moongate6runner5check(options, (_cont_param$2) => {
           let _err;
           _L$2: {
-            const _bind$12 = _M0FP39brickfrog8moongate3cli19run__check__commandN16_2aasync__driverS161(_env, new _M0DTP39brickfrog8moongate3cli51_24brickfrog_2fmoongate_2fcli_2erun__check__commandL5State8State__5(_cont_param$3));
-            let _bind$13;
-            if (_bind$12.$tag === 1) {
-              const _ok = _bind$12;
-              _bind$13 = _ok._0;
+            const _bind$7 = _M0FP39brickfrog8moongate3cli19run__check__commandN16_2aasync__driverS170(_env, new _M0DTP39brickfrog8moongate3cli51_24brickfrog_2fmoongate_2fcli_2erun__check__commandL5State8State__2(_cont_param$2, matches$3, format$2, _cont$3, _err_cont$3));
+            let _bind$8;
+            if (_bind$7.$tag === 1) {
+              const _ok = _bind$7;
+              _bind$8 = _ok._0;
             } else {
-              const _err$2 = _bind$12;
+              const _err$2 = _bind$7;
               _err = _err$2._0;
               break _L$2;
             }
-            if (_bind$13 === undefined) {
+            if (_bind$8 === undefined) {
               return;
             } else {
-              const _Some = _bind$13;
+              const _Some = _bind$8;
               const _payload = _Some;
-              _cont$4(_payload);
+              _cont$3(_payload);
               return;
             }
           }
-          _err_cont$4(_err);
-        }, _err_cont$4);
-        let _bind$12;
-        if (_bind$11.$tag === 1) {
-          const _ok = _bind$11;
-          _bind$12 = _ok._0;
+          _err_cont$3(_err);
+        }, _err_cont$3);
+        let _bind$7;
+        if (_bind$6.$tag === 1) {
+          const _ok = _bind$6;
+          _bind$7 = _ok._0;
         } else {
-          return _bind$11;
+          return _bind$6;
         }
-        if (_bind$12 === -1) {
+        if (_bind$7 === undefined) {
           return new _M0DTPC16result6ResultGOiRPC15error5ErrorE2Ok(undefined);
         } else {
-          const _Some = _bind$12;
+          const _Some = _bind$7;
           const _payload = _Some;
-          _tmp$2 = new _M0DTP39brickfrog8moongate3cli51_24brickfrog_2fmoongate_2fcli_2erun__check__commandL5State8State__5(_payload);
+          _tmp$2 = new _M0DTP39brickfrog8moongate3cli51_24brickfrog_2fmoongate_2fcli_2erun__check__commandL5State8State__2(_payload, matches$3, format$2, _cont$3, _err_cont$3);
+          continue _L;
+        }
+      }
+      case 4: {
+        return new _M0DTPC16result6ResultGOiRPC15error5ErrorE2Ok(constr);
+      }
+      case 5: {
+        const _State_5 = _state$2;
+        const _err_cont$4 = _State_5._3;
+        const _cont$4 = _State_5._2;
+        const matches$4 = _State_5._1;
+        const _cont_param$2 = _State_5._0;
+        const _bind$8 = _M0FP39brickfrog8moongate3cli6single(matches$4, "base", "");
+        const _bind$9 = _M0FP39brickfrog8moongate3cli6single(matches$4, "head", "HEAD");
+        const _bind$10 = _M0FP39brickfrog8moongate3cli6single(matches$4, "config", ".moongate.json");
+        const _bind$11 = _M0FP39brickfrog8moongate3cli8optional(matches$4, "config-ref");
+        const options$2 = new _M0TP39brickfrog8moongate6runner12CheckOptions(_bind$8, _bind$9, _bind$10, _bind$11);
+        if (_bind$8 === "") {
+          const _bind$12 = _M0FP39brickfrog8moongate3cli9emit__err("--base is required.\n", (_cont_param$3) => {
+            let _err;
+            _L$2: {
+              const _bind$13 = _M0FP39brickfrog8moongate3cli19run__check__commandN16_2aasync__driverS170(_env, new _M0DTP39brickfrog8moongate3cli51_24brickfrog_2fmoongate_2fcli_2erun__check__commandL5State8State__4(_cont_param$3));
+              let _bind$14;
+              if (_bind$13.$tag === 1) {
+                const _ok = _bind$13;
+                _bind$14 = _ok._0;
+              } else {
+                const _err$2 = _bind$13;
+                _err = _err$2._0;
+                break _L$2;
+              }
+              if (_bind$14 === undefined) {
+                return;
+              } else {
+                const _Some = _bind$14;
+                const _payload = _Some;
+                _cont$4(_payload);
+                return;
+              }
+            }
+            _err_cont$4(_err);
+          }, _err_cont$4);
+          let _bind$13;
+          if (_bind$12.$tag === 1) {
+            const _ok = _bind$12;
+            _bind$13 = _ok._0;
+          } else {
+            return _bind$12;
+          }
+          if (_bind$13 === -1) {
+            return new _M0DTPC16result6ResultGOiRPC15error5ErrorE2Ok(undefined);
+          } else {
+            const _Some = _bind$13;
+            const _payload = _Some;
+            _tmp$2 = new _M0DTP39brickfrog8moongate3cli51_24brickfrog_2fmoongate_2fcli_2erun__check__commandL5State8State__4(_payload);
+            continue _L;
+          }
+        } else {
+          _tmp$2 = new _M0DTP39brickfrog8moongate3cli51_24brickfrog_2fmoongate_2fcli_2erun__check__commandL5State8State__3(undefined, matches$4, _cont_param$2, options$2, _cont$4, _err_cont$4);
+          continue _L;
+        }
+      }
+      case 6: {
+        return new _M0DTPC16result6ResultGOiRPC15error5ErrorE2Ok(constr$2);
+      }
+      default: {
+        const _$42$try$47$95 = _state$2;
+        const _err_cont$5 = _$42$try$47$95._2;
+        const _cont$5 = _$42$try$47$95._1;
+        const _try_err = _$42$try$47$95._0;
+        const _bind$12 = _M0FP39brickfrog8moongate3cli9emit__err(`${_M0FP39brickfrog8moongate4core13safe__message(_try_err)}\n`, (_cont_param$3) => {
+          let _err;
+          _L$2: {
+            const _bind$13 = _M0FP39brickfrog8moongate3cli19run__check__commandN16_2aasync__driverS170(_env, new _M0DTP39brickfrog8moongate3cli51_24brickfrog_2fmoongate_2fcli_2erun__check__commandL5State8State__6(_cont_param$3));
+            let _bind$14;
+            if (_bind$13.$tag === 1) {
+              const _ok = _bind$13;
+              _bind$14 = _ok._0;
+            } else {
+              const _err$2 = _bind$13;
+              _err = _err$2._0;
+              break _L$2;
+            }
+            if (_bind$14 === undefined) {
+              return;
+            } else {
+              const _Some = _bind$14;
+              const _payload = _Some;
+              _cont$5(_payload);
+              return;
+            }
+          }
+          _err_cont$5(_err);
+        }, _err_cont$5);
+        let _bind$13;
+        if (_bind$12.$tag === 1) {
+          const _ok = _bind$12;
+          _bind$13 = _ok._0;
+        } else {
+          return _bind$12;
+        }
+        if (_bind$13 === -1) {
+          return new _M0DTPC16result6ResultGOiRPC15error5ErrorE2Ok(undefined);
+        } else {
+          const _Some = _bind$13;
+          const _payload = _Some;
+          _tmp$2 = new _M0DTP39brickfrog8moongate3cli51_24brickfrog_2fmoongate_2fcli_2erun__check__commandL5State8State__6(_payload);
           continue _L;
         }
       }
@@ -27520,7 +27647,7 @@ function _M0FP39brickfrog8moongate3cli19run__check__commandN16_2aasync__driverS1
   }
 }
 function _M0FP39brickfrog8moongate3cli19run__check__command(matches, _cont, _err_cont) {
-  const _env = { _0: _M0FP39brickfrog8moongate3cli19run__check__commandN6constrS347, _1: _M0FP39brickfrog8moongate3cli19run__check__commandN6constrS348 };
+  const _env = { _0: _M0FP39brickfrog8moongate3cli19run__check__commandN6constrS372, _1: _M0FP39brickfrog8moongate3cli19run__check__commandN6constrS371 };
   let _err;
   _L: {
     const _bind$3 = _M0FP39brickfrog8moongate4core13parse__format(_M0FP39brickfrog8moongate3cli6single(matches, "format", "text"));
@@ -27533,11 +27660,11 @@ function _M0FP39brickfrog8moongate3cli19run__check__command(matches, _cont, _err
       _err = _err$2._0;
       break _L;
     }
-    return _M0FP39brickfrog8moongate3cli19run__check__commandN16_2aasync__driverS161(_env, new _M0DTP39brickfrog8moongate3cli51_24brickfrog_2fmoongate_2fcli_2erun__check__commandL5State8State__4(_tmp$2, matches, _cont, _err_cont));
+    return _M0FP39brickfrog8moongate3cli19run__check__commandN16_2aasync__driverS170(_env, new _M0DTP39brickfrog8moongate3cli51_24brickfrog_2fmoongate_2fcli_2erun__check__commandL5State8State__5(_tmp$2, matches, _cont, _err_cont));
   }
-  return _M0FP39brickfrog8moongate3cli19run__check__commandN16_2aasync__driverS161(_env, new _M0DTP39brickfrog8moongate3cli51_24brickfrog_2fmoongate_2fcli_2erun__check__commandL5State11_2atry_2f86(_err, _cont, _err_cont));
+  return _M0FP39brickfrog8moongate3cli19run__check__commandN16_2aasync__driverS170(_env, new _M0DTP39brickfrog8moongate3cli51_24brickfrog_2fmoongate_2fcli_2erun__check__commandL5State11_2atry_2f95(_err, _cont, _err_cont));
 }
-function _M0FP39brickfrog8moongate3cli13run__validateN16_2aasync__driverS221(_env, _state) {
+function _M0FP39brickfrog8moongate3cli13run__validateN16_2aasync__driverS245(_env, _state) {
   const constr = _env._2;
   const constr$2 = _env._1;
   const constr$3 = _env._0;
@@ -27549,7 +27676,7 @@ function _M0FP39brickfrog8moongate3cli13run__validateN16_2aasync__driverS221(_en
         return new _M0DTPC16result6ResultGOiRPC15error5ErrorE2Ok(constr$3);
       }
       case 1: {
-        return new _M0DTPC16result6ResultGOiRPC15error5ErrorE2Ok(constr);
+        return new _M0DTPC16result6ResultGOiRPC15error5ErrorE2Ok(constr$2);
       }
       case 2: {
         const _State_2 = _state$2;
@@ -27563,7 +27690,7 @@ function _M0FP39brickfrog8moongate3cli13run__validateN16_2aasync__driverS221(_en
           const _bind$3 = _M0FP39brickfrog8moongate3cli9emit__out(_M0FP39brickfrog8moongate4core18render__validation(_config.rules.length, [], format), (_cont_param$2) => {
             let _err;
             _L$2: {
-              const _bind$4 = _M0FP39brickfrog8moongate3cli13run__validateN16_2aasync__driverS221(_env, new _M0DTP39brickfrog8moongate3cli45_24brickfrog_2fmoongate_2fcli_2erun__validateL5State8State__0(_cont_param$2));
+              const _bind$4 = _M0FP39brickfrog8moongate3cli13run__validateN16_2aasync__driverS245(_env, new _M0DTP39brickfrog8moongate3cli45_24brickfrog_2fmoongate_2fcli_2erun__validateL5State8State__0(_cont_param$2));
               let _bind$5;
               if (_bind$4.$tag === 1) {
                 const _ok = _bind$4;
@@ -27607,7 +27734,7 @@ function _M0FP39brickfrog8moongate3cli13run__validateN16_2aasync__driverS221(_en
             const _bind$3 = _M0FP39brickfrog8moongate3cli9emit__err(text, (_cont_param$2) => {
               let _err;
               _L$2: {
-                const _bind$4 = _M0FP39brickfrog8moongate3cli13run__validateN16_2aasync__driverS221(_env, new _M0DTP39brickfrog8moongate3cli45_24brickfrog_2fmoongate_2fcli_2erun__validateL5State8State__1(_cont_param$2));
+                const _bind$4 = _M0FP39brickfrog8moongate3cli13run__validateN16_2aasync__driverS245(_env, new _M0DTP39brickfrog8moongate3cli45_24brickfrog_2fmoongate_2fcli_2erun__validateL5State8State__1(_cont_param$2));
                 let _bind$5;
                 if (_bind$4.$tag === 1) {
                   const _ok = _bind$4;
@@ -27647,7 +27774,7 @@ function _M0FP39brickfrog8moongate3cli13run__validateN16_2aasync__driverS221(_en
             const _bind$3 = _M0FP39brickfrog8moongate3cli9emit__out(text, (_cont_param$2) => {
               let _err;
               _L$2: {
-                const _bind$4 = _M0FP39brickfrog8moongate3cli13run__validateN16_2aasync__driverS221(_env, new _M0DTP39brickfrog8moongate3cli45_24brickfrog_2fmoongate_2fcli_2erun__validateL5State8State__1(_cont_param$2));
+                const _bind$4 = _M0FP39brickfrog8moongate3cli13run__validateN16_2aasync__driverS245(_env, new _M0DTP39brickfrog8moongate3cli45_24brickfrog_2fmoongate_2fcli_2erun__validateL5State8State__1(_cont_param$2));
                 let _bind$5;
                 if (_bind$4.$tag === 1) {
                   const _ok = _bind$4;
@@ -27687,11 +27814,11 @@ function _M0FP39brickfrog8moongate3cli13run__validateN16_2aasync__driverS221(_en
         }
       }
       case 3: {
-        const _$42$try$47$91 = _state$2;
-        const _err_cont$2 = _$42$try$47$91._3;
-        const _cont$2 = _$42$try$47$91._2;
-        const format$2 = _$42$try$47$91._1;
-        const _try_err = _$42$try$47$91._0;
+        const _$42$try$47$100 = _state$2;
+        const _err_cont$2 = _$42$try$47$100._3;
+        const _cont$2 = _$42$try$47$100._2;
+        const format$2 = _$42$try$47$100._1;
+        const _try_err = _$42$try$47$100._0;
         if (_try_err.$tag === 25) {
           return new _M0DTPC16result6ResultGOiRPC15error5ErrorE3Err(_try_err);
         } else {
@@ -27720,7 +27847,7 @@ function _M0FP39brickfrog8moongate3cli13run__validateN16_2aasync__driverS221(_en
           const _bind$3 = _M0FP39brickfrog8moongate6runner16validate__config(path, (_cont_param$4) => {
             let _err$2;
             _L$3: {
-              const _bind$4 = _M0FP39brickfrog8moongate3cli13run__validateN16_2aasync__driverS221(_env, new _M0DTP39brickfrog8moongate3cli45_24brickfrog_2fmoongate_2fcli_2erun__validateL5State8State__4(_cont_param$4, _cont_param$3, _cont$4, _err_cont$4));
+              const _bind$4 = _M0FP39brickfrog8moongate3cli13run__validateN16_2aasync__driverS245(_env, new _M0DTP39brickfrog8moongate3cli45_24brickfrog_2fmoongate_2fcli_2erun__validateL5State8State__4(_cont_param$4, _cont_param$3, _cont$4, _err_cont$4));
               let _bind$5;
               if (_bind$4.$tag === 1) {
                 const _ok = _bind$4;
@@ -27743,7 +27870,7 @@ function _M0FP39brickfrog8moongate3cli13run__validateN16_2aasync__driverS221(_en
           }, (_cont_param$4) => {
             let _err$2;
             _L$3: {
-              const _bind$4 = _M0FP39brickfrog8moongate3cli13run__validateN16_2aasync__driverS221(_env, new _M0DTP39brickfrog8moongate3cli45_24brickfrog_2fmoongate_2fcli_2erun__validateL5State11_2atry_2f91(_cont_param$4, _cont_param$3, _cont$4, _err_cont$4));
+              const _bind$4 = _M0FP39brickfrog8moongate3cli13run__validateN16_2aasync__driverS245(_env, new _M0DTP39brickfrog8moongate3cli45_24brickfrog_2fmoongate_2fcli_2erun__validateL5State12_2atry_2f100(_cont_param$4, _cont_param$3, _cont$4, _err_cont$4));
               let _bind$5;
               if (_bind$4.$tag === 1) {
                 const _ok = _bind$4;
@@ -27782,21 +27909,21 @@ function _M0FP39brickfrog8moongate3cli13run__validateN16_2aasync__driverS221(_en
             continue _L;
           }
         }
-        _tmp$2 = new _M0DTP39brickfrog8moongate3cli45_24brickfrog_2fmoongate_2fcli_2erun__validateL5State11_2atry_2f91(_err, _cont_param$3, _cont$4, _err_cont$4);
+        _tmp$2 = new _M0DTP39brickfrog8moongate3cli45_24brickfrog_2fmoongate_2fcli_2erun__validateL5State12_2atry_2f100(_err, _cont_param$3, _cont$4, _err_cont$4);
         continue _L;
       }
       case 6: {
-        return new _M0DTPC16result6ResultGOiRPC15error5ErrorE2Ok(constr$2);
+        return new _M0DTPC16result6ResultGOiRPC15error5ErrorE2Ok(constr);
       }
       default: {
-        const _$42$try$47$105 = _state$2;
-        const _err_cont$5 = _$42$try$47$105._2;
-        const _cont$5 = _$42$try$47$105._1;
-        const _try_err$2 = _$42$try$47$105._0;
+        const _$42$try$47$114 = _state$2;
+        const _err_cont$5 = _$42$try$47$114._2;
+        const _cont$5 = _$42$try$47$114._1;
+        const _try_err$2 = _$42$try$47$114._0;
         const _bind$3 = _M0FP39brickfrog8moongate3cli9emit__err(`${_M0FP39brickfrog8moongate4core13safe__message(_try_err$2)}\n`, (_cont_param$4) => {
           let _err$2;
           _L$3: {
-            const _bind$4 = _M0FP39brickfrog8moongate3cli13run__validateN16_2aasync__driverS221(_env, new _M0DTP39brickfrog8moongate3cli45_24brickfrog_2fmoongate_2fcli_2erun__validateL5State8State__6(_cont_param$4));
+            const _bind$4 = _M0FP39brickfrog8moongate3cli13run__validateN16_2aasync__driverS245(_env, new _M0DTP39brickfrog8moongate3cli45_24brickfrog_2fmoongate_2fcli_2erun__validateL5State8State__6(_cont_param$4));
             let _bind$5;
             if (_bind$4.$tag === 1) {
               const _ok = _bind$4;
@@ -27837,7 +27964,7 @@ function _M0FP39brickfrog8moongate3cli13run__validateN16_2aasync__driverS221(_en
   }
 }
 function _M0FP39brickfrog8moongate3cli13run__validate(matches, _cont, _err_cont) {
-  const _env = { _0: _M0FP39brickfrog8moongate3cli13run__validateN6constrS349, _1: _M0FP39brickfrog8moongate3cli13run__validateN6constrS351, _2: _M0FP39brickfrog8moongate3cli13run__validateN6constrS350 };
+  const _env = { _0: _M0FP39brickfrog8moongate3cli13run__validateN6constrS373, _1: _M0FP39brickfrog8moongate3cli13run__validateN6constrS374, _2: _M0FP39brickfrog8moongate3cli13run__validateN6constrS375 };
   let _err;
   _L: {
     const _bind$3 = _M0FP39brickfrog8moongate4core13parse__format(_M0FP39brickfrog8moongate3cli6single(matches, "format", "text"));
@@ -27850,11 +27977,11 @@ function _M0FP39brickfrog8moongate3cli13run__validate(matches, _cont, _err_cont)
       _err = _err$2._0;
       break _L;
     }
-    return _M0FP39brickfrog8moongate3cli13run__validateN16_2aasync__driverS221(_env, new _M0DTP39brickfrog8moongate3cli45_24brickfrog_2fmoongate_2fcli_2erun__validateL5State8State__5(_tmp$2, matches, _cont, _err_cont));
+    return _M0FP39brickfrog8moongate3cli13run__validateN16_2aasync__driverS245(_env, new _M0DTP39brickfrog8moongate3cli45_24brickfrog_2fmoongate_2fcli_2erun__validateL5State8State__5(_tmp$2, matches, _cont, _err_cont));
   }
-  return _M0FP39brickfrog8moongate3cli13run__validateN16_2aasync__driverS221(_env, new _M0DTP39brickfrog8moongate3cli45_24brickfrog_2fmoongate_2fcli_2erun__validateL5State12_2atry_2f105(_err, _cont, _err_cont));
+  return _M0FP39brickfrog8moongate3cli13run__validateN16_2aasync__driverS245(_env, new _M0DTP39brickfrog8moongate3cli45_24brickfrog_2fmoongate_2fcli_2erun__validateL5State12_2atry_2f114(_err, _cont, _err_cont));
 }
-function _M0FP39brickfrog8moongate3cli3runN16_2aasync__driverS297(_env, _state) {
+function _M0FP39brickfrog8moongate3cli3runN16_2aasync__driverS321(_env, _state) {
   const constr = _env._2;
   const constr$2 = _env._1;
   const constr$3 = _env._0;
@@ -27863,10 +27990,10 @@ function _M0FP39brickfrog8moongate3cli3runN16_2aasync__driverS297(_env, _state) 
     const _state$2 = _tmp$2;
     switch (_state$2.$tag) {
       case 0: {
-        return new _M0DTPC16result6ResultGOiRPC15error5ErrorE2Ok(constr$2);
+        return new _M0DTPC16result6ResultGOiRPC15error5ErrorE2Ok(constr);
       }
       case 1: {
-        return new _M0DTPC16result6ResultGOiRPC15error5ErrorE2Ok(constr);
+        return new _M0DTPC16result6ResultGOiRPC15error5ErrorE2Ok(constr$2);
       }
       case 2: {
         const _State_2 = _state$2;
@@ -27879,7 +28006,7 @@ function _M0FP39brickfrog8moongate3cli3runN16_2aasync__driverS297(_env, _state) 
           const _bind$4 = _M0FP39brickfrog8moongate3cli9emit__out(`${_M0FP39brickfrog8moongate4core15sanitize__block(_M0MPC18argparse7Command12render__help(command))}\n`, (_cont_param$2) => {
             let _err;
             _L$2: {
-              const _bind$5 = _M0FP39brickfrog8moongate3cli3runN16_2aasync__driverS297(_env, new _M0DTP39brickfrog8moongate3cli35_24brickfrog_2fmoongate_2fcli_2erunL5State8State__0(_cont_param$2));
+              const _bind$5 = _M0FP39brickfrog8moongate3cli3runN16_2aasync__driverS321(_env, new _M0DTP39brickfrog8moongate3cli35_24brickfrog_2fmoongate_2fcli_2erunL5State8State__0(_cont_param$2));
               let _bind$6;
               if (_bind$5.$tag === 1) {
                 const _ok = _bind$5;
@@ -27936,7 +28063,7 @@ function _M0FP39brickfrog8moongate3cli3runN16_2aasync__driverS297(_env, _state) 
               const _bind$4 = _M0FP39brickfrog8moongate3cli9emit__err(_string_builder.val, (_cont_param$2) => {
                 let _err;
                 _L$2: {
-                  const _bind$5 = _M0FP39brickfrog8moongate3cli3runN16_2aasync__driverS297(_env, new _M0DTP39brickfrog8moongate3cli35_24brickfrog_2fmoongate_2fcli_2erunL5State8State__1(_cont_param$2));
+                  const _bind$5 = _M0FP39brickfrog8moongate3cli3runN16_2aasync__driverS321(_env, new _M0DTP39brickfrog8moongate3cli35_24brickfrog_2fmoongate_2fcli_2erunL5State8State__1(_cont_param$2));
                   let _bind$6;
                   if (_bind$5.$tag === 1) {
                     const _ok = _bind$5;
@@ -27980,14 +28107,14 @@ function _M0FP39brickfrog8moongate3cli3runN16_2aasync__driverS297(_env, _state) 
         return new _M0DTPC16result6ResultGOiRPC15error5ErrorE2Ok(constr$3);
       }
       default: {
-        const _$42$try$47$120 = _state$2;
-        const _err_cont$2 = _$42$try$47$120._2;
-        const _cont$2 = _$42$try$47$120._1;
-        const _try_err = _$42$try$47$120._0;
+        const _$42$try$47$129 = _state$2;
+        const _err_cont$2 = _$42$try$47$129._2;
+        const _cont$2 = _$42$try$47$129._1;
+        const _try_err = _$42$try$47$129._0;
         const _bind$4 = _M0FP39brickfrog8moongate3cli9emit__err(`${_M0FP39brickfrog8moongate4core15sanitize__block(_M0FP15Error10to__string(_try_err))}\n`, (_cont_param$2) => {
           let _err;
           _L$2: {
-            const _bind$5 = _M0FP39brickfrog8moongate3cli3runN16_2aasync__driverS297(_env, new _M0DTP39brickfrog8moongate3cli35_24brickfrog_2fmoongate_2fcli_2erunL5State8State__3(_cont_param$2));
+            const _bind$5 = _M0FP39brickfrog8moongate3cli3runN16_2aasync__driverS321(_env, new _M0DTP39brickfrog8moongate3cli35_24brickfrog_2fmoongate_2fcli_2erunL5State8State__3(_cont_param$2));
             let _bind$6;
             if (_bind$5.$tag === 1) {
               const _ok = _bind$5;
@@ -28028,7 +28155,7 @@ function _M0FP39brickfrog8moongate3cli3runN16_2aasync__driverS297(_env, _state) 
   }
 }
 function _M0FP39brickfrog8moongate3cli3run(_cont, _err_cont) {
-  const _env = { _0: _M0FP39brickfrog8moongate3cli3runN6constrS354, _1: _M0FP39brickfrog8moongate3cli3runN6constrS352, _2: _M0FP39brickfrog8moongate3cli3runN6constrS353 };
+  const _env = { _0: _M0FP39brickfrog8moongate3cli3runN6constrS378, _1: _M0FP39brickfrog8moongate3cli3runN6constrS377, _2: _M0FP39brickfrog8moongate3cli3runN6constrS376 };
   let argv;
   let _try_err;
   _L: {
@@ -28063,9 +28190,9 @@ function _M0FP39brickfrog8moongate3cli3run(_cont, _err_cont) {
       _err = _err$2._0;
       break _L$2;
     }
-    return _M0FP39brickfrog8moongate3cli3runN16_2aasync__driverS297(_env, new _M0DTP39brickfrog8moongate3cli35_24brickfrog_2fmoongate_2fcli_2erunL5State8State__2(_tmp$2, command, _cont, _err_cont));
+    return _M0FP39brickfrog8moongate3cli3runN16_2aasync__driverS321(_env, new _M0DTP39brickfrog8moongate3cli35_24brickfrog_2fmoongate_2fcli_2erunL5State8State__2(_tmp$2, command, _cont, _err_cont));
   }
-  return _M0FP39brickfrog8moongate3cli3runN16_2aasync__driverS297(_env, new _M0DTP39brickfrog8moongate3cli35_24brickfrog_2fmoongate_2fcli_2erunL5State12_2atry_2f120(_err, _cont, _err_cont));
+  return _M0FP39brickfrog8moongate3cli3runN16_2aasync__driverS321(_env, new _M0DTP39brickfrog8moongate3cli35_24brickfrog_2fmoongate_2fcli_2erunL5State12_2atry_2f129(_err, _cont, _err_cont));
 }
 function _M0FP411moonbitlang5async8internal9coroutine18current__coroutine() {
   const _p = _M0FP411moonbitlang5async8internal9coroutine9scheduler.curr_coro;

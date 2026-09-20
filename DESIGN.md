@@ -131,6 +131,18 @@ A rule the runner could not evaluate — unrepresentable evidence, or evidence o
 
 ---
 
+## 6b. Check runs
+
+The action publishes a check run when given a token with `checks:write`, and workflow log annotations otherwise. The structured report reaches the shim through `check --report-json`, which writes the JSON report to stderr alongside the annotations on stdout: a second `check` invocation would bill a second set of model calls for output that already exists.
+
+The check run's conclusion is derived from the exit code (0 success, 1 failure, 2 action_required), never computed separately, so the check and the job cannot disagree. Annotations carry the runner's verdict, the rule source, and the model's raw answer, and point at the first path a rule selected with no invented line number. The API caps one request at 50 annotations.
+
+A failed publication fails the job with exit 2. A verdict nobody can see is worse than a red build.
+
+An installation token from a GitHub App changes the check run's identity, nothing else: the evaluation still runs on the caller's runner, with the caller's TypeSafe key, and fork pull requests remain out of reach. Moving compute off the caller would mean a hosted receiver holding the key centrally, which is a different product with a different bill.
+
+---
+
 ## 7. Evidence discipline
 
 - Changes come from `git diff --raw -z` between the single merge base and head; multiple or missing merge bases fail with exit 2.
