@@ -14,6 +14,7 @@ async fn run_action(
   inputs : Array[(String, String)],
   extra_env : Array[(String, String)],
   path_prefix~ : String = "",
+  entry~ : String = "",
 ) -> Proc raise {
   let env = base_env()
   for input in inputs {
@@ -27,7 +28,38 @@ async fn run_action(
   }
   // A node action always starts in the workspace, never in the repository
   // under evaluation: the shim is what enters it.
-  run_process("node", [action_entry.val], "/", env)
+  let script = if entry.is_empty() { action_entry.val } else { entry }
+  run_process("node", [script], "/", env)
+}
+
+///|
+/// A copy of the action whose runner writes a stray JSON object to stderr
+/// before the real one runs. Node's own startup warnings vary by version; this
+/// reproduces the same hazard deterministically.
+async fn noisy_action() -> String raise {
+  let dir = @fs.tmpdir(prefix="moongate-it-noise-")
+  temp_dirs.push(dir)
+  let real = action_entry.val
+  let mut cut = -1
+  for i, c in real {
+    if c == '/' {
+      cut = i
+    }
+  }
+  let runner = real[:cut].to_owned() + "/moongate.js"
+  // A copy, not a require: `require` would give the real module its own
+  // __dirname and it would spawn the real runner, skipping the decoy.
+  @fs.write_file("\{dir}/index.js", @fs.read_file(real))
+  @fs.write_file(
+    "\{dir}/moongate.js",
+    "process.stderr.write('{\"decoy\":1}\\n');\nrequire(\{json_string(runner)});\n",
+  )
+  dir + "/index.js"
+}
+
+///|
+fn json_string(value : String) -> String {
+  Json::string(value).stringify()
 }
 
 ///|
@@ -314,14 +346,17 @@ async fn test_action_publishes_a_check_run(fixture : Fixture) -> Unit raise {
     clip(last.body.stringify()),
   )
 
-  // A clean pull request must publish too: the report travels on stderr, which
-  // the host runtime also uses for its own warnings.
+// A clean pull request must publish too, and the report shares stderr with
+  // anything the host runtime writes there. A wrapper puts a stray JSON object
+  // ahead of the frame: that is the exact hazard, without depending on which
+  // runtime warnings a given Node version happens to print.
   let clean = new_repo()
   clean.write(".moongate.json", config([rule([])]))
   clean.write("src/a.py", "x\n")
   let clean_base = clean.commit("base")
   clean.write("src/a.py", "y\n")
   let clean_head = clean.commit("head")
+  let noisy = noisy_action()
   fixture.queue_json(response([("no_secret_logging", decisive("compliant"))]))
   fixture.queue_json({ "id": Json::number(3) })
   let passing = run_action(
@@ -336,17 +371,15 @@ async fn test_action_publishes_a_check_run(fixture : Fixture) -> Unit raise {
       ("TYPESAFE_BASE_URL", fixture.origin),
       ("GITHUB_API_URL", fixture.origin),
       ("GITHUB_REPOSITORY", "owner/repo"),
-      // Makes the runtime print an ExperimentalWarning on the same stream that
-      // carries the report.
-      ("NODE_OPTIONS", "--experimental-loader=data:text/javascript,"),
     ],
+    entry=noisy,
   )
   expect_exit("a compliant pull request still exits 0", passing, 0)
   let clean_run = fixture.last()
   check(
-    "runtime noise on stderr does not break the report",
+    "stray output before the frame does not break the report",
     clean_run.path == "/repos/owner/repo/check-runs",
-    clean_run.path,
+    clean_run.path + " " + clip(passing.stdout),
   )
   check(
     "a compliant run publishes a successful check run",
@@ -364,7 +397,49 @@ async fn test_action_publishes_a_check_run(fixture : Fixture) -> Unit raise {
     clip(clean_run.body.stringify()),
   )
 
-  // A ref name is not an object id: the check run must pin what was evaluated.
+  // Rule text is author-controlled and is echoed into the report, so a rule
+  // that spells the closing marker must not truncate the document.
+  let spoof = new_repo()
+  spoof.write(
+    ".moongate.json",
+    config([
+      rule([
+        (
+          "message",
+          Json::string("ends here --- moongate report end --- and continues"),
+        ),
+      ]),
+    ]),
+  )
+  spoof.write("src/a.py", "x\n")
+  let spoof_base = spoof.commit("base")
+  spoof.write("src/a.py", "y\n")
+  let spoof_head = spoof.commit("head")
+  fixture.queue_json(response([("no_secret_logging", decisive("violation"))]))
+  fixture.queue_json({ "id": Json::number(5) })
+  let spoofed = run_action(
+    [
+      ("BASE", spoof_base),
+      ("HEAD", spoof_head),
+      ("REPOSITORY", spoof.path),
+      ("API-KEY", dummy_key),
+      ("GITHUB-TOKEN", "ghs_dummy_token"),
+    ],
+    [
+      ("TYPESAFE_BASE_URL", fixture.origin),
+      ("GITHUB_API_URL", fixture.origin),
+      ("GITHUB_REPOSITORY", "owner/repo"),
+    ],
+  )
+  expect_exit("a marker inside rule text still exits 0", spoofed, 0)
+  check(
+    "a spoofed end marker does not truncate the report",
+    fixture.last().path == "/repos/owner/repo/check-runs" &&
+    text_of(field(fixture.last().body, "head_sha")) == spoof_head,
+    clip(spoofed.stdout),
+  )
+
+    // A ref name is not an object id: the check run must pin what was evaluated.
   fixture.queue_json(response([("no_secret_logging", decisive("compliant"))]))
   fixture.queue_json({ "id": Json::number(4) })
   let by_ref = run_action(

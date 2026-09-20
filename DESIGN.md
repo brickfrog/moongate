@@ -133,9 +133,9 @@ A rule the runner could not evaluate — unrepresentable evidence, or evidence o
 
 ## 6b. Check runs
 
-The action publishes a check run when given a token with `checks:write`, and workflow log annotations otherwise. The structured report reaches the shim through `check --report-json`, which writes the JSON report to stderr alongside the annotations on stdout: a second `check` invocation would bill a second set of model calls for output that already exists.
+The action publishes a check run when given a token with `checks:write`, and workflow log annotations otherwise. The structured report reaches the shim through `check --report-json`, which writes a marker-framed JSON report to stderr alongside the annotations on stdout: a second `check` invocation would bill a second set of model calls for output that already exists.
 
-The report is framed by `--- moongate report begin ---` and `--- moongate report end ---`. stderr also carries runner diagnostics and whatever the host runtime prints there, and a Node warning containing braces would otherwise be parsed as the start of the document. The shim extracts between the markers and fails loudly if they are absent.
+The report is framed by `--- moongate report begin ---` and `--- moongate report end ---`. stderr also carries runner diagnostics and whatever the host runtime prints there, and a Node warning containing braces would otherwise be parsed as the start of the document. The shim extracts between the markers and fails loudly if they are absent, so `2>report.json` alone does not give a parseable file. It takes the first begin marker and the last end marker: rule messages and source citations come from the evaluated config and are echoed into the report, so a first-match end marker could otherwise be spoofed to truncate the document.
 
 `head_sha` comes from the report's resolved head object id, not from the `head` input. The check-runs API rejects a ref name, and a check must pin the commit that was actually evaluated.
 
