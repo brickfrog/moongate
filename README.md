@@ -1,22 +1,24 @@
 # Moongate
 
-Evaluate committed repository changes against semantic rules in CI, using [TypeSafe](https://typesafe.ai) Jev.
+Checks a pull request's diff against semantic rules you wrote, using [TypeSafe](https://typesafe.ai) Jev, and reports the results as PR annotations.
 
-Linters check syntax. Moongate checks the rules you wrote in prose — "don't log credentials", "new endpoints need an authorization check", "migrations must be reversible" — against the actual diff, and reports them as pull-request annotations.
+Rules are JSON in your repository. Each one is a question with three possible answers (violation, compliant, insufficient_evidence) plus a probability threshold. CI sends the selected diff and the question; the model picks an answer; Moongate applies your thresholds and decides the exit code.
 
-It is not a generative code reviewer. There is no model writing rules, no chat, no agent. Rules are structured, hand-reviewed JSON in your repository; CI only classifies the diff against them.
+Use it for things a linter can't see: "don't log credentials", "new endpoints need an auth check", "migrations must be reversible". There is no model writing or editing rules, and nothing runs your repository's code.
 
-## What a run looks like
+## Example output
 
 ```
-::warning title=moongate: no_secret_logging::Possible credential logging. Log a request id instead. (source: AGENTS.md: never log credentials) [paths: src/handlers.py] [choice=violation p=1.000 confidence=1.000]
+::warning title=moongate: no_secret_logging::[violation] Possible credential logging. Log a request id instead. (source: AGENTS.md: never log credentials) [paths: src/handlers.py] [choice=violation p=1.000 confidence=1.000]
 ::notice title=moongate::conclusion advisory (exit 0)
 ```
 
-## Quickstart
+The leading `[violation]` / `[needs review]` / `[not evaluated]` is Moongate's verdict after thresholds. The trailing `choice=` is the model's raw answer. They differ when an answer lands below a threshold.
 
-1. Get a TypeSafe API key and add it as the repository secret `TYPESAFE_API_KEY`.
-2. Commit a `.moongate.json` (see below).
+## Setup
+
+1. Add your TypeSafe key as the repository secret `TYPESAFE_API_KEY`.
+2. Commit a `.moongate.json`.
 3. Add the workflow:
 
 ```yaml
@@ -30,7 +32,7 @@ permissions:
 
 jobs:
   evaluate:
-    # Forks never receive the secret, and a fork job must not look like a pass.
+    # Forks get no secret, so skip them rather than report a fake pass.
     if: >-
       github.event.pull_request.head.repo.full_name == github.repository &&
       github.actor != 'dependabot[bot]'
@@ -49,9 +51,9 @@ jobs:
           api-key: ${{ secrets.TYPESAFE_API_KEY }}
 ```
 
-The checkout is of the **base** commit, and the action reads policy from that commit. A pull request cannot weaken the rules that judge it; rule changes take effect after merge.
+The checkout and the policy both come from the base commit, so a PR can't edit the rules that judge it. Rule changes apply after merge.
 
-No toolchain step is needed. The runner is compiled to JavaScript and committed under `dist/`, so the action is `runs: node24` and starts in well under a second.
+There's no build step. The runner is compiled to JavaScript and committed in `dist/`, so the action is `runs: node24`.
 
 ## Configuration
 
@@ -85,49 +87,56 @@ No toolchain step is needed. The runner is compiled to JavaScript and committed 
 }
 ```
 
-Full schema: [`skills/moongate-setup/references/moongate.schema.json`](skills/moongate-setup/references/moongate.schema.json).
+Schema: [`skills/moongate-setup/references/moongate.schema.json`](skills/moongate-setup/references/moongate.schema.json).
 
-Writing good rules is the hard part, so it lives in a skill rather than in the runner: copy [`skills/moongate-setup`](skills/moongate-setup) into your agent's skills directory and ask it to set Moongate up. It reads your `AGENTS.md`/`CLAUDE.md`, classifies each instruction as deterministic, semantically observable, or process-only, and drafts advisory rules for the second kind only. It never enables blocking and never calls the API.
+Writing rules is the hard part, so it lives in a skill instead of the runner. Copy [`skills/moongate-setup`](skills/moongate-setup) into your agent's skills directory and ask it to set Moongate up. It reads your `AGENTS.md`/`CLAUDE.md`, sorts each instruction into deterministic (use a linter), semantically checkable, or process-only (a diff can't prove you ran the tests), and drafts advisory rules for the middle group. It never enables blocking and never calls the API.
 
 ## Severity and exit codes
 
-| | exit | job |
+| result | exit | job |
 |---|---|---|
-| `advisory` violation, or any review verdict | 0 | green, annotated |
-| `blocking` violation | 1 | red |
-| configuration or operational failure | 2 | red |
+| advisory violation, or any review verdict | 0 | green, annotated |
+| blocking violation | 1 | red |
+| config or operational failure | 2 | red |
 
-Everything is advisory unless you explicitly set `"severity": "blocking"` and supply thresholds. A rule the runner could not evaluate — unrepresentable evidence, or evidence over the request budget — is judged by that same severity: blocking fails the run, advisory reports an error result and exits 0. Unevaluated is never a pass.
+Rules are advisory unless you set `"severity": "blocking"` and supply thresholds.
+
+If a rule can't be evaluated (unrepresentable evidence, evidence over the size budget), its severity decides what happens: blocking fails the run, advisory reports an error result and exits 0. An unevaluated rule never counts as a pass.
 
 ## Inputs
 
 | input | required | default | meaning |
 |---|---|---|---|
-| `base` | yes | — | Base commit. Policy is read from this commit. |
-| `head` | yes | — | Head commit to evaluate. |
-| `api-key` | yes | — | TypeSafe key. Reaches the runner through the environment only. |
+| `base` | yes | | Base commit. Policy is read from here. |
+| `head` | yes | | Head commit to evaluate. |
+| `api-key` | yes | | TypeSafe key. Passed through the environment only. |
 | `config` | no | `.moongate.json` | Root-relative config path. |
-| `repository` | no | `.` | Working directory of the repository under evaluation. |
+| `repository` | no | `.` | Working directory to evaluate. |
 
-## What leaves your machine
+## What gets sent
 
-Only the evidence a rule selects: the patches of matching changed files, plus any exact `context` files that rule names. No repository archive, no PR title or description, no branch names, no telemetry.
+Only what a rule selects: patches for matching changed files, plus any exact `context` files that rule names. No repository archive, no PR title or description, no branch names, no telemetry.
 
-- Patches are generated from the exact committed blob ids, never from the working tree, so excluded paths cannot be pulled in by a rename or a file-to-directory change.
-- Git hooks, external diff drivers, and textconv are disabled; `.gitattributes` cannot hide a selected file's contents.
-- The key is read only from `TYPESAFE_API_KEY`, never appears in argv or a file, and is stripped from every `git` child environment.
-- Fork and Dependabot pull requests are skipped by the workflow condition above, because a fork never receives the secret. GitHub marks them skipped; Moongate never reports them as passing.
+- Patches come from the committed blob ids, not the working tree, so a rename or a file-to-directory change can't pull in excluded paths.
+- Git hooks, external diff drivers, and textconv are off. A `.gitattributes` entry can't hide a selected file's contents.
+- The key is read from `TYPESAFE_API_KEY` only, never appears in argv or a file, and is removed from every `git` child environment.
+- Fork and Dependabot PRs are skipped by the workflow condition above. GitHub marks those jobs skipped; Moongate never reports them as passing.
 
-Same-repository workflow authors are trusted with the secret. Reading policy from the base commit protects the action invocation, not the workflow file itself.
+Anyone who can push a workflow to your repository can use the secret. Reading policy from the base commit protects the action invocation, not the workflow file.
 
-## Honest limits
+## Limitations
 
-- A model verdict is not proof. An advisory exit 0 does not assert compliance, and thresholds are routing knobs for one pinned model, not measured accuracy for your repository.
-- Confidence is derived from the answer's probability distribution. It is not independent evidence that the answer is right.
-- **Verdicts are not reproducible.** Ten replays of the byte-identical request the runner builds, same pinned model: the label was `violation` 10/10, but probability ranged 0.87-0.92 (sd 0.015) and confidence 0.82-0.88 (sd 0.019). Against that rule's own 0.90/0.80 gate, 4 of those 10 runs are a `violation` and 6 are a `review` - on one unchanged pull request. A threshold inside the band a rule actually lands in makes the verdict a coin flip per CI run. Set thresholds clear of it, and treat a rule that keeps landing near its gate as miscalibrated rather than borderline.
-- Repository content is untrusted input to a model. The instruction prefix that says so is a precaution, not a security boundary.
-- Each rule's evidence is one indivisible unit, capped at 65536 serialized bytes. Measured against `jev-1.13.0`: 149053 bytes (32827 input tokens) accepted, 152935 bytes rejected with `max_tokens_exceeded`; the cap assumes a pessimistic 2 bytes per token. A rule whose diff exceeds it is reported unevaluated rather than silently truncated — narrow its globs.
-- The model is pinned. Changing it is an explicit edit, and it invalidates your thresholds.
+A verdict is a model's answer, not a proof. Exit 0 doesn't mean the code is fine.
+
+Confidence comes from the answer's probability distribution. It doesn't tell you the answer is correct.
+
+Verdicts move between runs. Ten replays of the identical request the runner builds, same pinned model: the label was `violation` all ten times, but probability ranged 0.87 to 0.92 (sd 0.015) and confidence 0.82 to 0.88 (sd 0.019). That rule's gate was 0.90/0.80, which falls inside the range, so 4 replays counted as a violation and 6 as a review on one unchanged PR. Keep thresholds away from where a rule actually lands. If a rule keeps landing near its gate, the rule needs work.
+
+Repository content is untrusted input to a model. The instruction prefix saying so is a precaution, not a guarantee.
+
+Each rule's evidence is one unit, capped at 65536 serialized bytes. Measured against `jev-1.13.0`: 149053 bytes (32827 input tokens) was accepted, 152935 bytes came back `max_tokens_exceeded`; the cap assumes a pessimistic 2 bytes per token. A rule whose diff exceeds it is reported unevaluated rather than truncated. Narrow its globs.
+
+The model is pinned. Changing it invalidates your thresholds.
 
 ## Local use
 
@@ -151,9 +160,9 @@ _build/native/release/build/cmd/itest/itest.exe \
   --action "$PWD/dist/index.js"
 ```
 
-The integration suite builds real Git repositories and a loopback API fixture; it needs no credential. CI runs it against both the native binary and the committed JavaScript bundle, and fails if `dist/` is stale.
+The integration suite builds real Git repositories and a loopback API fixture, and needs no credential. CI runs it against both the native binary and the committed JavaScript bundle, and fails if `dist/` is stale.
 
-Design rationale and threat model: [`DESIGN.md`](DESIGN.md).
+Design notes and threat model: [`DESIGN.md`](DESIGN.md).
 
 ## License
 
