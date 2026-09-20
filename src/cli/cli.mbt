@@ -155,6 +155,14 @@ async fn run_validate(matches : @argparse.Matches) -> Int {
 }
 
 ///|
+/// The JSON report shares stderr with diagnostics and with anything the host
+/// runtime prints there, so it is framed by lines no report can contain.
+let report_begin : String = "--- moongate report begin ---"
+
+///|
+let report_end : String = "--- moongate report end ---"
+
+///|
 async fn run_check_command(matches : @argparse.Matches) -> Int {
   let format = try @core.parse_format(single(matches, "format", "text")) catch {
     err => {
@@ -176,8 +184,16 @@ async fn run_check_command(matches : @argparse.Matches) -> Int {
   emit_out(@core.render_report(report, format))
   // A caller that consumes annotations on stdout still needs the structured
   // result; re-running `check` to get it would mean a second paid evaluation.
+  // stderr also carries diagnostics and whatever the host runtime decides to
+  // print there, so the document is framed rather than left to be found.
   if matches.flags.get("report-json") is Some(true) {
-    emit_err(@core.render_report(report, @core.FormatJson))
+    emit_err(
+      report_begin +
+      "\n" +
+      @core.render_report(report, @core.FormatJson) +
+      report_end +
+      "\n",
+    )
   }
   report.exit_code()
 }

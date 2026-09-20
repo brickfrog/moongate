@@ -2767,6 +2767,8 @@ const _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS56 = "Output format
 const _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS58 = "Evaluate committed changes against the configured rules";
 const _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS34 = "moongate";
 const _M0FP39brickfrog8moongate3cli14build__commandN7_2abindS36 = "Semantic CI gatekeeper";
+const _M0FP39brickfrog8moongate3cli13report__begin = "--- moongate report begin ---";
+const _M0FP39brickfrog8moongate3cli11report__end = "--- moongate report end ---";
 const _M0FPB4seed = _M0FPB12random__seed();
 const _bind = [];
 const _tmp = _M0MPC15deque5Deque5DequeGRP411moonbitlang5async8internal9coroutine9CoroutineE(new _M0TPB9ArrayViewGRP411moonbitlang5async8internal9coroutine9CoroutineE(_bind, 0, 0), undefined);
@@ -27397,7 +27399,7 @@ function _M0FP39brickfrog8moongate3cli19run__check__commandN16_2aasync__driverS1
           const _Some = _bind$3;
           const _x = _Some;
           if (_x === true) {
-            const _bind$4 = _M0FP39brickfrog8moongate3cli9emit__err(_M0FP39brickfrog8moongate4core14render__report(report$2, 1), (_cont_param) => {
+            const _bind$4 = _M0FP39brickfrog8moongate3cli9emit__err(`${_M0FP39brickfrog8moongate3cli13report__begin}\n${_M0FP39brickfrog8moongate4core14render__report(report$2, 1)}${_M0FP39brickfrog8moongate3cli11report__end}\n`, (_cont_param) => {
               let _err;
               _L$2: {
                 const _bind$5 = _M0FP39brickfrog8moongate3cli19run__check__commandN16_2aasync__driverS170(_env, new _M0DTP39brickfrog8moongate3cli51_24brickfrog_2fmoongate_2fcli_2erun__check__commandL5State8State__0(_cont_param, report$2));

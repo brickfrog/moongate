@@ -135,6 +135,10 @@ A rule the runner could not evaluate — unrepresentable evidence, or evidence o
 
 The action publishes a check run when given a token with `checks:write`, and workflow log annotations otherwise. The structured report reaches the shim through `check --report-json`, which writes the JSON report to stderr alongside the annotations on stdout: a second `check` invocation would bill a second set of model calls for output that already exists.
 
+The report is framed by `--- moongate report begin ---` and `--- moongate report end ---`. stderr also carries runner diagnostics and whatever the host runtime prints there, and a Node warning containing braces would otherwise be parsed as the start of the document. The shim extracts between the markers and fails loudly if they are absent.
+
+`head_sha` comes from the report's resolved head object id, not from the `head` input. The check-runs API rejects a ref name, and a check must pin the commit that was actually evaluated.
+
 The check run's conclusion is derived from the exit code (0 success, 1 failure, 2 action_required), never computed separately, so the check and the job cannot disagree. Annotations carry the runner's verdict, the rule source, and the model's raw answer, and point at the first path a rule selected with no invented line number. The API caps one request at 50 annotations.
 
 A failed publication fails the job with exit 2. A verdict nobody can see is worse than a red build.

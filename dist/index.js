@@ -11,6 +11,9 @@ const path = require("node:path");
 // request. Rules are few, but the cap is the API's, not ours.
 const MAX_ANNOTATIONS = 50;
 
+const REPORT_BEGIN = "--- moongate report begin ---";
+const REPORT_END = "--- moongate report end ---";
+
 
 function input(name, fallback) {
   const key = "INPUT_" + name.toUpperCase().replace(/ /g, "_");
@@ -102,15 +105,24 @@ async function publishCheckRun() {
     process.stderr.write(stderr);
     fail("The runner produced no JSON report.");
   }
+  if (typeof report.head !== "string" || !/^[0-9a-f]{40}$/.test(report.head)) {
+    fail("The report carries no resolved head commit; a check run cannot be pinned.");
+  }
   await createCheckRun(report);
   process.exitCode = code;
 }
 
+// The runner frames its report because stderr also carries diagnostics and
+// whatever the host runtime prints there. An interleaved warning line must not
+// reach JSON.parse.
 function parseReport(stderr) {
-  const start = stderr.indexOf("{");
+  const start = stderr.indexOf(REPORT_BEGIN);
   if (start < 0) return null;
+  const from = start + REPORT_BEGIN.length;
+  const end = stderr.indexOf(REPORT_END, from);
+  if (end < 0) return null;
   try {
-    return JSON.parse(stderr.slice(start));
+    return JSON.parse(stderr.slice(from, end));
   } catch {
     return null;
   }
@@ -179,7 +191,9 @@ async function createCheckRun(report) {
   const api = process.env.GITHUB_API_URL || "https://api.github.com";
   const body = {
     name: "Moongate",
-    head_sha: head,
+    // The runner resolved the head input to an object id. The API rejects a
+    // ref name, and a check run must pin the commit that was evaluated.
+    head_sha: report.head,
     status: "completed",
     conclusion: conclusionOf(report),
     output: {

@@ -314,6 +314,80 @@ async fn test_action_publishes_a_check_run(fixture : Fixture) -> Unit raise {
     clip(last.body.stringify()),
   )
 
+  // A clean pull request must publish too: the report travels on stderr, which
+  // the host runtime also uses for its own warnings.
+  let clean = new_repo()
+  clean.write(".moongate.json", config([rule([])]))
+  clean.write("src/a.py", "x\n")
+  let clean_base = clean.commit("base")
+  clean.write("src/a.py", "y\n")
+  let clean_head = clean.commit("head")
+  fixture.queue_json(response([("no_secret_logging", decisive("compliant"))]))
+  fixture.queue_json({ "id": Json::number(3) })
+  let passing = run_action(
+    [
+      ("BASE", clean_base),
+      ("HEAD", clean_head),
+      ("REPOSITORY", clean.path),
+      ("API-KEY", dummy_key),
+      ("GITHUB-TOKEN", "ghs_dummy_token"),
+    ],
+    [
+      ("TYPESAFE_BASE_URL", fixture.origin),
+      ("GITHUB_API_URL", fixture.origin),
+      ("GITHUB_REPOSITORY", "owner/repo"),
+      // Makes the runtime print an ExperimentalWarning on the same stream that
+      // carries the report.
+      ("NODE_OPTIONS", "--experimental-loader=data:text/javascript,"),
+    ],
+  )
+  expect_exit("a compliant pull request still exits 0", passing, 0)
+  let clean_run = fixture.last()
+  check(
+    "runtime noise on stderr does not break the report",
+    clean_run.path == "/repos/owner/repo/check-runs",
+    clean_run.path,
+  )
+  check(
+    "a compliant run publishes a successful check run",
+    text_of(field(clean_run.body, "conclusion")) == "success",
+    clip(clean_run.body.stringify()),
+  )
+  check(
+    "a compliant check run pins the evaluated head",
+    text_of(field(clean_run.body, "head_sha")) == clean_head,
+    clip(clean_run.body.stringify()),
+  )
+  check(
+    "a compliant check run carries no annotations",
+    array_of(field(field(clean_run.body, "output"), "annotations")).length() == 0,
+    clip(clean_run.body.stringify()),
+  )
+
+  // A ref name is not an object id: the check run must pin what was evaluated.
+  fixture.queue_json(response([("no_secret_logging", decisive("compliant"))]))
+  fixture.queue_json({ "id": Json::number(4) })
+  let by_ref = run_action(
+    [
+      ("BASE", clean_base),
+      ("HEAD", "HEAD"),
+      ("REPOSITORY", clean.path),
+      ("API-KEY", dummy_key),
+      ("GITHUB-TOKEN", "ghs_dummy_token"),
+    ],
+    [
+      ("TYPESAFE_BASE_URL", fixture.origin),
+      ("GITHUB_API_URL", fixture.origin),
+      ("GITHUB_REPOSITORY", "owner/repo"),
+    ],
+  )
+  expect_exit("a ref-named head still exits 0", by_ref, 0)
+  check(
+    "a ref-named head is published as a resolved object id",
+    text_of(field(fixture.last().body, "head_sha")) == clean_head,
+    clip(fixture.last().body.stringify()),
+  )
+
   // A refused publication is an operational failure, never a silent success.
   fixture.queue_json(response([("no_secret_logging", decisive("compliant"))]))
   fixture.queue_json({ "message": Json::string("Bad credentials") }, status=500)
