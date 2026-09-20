@@ -61,3 +61,8 @@ jobs:
         run: |
           ./_build/native/release/build/cmd/moongate/moongate.exe \
             validate --config .moongate.json --format json
+
+      - name: Skill frontmatter parses as YAML
+        run: |
+          python3 -m pip install --quiet pyyaml
+          python3 scripts/check_skills.py

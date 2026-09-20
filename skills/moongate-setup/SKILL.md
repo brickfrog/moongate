@@ -1,6 +1,12 @@
 ---
 name: moongate-setup
-description: Turn repository instructions (CLAUDE.md, AGENTS.md, CONTRIBUTING.md) into Moongate semantic rules in .moongate.json, then validate them locally. Use when the user runs `/moongate-setup`, asks to set up or install Moongate, asks to add or update Moongate rules, or asks which repository instructions can be enforced semantically in CI. Authoring only: it never calls the evaluation API, edits workflows, or reads secrets.
+description: >-
+  Turn repository instructions (CLAUDE.md, AGENTS.md, CONTRIBUTING.md) into
+  Moongate semantic rules in .moongate.json, then validate them locally. Use
+  when the user runs `/moongate-setup`, asks to set up or install Moongate,
+  asks to add or update Moongate rules, or asks which repository instructions
+  can be enforced semantically in CI. This skill only authors rules. It never
+  calls the evaluation API, edits workflows, or reads secrets.
 ---
 
 # Moongate Setup
