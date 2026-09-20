@@ -9,7 +9,9 @@ import {
 
 description = "Semantic CI gatekeeper evaluating repository rules with TypeSafe Jev"
 
-keywords = [ ]
+license = "Apache-2.0"
+
+keywords = ["ci", "code-review", "github-action", "typesafe"]
 
 source = "src"
 
