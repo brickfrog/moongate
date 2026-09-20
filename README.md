@@ -1,4 +1,8 @@
-# Moongate
+<p align="center">
+  <img src="docs/logo.png" alt="Moongate" width="200">
+</p>
+
+<h1 align="center">Moongate</h1>
 
 Checks a pull request's diff against semantic rules you wrote, using [TypeSafe](https://typesafe.ai) Jev, and reports the results as PR annotations.
 
