@@ -207,6 +207,18 @@ fn render_github(report : Report) -> String {
   for result in report.results {
     let title = escape_annotation_property("moongate: \{result.id}")
     let detail = StringBuilder()
+    // The runner's own verdict leads, because it is not the model's choice:
+    // an answer below a threshold is a review no matter which label it picked,
+    // and review and advisory violation both render as `::warning`. Without
+    // this a reader cannot tell that the runner rejected the verdict.
+    detail.write_string(
+      match result.status {
+        StatusViolation => "[violation] "
+        StatusReview => "[needs review] "
+        StatusError => "[not evaluated] "
+        _ => ""
+      },
+    )
     detail.write_string(result.message)
     match result.source {
       Some(source) => detail.write_string(" (source: \{source})")

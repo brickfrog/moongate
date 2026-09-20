@@ -284,3 +284,35 @@ test "nesting deeper than the limit is rejected before parsing" {
   let escaped = "{\"a\": \"x\\\"[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[\"}"
   parse_strict(escaped, "test") |> ignore
 }
+
+///|
+test "an annotation states the runner's verdict, not just the model's choice" {
+  // A compliant answer under threshold is a review; the annotation must not
+  // read like agreement, and a violation annotation must not read like one
+  // the runner accepted when it did not.
+  let below = RuleResult::{
+    id: "r",
+    status: StatusReview,
+    severity: Advisory,
+    source: None,
+    message: "m",
+    paths: ["a.py"],
+    model: Some("jev-1.13.0"),
+    answer: Some(ChoiceAnswer::{
+      choice: "compliant",
+      p_violation: 0.13,
+      p_compliant: 0.87,
+      p_insufficient: 0.0,
+      confidence: 0.8,
+    }),
+    detail: (None : String?),
+  }
+  let text = render_report(report_of([below], []), FormatGithub)
+  assert_true(text.contains("[needs review]"))
+  assert_true(text.contains("choice=compliant"))
+  assert_true(text.has_prefix("::warning"))
+  let confirmed = { ..below, status: StatusViolation }
+  let confirmed_text = render_report(report_of([confirmed], []), FormatGithub)
+  assert_true(confirmed_text.contains("[violation]"))
+  assert_false(confirmed_text.contains("[needs review]"))
+}
