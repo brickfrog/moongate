@@ -277,6 +277,10 @@ test "nesting deeper than the limit is rejected before parsing" {
   }
   assert_true(rejected)
   // Brackets inside a string are text, not structure.
-  let bracketed = "{\"a\": \"[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[\"}"
+  let bracketed = "{\"a\": \"[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[\"}"
   parse_strict(bracketed, "test") |> ignore
+  // An escaped quote must not end the string early, which would make the
+  // brackets after it look like real nesting.
+  let escaped = "{\"a\": \"x\\\"[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[\"}"
+  parse_strict(escaped, "test") |> ignore
 }

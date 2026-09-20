@@ -1,0 +1,57 @@
+name: Release
+
+# Callers pin `brickfrog/moongate@v0`, a moving major tag. Moving it is the
+# release: it is what decides which bytes every consumer executes, so it only
+# moves after the committed bundle has been rebuilt and proven identical.
+on:
+  push:
+    tags: ["v*.*.*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Verify and move the major tag
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Install the MoonBit toolchain
+        run: |
+          set -euo pipefail
+          curl -fsSL https://cli.moonbitlang.com/install/unix.sh | bash -s -- 0.10.13+cbb11c36f
+          echo "$HOME/.moon/bin" >> "$GITHUB_PATH"
+
+      - name: Fetch the module registry
+        run: moon update
+
+      - name: Build
+        run: |
+          moon build --target native --release
+          moon build --target js --release
+
+      - name: Integration tests against the shipped bundle
+        run: |
+          ./_build/native/release/build/cmd/itest/itest.exe \
+            --bin node --bin-arg "$PWD/dist/moongate.js" \
+            --action "$PWD/dist/index.js"
+
+      - name: Tagged bundle is reproducible
+        run: |
+          set -euo pipefail
+          cp _build/js/release/build/cmd/moongate-js/moongate-js.js dist/moongate.js
+          git diff --exit-code -- dist/
+
+      - name: Move the major tag
+        env:
+          TAG: ${{ github.ref_name }}
+        run: |
+          set -euo pipefail
+          major="${TAG%%.*}"
+          git tag -f "$major" "$TAG"
+          git push -f origin "refs/tags/$major"
+          echo "$major now points at $TAG" >> "$GITHUB_STEP_SUMMARY"
