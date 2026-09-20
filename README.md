@@ -9,8 +9,8 @@ It is not a generative code reviewer. There is no model writing rules, no chat, 
 ## What a run looks like
 
 ```
-::warning title=no_secret_logging::Possible credential logging in a request handler. [choice=violation p=0.97 confidence=0.91]
-conclusion advisory (exit 0)
+::warning title=moongate: no_secret_logging::Possible credential logging. Log a request id instead. (source: AGENTS.md: never log credentials) [paths: src/handlers.py] [choice=violation p=1.000 confidence=1.000]
+::notice title=moongate::conclusion advisory (exit 0)
 ```
 
 ## Quickstart
