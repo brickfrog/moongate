@@ -41,9 +41,10 @@ criteria — `violation`, `compliant`, `insufficient_evidence` — with no other
 `context` entries are exact file paths, never globs. New rules are `advisory`.
 
 Leave `thresholds` at the defaults unless the user asks. Verdict numbers drift
-run to run on identical evidence (probability sd ~0.03, confidence sd ~0.04 in
-a 10-request sample), so a threshold tuned to sit just under one observed
-answer converts that noise into a verdict change on an unchanged pull request.
+run to run on identical evidence (probability sd ~0.015 in a 10-replay sample,
+enough that a gate inside the band split one unchanged pull request 4 ways
+violation and 6 ways review), so a threshold tuned to sit just under one
+observed answer converts sampling noise into a verdict change.
 Preserve existing ids, rules and severities; change a rule only when its
 source requirement changed.
 
