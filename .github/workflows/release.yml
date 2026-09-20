@@ -52,6 +52,14 @@ jobs:
         run: |
           set -euo pipefail
           major="${TAG%%.*}"
+          # A pre-release must never repoint consumers: v0.2.0-rc1 also
+          # reduces to v0.
+          case "$TAG" in
+            *-*)
+              echo "$TAG is a pre-release; $major not moved" >> "$GITHUB_STEP_SUMMARY"
+              exit 0
+              ;;
+          esac
           git tag -f "$major" "$TAG"
           git push -f origin "refs/tags/$major"
           echo "$major now points at $TAG" >> "$GITHUB_STEP_SUMMARY"
