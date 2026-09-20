@@ -112,6 +112,37 @@ If a rule can't be evaluated (unrepresentable evidence, evidence over the size b
 | `api-key` | yes | | TypeSafe key. Passed through the environment only. |
 | `config` | no | `.moongate.json` | Root-relative config path. |
 | `repository` | no | `.` | Working directory to evaluate. |
+| `github-token` | no | | Token with `checks:write`. See below. |
+
+## Check runs
+
+Without `github-token`, results are workflow log annotations. They show up in the job log and in the PR's Files tab, and the job's own pass or fail is the only status.
+
+With a token that has `checks:write`, Moongate also publishes a check run named "Moongate": its own entry in the PR checks list, a summary, per-file annotations, and a re-run button. Branch protection can require it by name. Add `permissions: checks: write` to the job and pass `${{ secrets.GITHUB_TOKEN }}`.
+
+If you register a GitHub App and mint an installation token, the check run appears under that app's name and avatar instead of github-actions:
+
+```yaml
+    permissions:
+      contents: read
+      checks: write
+    steps:
+      - uses: actions/create-github-app-token@v2
+        id: app
+        with:
+          app-id: ${{ vars.MOONGATE_APP_ID }}
+          private-key: ${{ secrets.MOONGATE_APP_KEY }}
+      - uses: brickfrog/moongate@v0
+        with:
+          base: ${{ github.event.pull_request.base.sha }}
+          head: ${{ github.event.pull_request.head.sha }}
+          api-key: ${{ secrets.TYPESAFE_API_KEY }}
+          github-token: ${{ steps.app.outputs.token }}
+```
+
+The App route costs more setup, not less: you register the App, install it, and store its private key and id alongside the TypeSafe key. What it buys is presentation and control, a distinct identity in the checks list and a check that branch protection can require. It does not remove any secret, does not move compute off the consumer's runner, and does not make fork PRs work. Everything still runs in the caller's CI.
+
+The check run's conclusion follows the exit code: 0 is success, 1 is failure, 2 is action_required. Publishing uses the same single evaluation that produced the annotations, so enabling it costs no extra model calls. If publishing fails, the job fails with exit 2 rather than reporting a result nobody can see.
 
 ## What gets sent
 

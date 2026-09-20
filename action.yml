@@ -20,6 +20,13 @@ inputs:
   api-key:
     description: TypeSafe API key. Reaches the runner through the environment only.
     required: true
+  github-token:
+    description: >-
+      Token with checks:write. Supplying it publishes a "Moongate" check run
+      with file annotations instead of only writing workflow log annotations.
+      A GitHub App installation token makes the check run appear under that
+      app and lets branch protection require it by name.
+    required: false
 
 # The runner is compiled to JavaScript and committed under dist/, so a caller
 # needs no MoonBit toolchain and no build step. Regenerate with

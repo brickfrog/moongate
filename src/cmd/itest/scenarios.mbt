@@ -18,6 +18,7 @@ async fn run_scenarios(fixture : Fixture) -> Unit {
   scenario("batching", () => test_batching(fixture))
   scenario("action entry point", () => test_action_entry_point(fixture))
   scenario("large report", () => test_large_report_is_not_truncated(fixture))
+  scenario("check run", () => test_action_publishes_a_check_run(fixture))
 }
 
 ///|

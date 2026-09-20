@@ -181,3 +181,160 @@ async fn test_large_report_is_not_truncated(fixture : Fixture) -> Unit raise {
     clip(proc.stdout),
   )
 }
+
+///|
+/// With a token, the action publishes a check run built from the same
+/// evaluation that produced the annotations.
+async fn test_action_publishes_a_check_run(fixture : Fixture) -> Unit raise {
+  if action_entry.val.is_empty() {
+    return
+  }
+  let repo = new_repo()
+  repo.write(".moongate.json", config([rule([])]))
+  repo.write("src/a.py", "x\n")
+  let base = repo.commit("base")
+  repo.write("src/a.py", "y\n")
+  let head = repo.commit("head")
+  // One evaluation response, then the check-run reply.
+  fixture.queue_json(response([("no_secret_logging", decisive("violation"))]))
+  fixture.queue_json({ "id": Json::number(1) })
+  let before = fixture.requests.length()
+  let proc = run_action(
+    [
+      ("BASE", base),
+      ("HEAD", head),
+      ("REPOSITORY", repo.path),
+      ("API-KEY", dummy_key),
+      ("GITHUB-TOKEN", "ghs_dummy_token"),
+    ],
+    [
+      ("TYPESAFE_BASE_URL", fixture.origin),
+      ("GITHUB_API_URL", fixture.origin),
+      ("GITHUB_REPOSITORY", "owner/repo"),
+    ],
+  )
+  expect_exit("check run path keeps the advisory exit code", proc, 0)
+  check(
+    "annotations still reach the log",
+    proc.stdout.contains("::warning ") && proc.stdout.contains("::notice "),
+    clip(proc.stdout),
+  )
+  // Exactly one evaluation: publishing must not re-run a paid check.
+  let mut evaluations = 0
+  let mut published : Json? = None
+  for i in before..<fixture.requests.length() {
+    let recorded = fixture.requests[i]
+    if recorded.path == "/v1/systemone" {
+      evaluations = evaluations + 1
+    }
+    if recorded.path == "/repos/owner/repo/check-runs" {
+      published = Some(recorded.body)
+    }
+  }
+  check("exactly one evaluation", evaluations == 1, "evaluations=\{evaluations}")
+  match published {
+    None => check("check run was created", false, "no check-run request")
+    Some(body) => {
+      check(
+        "check run names the head commit",
+        text_of(field(body, "head_sha")) == head,
+        clip(body.stringify()),
+      )
+      check(
+        "an advisory violation does not fail the check run",
+        text_of(field(body, "conclusion")) == "success",
+        clip(body.stringify()),
+      )
+      let output = field(body, "output")
+      let annotations = array_of(field(output, "annotations"))
+      check(
+        "check run carries one annotation per finding",
+        annotations.length() == 1,
+        clip(output.stringify()),
+      )
+      check(
+        "annotation points at the offending file",
+        text_of(field(annotations[0], "path")) == "src/a.py",
+        clip(annotations[0].stringify()),
+      )
+      check(
+        "annotation states the runner verdict",
+        text_of(field(annotations[0], "message")).contains("[violation]"),
+        clip(annotations[0].stringify()),
+      )
+      check(
+        "annotation level matches an advisory severity",
+        text_of(field(annotations[0], "annotation_level")) == "warning",
+        clip(annotations[0].stringify()),
+      )
+      check(
+        "summary reports the conclusion",
+        text_of(field(output, "summary")).contains("advisory"),
+        clip(output.stringify()),
+      )
+    }
+  }
+  check(
+    "the github token never reaches the log",
+    !proc.stdout.contains("ghs_dummy_token") &&
+      !proc.stderr.contains("ghs_dummy_token"),
+    "token leaked",
+  )
+
+  // A blocking violation must fail the check run, not merely the job.
+  let strict = new_repo()
+  strict.write(".moongate.json", config([
+    rule([("severity", Json::string("blocking"))]),
+  ]))
+  strict.write("src/a.py", "x\n")
+  let strict_base = strict.commit("base")
+  strict.write("src/a.py", "y\n")
+  let strict_head = strict.commit("head")
+  fixture.queue_json(response([("no_secret_logging", decisive("violation"))]))
+  fixture.queue_json({ "id": Json::number(2) })
+  let blocked = run_action(
+    [
+      ("BASE", strict_base),
+      ("HEAD", strict_head),
+      ("REPOSITORY", strict.path),
+      ("API-KEY", dummy_key),
+      ("GITHUB-TOKEN", "ghs_dummy_token"),
+    ],
+    [
+      ("TYPESAFE_BASE_URL", fixture.origin),
+      ("GITHUB_API_URL", fixture.origin),
+      ("GITHUB_REPOSITORY", "owner/repo"),
+    ],
+  )
+  expect_exit("blocking violation still exits 1", blocked, 1)
+  let last = fixture.last()
+  check(
+    "blocking violation fails the check run",
+    text_of(field(last.body, "conclusion")) == "failure",
+    clip(last.body.stringify()),
+  )
+
+  // A refused publication is an operational failure, never a silent success.
+  fixture.queue_json(response([("no_secret_logging", decisive("compliant"))]))
+  fixture.queue_json({ "message": Json::string("Bad credentials") }, status=500)
+  let refused = run_action(
+    [
+      ("BASE", base),
+      ("HEAD", head),
+      ("REPOSITORY", repo.path),
+      ("API-KEY", dummy_key),
+      ("GITHUB-TOKEN", "ghs_dummy_token"),
+    ],
+    [
+      ("TYPESAFE_BASE_URL", fixture.origin),
+      ("GITHUB_API_URL", fixture.origin),
+      ("GITHUB_REPOSITORY", "owner/repo"),
+    ],
+  )
+  expect_exit("a refused check run fails the job", refused, 2)
+  check(
+    "refusal reports a workflow error",
+    refused.stdout.contains("::error title=moongate::"),
+    clip(refused.stdout),
+  )
+}

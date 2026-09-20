@@ -7,6 +7,11 @@
 
 const path = require("node:path");
 
+// GitHub rejects a check run carrying more than 50 annotations in one
+// request. Rules are few, but the cap is the API's, not ours.
+const MAX_ANNOTATIONS = 50;
+
+
 function input(name, fallback) {
   const key = "INPUT_" + name.toUpperCase().replace(/ /g, "_");
   const value = process.env[key];
@@ -37,15 +42,16 @@ const apiKey = input("api-key", "");
 if (apiKey !== "") {
   process.env.TYPESAFE_API_KEY = apiKey;
 }
-// The real variable name keeps the dash: GitHub only uppercases and replaces
-// spaces. Deleting it stops the key from reaching the `git` child environment.
+// The real variable names keep their dashes: GitHub only uppercases and
+// replaces spaces. Deleting them stops credentials from reaching the `git`
+// child environment.
+const githubToken = input("github-token", "");
 delete process.env["INPUT_API-KEY"];
+delete process.env["INPUT_GITHUB-TOKEN"];
 
 // Policy always comes from the base commit: a pull request cannot weaken the
 // rules that judge it. Configuration changes take effect after merge.
-process.argv = [
-  process.argv[0],
-  __filename,
+const argv = [
   "check",
   "--base",
   base,
@@ -59,4 +65,141 @@ process.argv = [
   "github",
 ];
 
-require("./moongate.js");
+if (githubToken === "") {
+  // No token: annotations on stdout are the whole output, so run the runner
+  // in this process and let it own the exit code.
+  process.argv = [process.argv[0], __filename, ...argv];
+  require("./moongate.js");
+} else {
+  publishCheckRun().catch((err) => {
+    fail("Check run publication failed: " + (err && err.message ? err.message : String(err)));
+  });
+}
+
+// Publishing a check run needs the structured report as well as the
+// annotations. `--report-json` emits it on stderr from the same evaluation:
+// invoking `check` twice would bill a second set of model calls on every run.
+async function publishCheckRun() {
+  const { spawnSync } = require("node:child_process");
+  const runner = path.join(__dirname, "moongate.js");
+  const result = spawnSync(process.execPath, [runner, ...argv, "--report-json"], {
+    cwd: repository,
+    encoding: "utf8",
+    maxBuffer: 64 * 1024 * 1024,
+    stdio: ["ignore", "pipe", "pipe"],
+  });
+  if (result.error) throw result.error;
+  if (result.signal) throw new Error("The runner was killed by " + result.signal + ".");
+  const stdout = result.stdout === null ? "" : result.stdout;
+  const stderr = result.stderr === null ? "" : result.stderr;
+  const code = result.status === null ? 2 : result.status;
+  // Annotations still go to the log, so a consumer sees the same output with
+  // or without a token.
+  process.stdout.write(stdout);
+
+  const report = parseReport(stderr);
+  if (report === null) {
+    process.stderr.write(stderr);
+    fail("The runner produced no JSON report.");
+  }
+  await createCheckRun(report);
+  process.exitCode = code;
+}
+
+function parseReport(stderr) {
+  const start = stderr.indexOf("{");
+  if (start < 0) return null;
+  try {
+    return JSON.parse(stderr.slice(start));
+  } catch {
+    return null;
+  }
+}
+
+function annotationsOf(report) {
+  const out = [];
+  for (const result of report.results) {
+    if (result.status === "compliant" || result.status === "not_applicable") continue;
+    const level = result.status === "violation" && result.severity === "blocking" ? "failure"
+      : result.status === "error" && result.severity === "blocking" ? "failure"
+      : "warning";
+    const verdict = result.status === "violation" ? "[violation]"
+      : result.status === "review" ? "[needs review]"
+      : "[not evaluated]";
+    let body = verdict + " " + result.message;
+    if (result.source) body += "\n\nRule source: " + result.source;
+    if (result.answer) {
+      const p = result.answer.probabilities[result.answer.choice];
+      body += "\n\nModel answer: " + result.answer.choice
+        + " (p=" + p.toFixed(3) + ", confidence=" + result.answer.confidence.toFixed(3) + ")";
+    }
+    if (result.detail) body += "\n\n" + result.detail;
+    // A rule judges a change, not a line, so every annotation points at the
+    // first path it selected without inventing a line number.
+    const file = result.paths.length > 0 ? result.paths[0] : ".moongate.json";
+    out.push({
+      path: file,
+      start_line: 1,
+      end_line: 1,
+      annotation_level: level,
+      title: "moongate: " + result.id,
+      message: body,
+    });
+    if (out.length === MAX_ANNOTATIONS) break;
+  }
+  return out;
+}
+
+function summaryOf(report) {
+  const counts = {};
+  for (const result of report.results) {
+    counts[result.status] = (counts[result.status] || 0) + 1;
+  }
+  const parts = Object.keys(counts).sort().map((k) => counts[k] + " " + k);
+  let text = "**" + report.conclusion + "** (exit " + report.exit_code + ")\n\n"
+    + (parts.length > 0 ? parts.join(", ") : "no rules evaluated") + "\n\n"
+    + "Model: `" + report.requested_model + "`\n";
+  if (report.errors.length > 0) {
+    text += "\nErrors:\n" + report.errors.map((e) => "- " + e).join("\n") + "\n";
+  }
+  return text;
+}
+
+// A check run reports a verdict; it never fails the job on its own. The
+// runner's exit code still decides that, so the two can never disagree.
+function conclusionOf(report) {
+  if (report.exit_code === 0) return "success";
+  if (report.exit_code === 1) return "failure";
+  return "action_required";
+}
+
+async function createCheckRun(report) {
+  const repo = process.env.GITHUB_REPOSITORY;
+  if (!repo) fail("GITHUB_REPOSITORY is not set; a check run needs a repository.");
+  const api = process.env.GITHUB_API_URL || "https://api.github.com";
+  const body = {
+    name: "Moongate",
+    head_sha: head,
+    status: "completed",
+    conclusion: conclusionOf(report),
+    output: {
+      title: report.conclusion + " (exit " + report.exit_code + ")",
+      summary: summaryOf(report),
+      annotations: annotationsOf(report),
+    },
+  };
+  const response = await fetch(api + "/repos/" + repo + "/check-runs", {
+    method: "POST",
+    headers: {
+      "Authorization": "Bearer " + githubToken,
+      "Accept": "application/vnd.github+json",
+      "X-GitHub-Api-Version": "2022-11-28",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  });
+  if (!response.ok) {
+    // The status is safe to print; the response body may echo the request.
+    throw new Error("GitHub returned " + response.status + " creating the check run.");
+  }
+}

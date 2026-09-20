@@ -22,6 +22,13 @@ fn build_command() -> @argparse.Command {
   let check = @argparse.Command(
     "check",
     about="Evaluate committed changes against the configured rules",
+    flags=[
+      @argparse.FlagArg(
+        "report-json",
+        long="report-json",
+        about="Also write the JSON report to stderr, for a caller that needs the structured result alongside another format",
+      ),
+    ],
     options=[
       @argparse.OptionArg(
         "base",
@@ -167,5 +174,10 @@ async fn run_check_command(matches : @argparse.Matches) -> Int {
   }
   let report = @runner.check(options)
   emit_out(@core.render_report(report, format))
+  // A caller that consumes annotations on stdout still needs the structured
+  // result; re-running `check` to get it would mean a second paid evaluation.
+  if matches.flags.get("report-json") is Some(true) {
+    emit_err(@core.render_report(report, @core.FormatJson))
+  }
   report.exit_code()
 }
