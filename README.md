@@ -153,3 +153,7 @@ _build/native/release/build/cmd/itest/itest.exe \
 The integration suite builds real Git repositories and a loopback API fixture; it needs no credential. CI runs it against both the native binary and the committed JavaScript bundle, and fails if `dist/` is stale.
 
 Design rationale and threat model: [`DESIGN.md`](DESIGN.md).
+
+## License
+
+Apache-2.0. See [`LICENSE`](LICENSE).
