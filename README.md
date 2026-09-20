@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/logo.png" alt="Moongate" width="200">
+  <img src="docs/logo.png" alt="Moongate" width="220">
 </p>
 
 <h1 align="center">Moongate</h1>
