@@ -160,7 +160,6 @@ function annotationsOf(report) {
       title: "moongate: " + result.id,
       message: body,
     });
-    if (out.length === MAX_ANNOTATIONS) break;
   }
   return out;
 }
@@ -192,21 +191,49 @@ async function createCheckRun(report) {
   const repo = process.env.GITHUB_REPOSITORY;
   if (!repo) fail("GITHUB_REPOSITORY is not set; a check run needs a repository.");
   const api = process.env.GITHUB_API_URL || "https://api.github.com";
+  const annotations = annotationsOf(report);
+  const overflow = annotations.length > MAX_ANNOTATIONS;
+  const output = {
+    title: report.conclusion + " (exit " + report.exit_code + ")",
+    summary: summaryOf(report),
+  };
   const body = {
     name: "Moongate",
     // The runner resolved the head input to an object id. The API rejects a
     // ref name, and a check run must pin the commit that was evaluated.
     head_sha: report.head,
-    status: "completed",
-    conclusion: conclusionOf(report),
+    // An overflow check remains pending until every annotation is accepted.
+    // A refused append fails the job without leaving a misleading success.
+    status: overflow ? "in_progress" : "completed",
+    ...(overflow ? {} : { conclusion: conclusionOf(report) }),
     output: {
-      title: report.conclusion + " (exit " + report.exit_code + ")",
-      summary: summaryOf(report),
-      annotations: annotationsOf(report),
+      ...output,
+      annotations: annotations.slice(0, MAX_ANNOTATIONS),
     },
   };
-  const response = await fetch(api + "/repos/" + repo + "/check-runs", {
-    method: "POST",
+  const url = api + "/repos/" + repo + "/check-runs";
+  const response = await sendCheckRun(url, "POST", body);
+  if (!overflow) return;
+  const created = await response.json();
+  if (!created || !Number.isSafeInteger(created.id) || created.id <= 0) {
+    throw new Error("GitHub returned no valid check run id; annotations cannot be appended.");
+  }
+  for (let offset = MAX_ANNOTATIONS; offset < annotations.length; offset += MAX_ANNOTATIONS) {
+    const final = offset + MAX_ANNOTATIONS >= annotations.length;
+    await sendCheckRun(url + "/" + created.id, "PATCH", {
+      status: final ? "completed" : "in_progress",
+      ...(final ? { conclusion: conclusionOf(report) } : {}),
+      output: {
+        ...output,
+        annotations: annotations.slice(offset, offset + MAX_ANNOTATIONS),
+      },
+    });
+  }
+}
+
+async function sendCheckRun(url, method, body) {
+  const response = await fetch(url, {
+    method,
     headers: {
       "Authorization": "Bearer " + githubToken,
       "Accept": "application/vnd.github+json",
@@ -217,6 +244,8 @@ async function createCheckRun(report) {
   });
   if (!response.ok) {
     // The status is safe to print; the response body may echo the request.
-    throw new Error("GitHub returned " + response.status + " creating the check run.");
+    throw new Error("GitHub returned " + response.status
+      + (method === "POST" ? " creating the check run." : " appending check run annotations."));
   }
+  return response;
 }

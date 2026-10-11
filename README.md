@@ -146,7 +146,7 @@ If you register a GitHub App and mint an installation token, the check run appea
 
 The App route costs more setup, not less: you register the App, install it, and store its private key and id alongside the TypeSafe key. What it buys is presentation and control, a distinct identity in the checks list and a check that branch protection can require. It does not remove any secret, does not move compute off the consumer's runner, and does not make fork PRs work. Everything still runs in the caller's CI.
 
-The check run's conclusion follows the exit code: 0 is success, 1 is failure, 2 is action_required. Publishing uses the same single evaluation that produced the annotations, so enabling it costs no extra model calls. If publishing fails, the job fails with exit 2 rather than reporting a result nobody can see.
+The check run's conclusion follows the exit code: 0 is success, 1 is failure, 2 is action_required. Findings are published in batches of at most 50 annotations; an overflow check remains in progress until the final batch is accepted. Publishing uses the same single evaluation that produced the annotations, so enabling it costs no extra model calls. If publishing fails, the job fails with exit 2 rather than reporting a result nobody can see.
 
 ## What gets sent
 

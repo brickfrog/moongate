@@ -44,6 +44,7 @@ fn[X] fail(message : String) -> X raise {
 
 ///|
 struct Recorded {
+  verb : String
   path : String
   auth : String
   body : Json
@@ -143,6 +144,7 @@ async fn Fixture::serve_one(self : Fixture, conn : @socket.Tcp) -> Unit {
     parts.push(part.to_owned())
   }
   let path = if parts.length() > 1 { parts[1] } else { "" }
+  let verb = if parts.is_empty() { "" } else { parts[0] }
   let mut length = 0
   let mut auth = ""
   for i in 1..<lines.length() {
@@ -176,7 +178,7 @@ async fn Fixture::serve_one(self : Fixture, conn : @socket.Tcp) -> Unit {
   let body = @json.parse(text) catch {
     _ => Json::string(text)
   }
-  self.requests.push({ path, auth, body })
+  self.requests.push({ verb, path, auth, body })
   let reply = if self.responses.is_empty() {
     { status: 500, body: "{\"error\":\"no fixture queued\"}", headers: [] }
   } else {

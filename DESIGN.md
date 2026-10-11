@@ -139,7 +139,7 @@ The report is framed by `--- moongate report begin ---` and `--- moongate report
 
 `head_sha` comes from the report's resolved head object id, not from the `head` input. The check-runs API rejects a ref name, and a check must pin the commit that was actually evaluated.
 
-The check run's conclusion is derived from the exit code (0 success, 1 failure, 2 action_required), never computed separately, so the check and the job cannot disagree. Annotations carry the runner's verdict, the rule source, and the model's raw answer, and point at the first path a rule selected with no invented line number. The API caps one request at 50 annotations.
+The check run's conclusion is derived from the exit code (0 success, 1 failure, 2 action_required), never computed separately. Annotations carry the runner's verdict, the rule source, and the model's raw answer, and point at the first path a rule selected with no invented line number. The API caps one request at 50 annotations. When more findings exist, the action creates an in-progress check with the first batch and appends the rest through updates. Only the final accepted batch completes the check with the evaluation's conclusion; a failed append leaves the check in progress and fails the job with exit 2.
 
 A failed publication fails the job with exit 2. A verdict nobody can see is worse than a red build.
 

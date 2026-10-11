@@ -487,3 +487,180 @@ async fn test_action_publishes_a_check_run(fixture : Fixture) -> Unit raise {
     clip(refused.stdout),
   )
 }
+
+///|
+/// Every finding reaches the check run, in bounded requests, without a second
+/// model evaluation. A failed append must never leave a successful check.
+async fn test_check_run_annotation_overflow(fixture : Fixture) -> Unit {
+  if action_entry.val.is_empty() {
+    return
+  }
+  for
+    (count, failure_at) in [
+      (50, 0),
+      (51, 0),
+      (101, 0),
+      (101, 2),
+      (101, 1),
+    ] {
+    let fail_append = failure_at > 0
+    let repo = new_repo()
+    let rules : Array[Json] = []
+    let answers : Array[(String, Json)] = []
+    for i in 0..<count {
+      let id = "overflow_\{i}"
+      // Put the only blocking finding beyond the first two batches.
+      let severity = if count >= 101 && i == count - 1 {
+        "blocking"
+      } else {
+        "advisory"
+      }
+      rules.push(
+        rule([
+          ("id", Json::string(id)),
+          ("severity", Json::string(severity)),
+          // Keep the questions in one evaluation request: this tests
+          // GitHub pagination independently of model-request batching.
+          ("question", {
+            "type": "choice",
+            "instructions": "Check the change.",
+            "criteria": {
+              "violation": "Bad.",
+              "compliant": "Good.",
+              "insufficient_evidence": "Unknown.",
+            },
+          }),
+        ]),
+      )
+      answers.push((id, decisive("violation")))
+    }
+    repo.write(".moongate.json", config(rules))
+    repo.write("src/a.py", "x\n")
+    let base = repo.commit("base")
+    repo.write("src/a.py", "y\n")
+    let head = repo.commit("head")
+    fixture.queue_json(response(answers))
+    fixture.queue_json({ "id": Json::number(77) })
+    if count > 50 {
+      fixture.queue_json(
+        { "id": Json::number(77) },
+        status=if failure_at == 1 { 500 } else { 200 },
+      )
+    }
+    if count > 100 && failure_at != 1 {
+      fixture.queue_json(
+        { "id": Json::number(77) },
+        status=if failure_at == 2 { 500 } else { 200 },
+      )
+    }
+    let before = fixture.requests.length()
+    let proc = run_action(
+      [
+        ("BASE", base),
+        ("HEAD", head),
+        ("REPOSITORY", repo.path),
+        ("API-KEY", dummy_key),
+        ("GITHUB-TOKEN", "ghs_dummy_token"),
+      ],
+      [
+        ("TYPESAFE_BASE_URL", fixture.origin),
+        ("GITHUB_API_URL", fixture.origin),
+        ("GITHUB_REPOSITORY", "owner/repo"),
+      ],
+    )
+    let label = "\{count} findings (failed append=\{failure_at})"
+    expect_exit(
+      label,
+      proc,
+      if fail_append {
+        2
+      } else if count >= 101 {
+        1
+      } else {
+        0
+      },
+    )
+    let mut evaluations = 0
+    let published : Array[Json] = []
+    let publications : Array[Recorded] = []
+    for i in before..<fixture.requests.length() {
+      let request = fixture.requests[i]
+      if request.path == "/v1/systemone" {
+        evaluations += 1
+      } else {
+        publications.push(request)
+        let annotations = array_of(
+          field(field(request.body, "output"), "annotations"),
+        )
+        check(
+          "\{label}: at most 50 per request",
+          annotations.length() <= 50,
+          describe(annotations),
+        )
+        for annotation in annotations {
+          published.push(annotation)
+        }
+      }
+    }
+    check("\{label}: one model call", evaluations == 1, "\{evaluations}")
+    check(
+      "\{label}: all findings submitted",
+      published.length() == (if failure_at == 1 { 100 } else { count }),
+      "\{published.length()}",
+    )
+    for i, annotation in published {
+      check(
+        "\{label}: finding \{i} in order",
+        text_of(field(annotation, "title")) == "moongate: overflow_\{i}",
+        annotation.stringify(),
+      )
+    }
+    check(
+      "\{label}: correct request count",
+      publications.length() == (if failure_at == 1 { 2 } else { (count + 49) / 50 }),
+      "\{publications.length()}",
+    )
+    for i, publication in publications {
+      check(
+        "\{label}: publication method and path",
+        publication.verb == (if i == 0 { "POST" } else { "PATCH" }) &&
+        publication.path ==
+        (if i == 0 {
+          "/repos/owner/repo/check-runs"
+        } else {
+          "/repos/owner/repo/check-runs/77"
+        }),
+        publication.verb + " " + publication.path,
+      )
+      let last_batch = (i + 1) * 50 >= count
+      check(
+        "\{label}: complete only on final append",
+        text_of(field(publication.body, "status")) ==
+        (if last_batch { "completed" } else { "in_progress" }) &&
+        (if last_batch {
+          text_of(field(publication.body, "conclusion")) ==
+          (if count >= 101 { "failure" } else { "success" })
+        } else {
+          field(publication.body, "conclusion") is Null
+        }),
+        clip(publication.body.stringify()),
+      )
+    }
+    if fail_append {
+      check(
+        "append refusal reports a workflow error",
+        proc.stdout.contains("::error title=moongate::") &&
+        proc.stdout.contains("GitHub returned 500"),
+        clip(proc.stdout),
+      )
+    } else if count == 101 && published.length() == count {
+      check(
+        "late blocking finding retains its failure level",
+        text_of(field(published[count - 1], "annotation_level")) == "failure",
+        published[count - 1].stringify(),
+      )
+    }
+    // Drain replies on a failed regression run so later scenarios stay isolated.
+    fixture.responses.clear()
+  }
+}
