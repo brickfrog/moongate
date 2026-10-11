@@ -1,4 +1,4 @@
-name: Moongate
+name: Moongate CI
 description: Evaluate committed repository changes against semantic rules with TypeSafe Jev
 author: brickfrog
 
